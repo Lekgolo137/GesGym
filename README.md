@@ -6,6 +6,6 @@ Instrucciones para la instalación:
 
 3.Ejecutar el siguiente comando para crear un usuario y darle persimos en la base de datos:
 
-	grant all privileges on mvcblog.* to mvcuser@localhost identified by "mvcblogpass";
+	grant all privileges on gesgym.* to gguser@localhost identified by "ggpass";
 	
 4.Arrancar el servidor y acceder desde un navegador con la URL que corresponda.

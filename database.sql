@@ -1,5 +1,5 @@
-create database mvcblog;
-use mvcblog;
+create database gesgym;
+use gesgym;
 create table users (
 		username varchar(255),
 		passwd varchar(255),
