@@ -1,10 +1,10 @@
 Instrucciones para la instalación:
 
-1.Descargar el repositorio y ponerlo en el servidor.
+1.Descargar el repositorio y ponerlo en la carpeta adecuada del servidor (./www/gesgym/).
 
-2.Crear la base de datos (archivo "database.sql" en la raiz del repositorio).
+2.Crear la base de datos importando el archivo "database.sql" o ejecutando el código que se encuentra en su interior desde el gestor de la base de datos (phpMyAdmin).
 
-3.Crear usuario y darle persimos en la base de datos con el siguiente comando:
+3.Ejecutar el siguiente comando para crear un usuario y darle persimos en la base de datos:
 
 	grant all privileges on mvcblog.* to mvcuser@localhost identified by "mvcblogpass";
 	
