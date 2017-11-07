@@ -115,7 +115,7 @@ class UsersController extends BaseController {
 	*
 	* @return void
 	*/
-	public function register() {
+	public function add() {
 		// Users controller operates in a "welcome" layout
 		// different to the "default" layout where the internal
 		// menu is displayed
@@ -125,9 +125,14 @@ class UsersController extends BaseController {
 
 		if (isset($_POST["username"])){ // reaching via HTTP Post...
 
-			// populate the User object with data form the form
+			// populate the User object with data from the form
 			$user->setUsername($_POST["username"]);
 			$user->setPassword($_POST["passwd"]);
+			$user->setTipo($_POST["tipo"]);
+			$user->setTlf($_POST["tlf"]);
+			$user->setCalle($_POST["calle"]);
+			$user->setCiudad($_POST["ciudad"]);
+			$user->setCodPostal($_POST["codPostal"]);
 
 			try{
 				$user->checkIsValidForRegister(); // if it fails, ValidationException
@@ -143,7 +148,7 @@ class UsersController extends BaseController {
 					// We want to see a message after redirection, so we establish
 					// a "flash" message (which is simply a Session variable) to be
 					// get in the view after redirection.
-					$this->view->setFlash(i18n("Account successfully created.<br>Please login now."));
+					$this->view->setFlash(i18n("User successfully created."));
 
 					// perform the redirection. More or less:
 					// header("Location: index.php?controller=users&action=login")
@@ -165,8 +170,8 @@ class UsersController extends BaseController {
 		// Put the User object visible to the view
 		$this->view->setVariable("user", $user);
 
-		// render the view (/view/users/register.php)
-		$this->view->render("users", "register");
+		// render the view (/view/users/add.php)
+		$this->view->render("users", "add");
 
 	}
 

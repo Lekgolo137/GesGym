@@ -15,5 +15,5 @@ $view->setVariable("header", i18n("Apunta"));
 				<button type="submit" class="btn btn-lg btn-primary btn-block"><?=i18n("Login")?></button>
 			</form>
 			<div><?=i18n("Don't have an user account?")?></div>
-			<a class="btn btn-lg btn-primary btn-block" href="index.php?controller=users&amp;action=register"><?=i18n("Register")?></a>
+			<a class="btn btn-lg btn-primary btn-block" href="index.php?controller=users&amp;action=add"><?=i18n("Register")?></a>
 <?=$view->moveToFragment("css")?>		<link rel="stylesheet" type="text/css" href="css/loginStyle.css">

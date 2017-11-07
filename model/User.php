@@ -3,84 +3,100 @@
 
 require_once(__DIR__."/../core/ValidationException.php");
 
-/**
-* Class User
-*
-* Represents a User in the blog
-*
-* @author lipido <lipido@gmail.com>
-*/
 class User {
 
-	/**
-	* The user name of the user
-	* @var string
-	*/
+	// String
 	private $username;
 
-	/**
-	* The password of the user
-	* @var string
-	*/
+	// String
 	private $passwd;
+	
+	// Integer
+	private $tlf;
 
-	/**
-	* The constructor
-	*
-	* @param string $username The name of the user
-	* @param string $passwd The password of the user
-	*/
-	public function __construct($username=NULL, $passwd=NULL) {
+	// String
+	private $tipo;
+
+	// String
+	private $calle;
+
+	// String
+	private $ciudad;
+	
+	// String
+	private $codPostal;
+
+	// Constructor
+	public function __construct($username=NULL, $passwd=NULL, $tlf=NULL, $tipo=NULL, $calle=NULL, $ciudad=NULL, $codPostal=NULL) {
 		$this->username = $username;
 		$this->passwd = $passwd;
+		$this->tlf = $tlf;
+		$this->tipo = $tipo;
+		$this->calle = $calle;
+		$this->ciudad = $ciudad;
+		$this->codPostal = $codPostal;
 	}
 
-	/**
-	* Gets the username of this user
-	*
-	* @return string The username of this user
-	*/
+	// GETTERS
+	
 	public function getUsername() {
 		return $this->username;
 	}
+	
+	public function getPasswd() {
+		return $this->passwd;
+	}
+	
+	public function getTlf() {
+		return $this->tlf;
+	}
+	
+	public function getTipo() {
+		return $this->tipo;
+	}
+	
+	public function getCalle() {
+		return $this->calle;
+	}
+	
+	public function getCiudad() {
+		return $this->ciudad;
+	}
+	
+	public function getCodPostal() {
+		return $this->codPostal;
+	}
+	// SETTERS
 
-	/**
-	* Sets the username of this user
-	*
-	* @param string $username The username of this user
-	* @return void
-	*/
 	public function setUsername($username) {
 		$this->username = $username;
 	}
 
-	/**
-	* Gets the password of this user
-	*
-	* @return string The password of this user
-	*/
-	public function getPasswd() {
-		return $this->passwd;
-	}
-	/**
-	* Sets the password of this user
-	*
-	* @param string $passwd The password of this user
-	* @return void
-	*/
 	public function setPassword($passwd) {
 		$this->passwd = $passwd;
 	}
 
-	/**
-	* Checks if the current user instance is valid
-	* for being registered in the database
-	*
-	* @throws ValidationException if the instance is
-	* not valid
-	*
-	* @return void
-	*/
+	public function setTlf($tlf) {
+		$this->tlf = $tlf;
+	}
+
+	public function setTipo($tipo) {
+		$this->tipo = $tipo;
+	}
+
+	public function setCalle($calle) {
+		$this->calle = $calle;
+	}
+
+	public function setCiudad($ciudad) {
+		$this->ciudad = $ciudad;
+	}
+
+	public function setCodPostal($codPostal) {
+		$this->codPostal = $codPostal;
+	}
+
+	// Función para comprobar si el usuario es válido para ser creado
 	public function checkIsValidForRegister() {
 		$errors = array();
 		if (strlen($this->username) < 5) {
@@ -90,7 +106,7 @@ class User {
 			$errors["passwd"] = i18n("Password must be at least 5 characters in length");
 		}
 		if (sizeof($errors)>0){
-			throw new ValidationException($errors, "user is not valid");
+			throw new ValidationException($errors, i18n("user is not valid"));
 		}
 	}
 }
