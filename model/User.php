@@ -84,11 +84,10 @@ class User {
 	public function checkIsValidForRegister() {
 		$errors = array();
 		if (strlen($this->username) < 5) {
-			$errors["username"] = "Username must be at least 5 characters length";
-
+			$errors["username"] = i18n("Username must be at least 5 characters in length");
 		}
 		if (strlen($this->passwd) < 5) {
-			$errors["passwd"] = "Password must be at least 5 characters length";
+			$errors["passwd"] = i18n("Password must be at least 5 characters in length");
 		}
 		if (sizeof($errors)>0){
 			throw new ValidationException($errors, "user is not valid");

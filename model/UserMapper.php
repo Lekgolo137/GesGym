@@ -64,4 +64,20 @@ class UserMapper {
 			return true;
 		}
 	}
+	
+	/**
+	* Retrieves all usernames
+	*/
+	public function findAll() {
+		$stmt = $this->db->query("SELECT * FROM users");
+		$users_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		$users = array();
+
+		foreach ($users_db as $user) {
+			array_push($users, new User($user["username"], $user["passwd"]));
+		}
+
+		return $users;
+	}
 }

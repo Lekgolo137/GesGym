@@ -1,0 +1,59 @@
+body {
+	padding-top: 50px;
+	background-color: #eee;
+}
+
+h1 {
+	text-align: center;
+	padding-bottom: 50px;
+	font-size: 70px;
+}
+
+main {
+	max-width: 275px;
+	margin: auto;
+}
+
+div {
+	text-align: center;
+}
+
+div:nth-child(2) {
+	color: red;
+}
+
+#remember {
+	text-align: left;
+	display: none;
+}
+
+.form-signin .form-control {
+	height: auto;
+	padding: 10px;
+	font-size: 16px;
+}
+
+.form-signin .form-control:focus {
+	z-index: 1;
+}
+
+.form-signin input[type="username"] {
+	margin-bottom: -1px;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.form-signin input[type="checkbox"] {
+	margin-top: 10px;
+	margin-right: 3px;
+}
+
+.form-signin button {
+	margin-top: 10px;
+	margin-bottom: 30px;
+}

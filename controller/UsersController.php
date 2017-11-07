@@ -29,11 +29,10 @@ class UsersController extends BaseController {
 		parent::__construct();
 
 		$this->userMapper = new UserMapper();
-
-		// Users controller operates in a "welcome" layout
-		// different to the "default" layout where the internal
-		// menu is displayed
-		$this->view->setLayout("welcome");
+	}
+	
+	public function listUsers(){
+		return $this->userMapper->findAll();
 	}
 
 	/**
@@ -64,6 +63,11 @@ class UsersController extends BaseController {
 	* @return void
 	*/
 	public function login() {
+		// Users controller operates in a "welcome" layout
+		// different to the "default" layout where the internal
+		// menu is displayed
+		$this->view->setLayout("welcome");
+		
 		if (isset($_POST["username"])){ // reaching via HTTP Post...
 			//process login form
 			if ($this->userMapper->isValidUser($_POST["username"], 							 $_POST["passwd"])) {
@@ -75,7 +79,7 @@ class UsersController extends BaseController {
 
 			}else{
 				$errors = array();
-				$errors["general"] = "Username is not valid";
+				$errors["general"] = i18n("Incorrect login");
 				$this->view->setVariable("errors", $errors);
 			}
 		}
@@ -112,7 +116,11 @@ class UsersController extends BaseController {
 	* @return void
 	*/
 	public function register() {
-
+		// Users controller operates in a "welcome" layout
+		// different to the "default" layout where the internal
+		// menu is displayed
+		$this->view->setLayout("welcome");
+	
 		$user = new User();
 
 		if (isset($_POST["username"])){ // reaching via HTTP Post...
@@ -135,7 +143,7 @@ class UsersController extends BaseController {
 					// We want to see a message after redirection, so we establish
 					// a "flash" message (which is simply a Session variable) to be
 					// get in the view after redirection.
-					$this->view->setFlash("Username ".$user->getUsername()." successfully added. Please login now");
+					$this->view->setFlash(i18n("Account successfully created.<br>Please login now."));
 
 					// perform the redirection. More or less:
 					// header("Location: index.php?controller=users&action=login")
@@ -143,7 +151,7 @@ class UsersController extends BaseController {
 					$this->view->redirect("users", "login");
 				} else {
 					$errors = array();
-					$errors["username"] = "Username already exists";
+					$errors["username"] = i18n("That username already exists");
 					$this->view->setVariable("errors", $errors);
 				}
 			}catch(ValidationException $ex) {

@@ -5,11 +5,13 @@
 * Default controller if any controller is passed in the URL
 */
 define("DEFAULT_CONTROLLER", "users");
+define("DEFAULT_CONTROLLER_LOGGED", "posts");
 
 /**
 * Default action if any action is passed in the URL
 */
 define("DEFAULT_ACTION", "login");
+define("DEFAULT_ACTION_LOGGED", "index");
 
 /**
 * Main router (single entry-point for all requests)
@@ -35,12 +37,21 @@ define("DEFAULT_ACTION", "login");
 function run() {
 	// invoke action!
 	try {
+		session_start();
 		if (!isset($_GET["controller"])) {
-			$_GET["controller"] = DEFAULT_CONTROLLER;
+			if (isset($_SESSION["currentuser"])) {
+				$_GET["controller"] = DEFAULT_CONTROLLER_LOGGED;
+			}else{
+				$_GET["controller"] = DEFAULT_CONTROLLER;
+			}
 		}
 
 		if (!isset($_GET["action"])) {
-			$_GET["action"] = DEFAULT_ACTION;
+			if (isset($_SESSION["currentuser"])) {
+				$_GET["action"] = DEFAULT_ACTION_LOGGED;
+			}else{
+				$_GET["action"] = DEFAULT_ACTION;
+			}
 		}
 
 		// Here is where the "magic" occurs.
@@ -55,7 +66,7 @@ function run() {
 		$controller->$actionName();
 	} catch(Exception $ex) {
 		//uniform treatment of exceptions
-		die("An exception occured!!!!!".$ex->getMessage());
+		die(i18n("An error has ocurred.<br>").$ex->getMessage());
 	}
 }
 
