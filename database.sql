@@ -2,11 +2,10 @@ create database gesgym;
 
 use gesgym;
 
---Completo
 create table users (
 		username varchar(255),
 		passwd varchar(255),
-		tlf int(9),
+		tlf integer(9),
 		tipo ENUM('cliente','entrenador','administrador'),
 		calle varchar(255),
 		ciudad varchar(255),
@@ -15,21 +14,6 @@ create table users (
 		primary key (username)
 ) ENGINE=INNODB DEFAULT CHARACTER SET = utf8;
 
---Completo
-create table comments (
-	commentid varchar(255),	 
-	content varchar(255),
-	username varchar(255),
-	sessionid varchar(255),
-	tableid varchar(255),
-
-	primary key (commentid),
-	foreign key (username) references users(username),
-	foreign key (sessionid) references sessions(sessionid),
-	foreign key (tableid) references tables(tableid)
-) ENGINE=INNODB DEFAULT CHARACTER SET = utf8;
-
---Completo
 create table tables (
 		tableid varchar(255),
 		tabletipo ENUM('person','noPerson'),
@@ -37,7 +21,6 @@ create table tables (
 		primary key (tableid)
 ) ENGINE=INNODB DEFAULT CHARACTER SET = utf8;
 
---Completo
 create table sessions (
 		sessionid varchar(255),
 		username varchar(255),
@@ -51,7 +34,19 @@ create table sessions (
 		
 ) ENGINE=INNODB DEFAULT CHARACTER SET = utf8;
 
---Completo
+create table comments (
+	commentid varchar(255),	 
+	content varchar(255),
+	username varchar(255),
+	sessionid varchar(255),
+	tableid varchar(255),
+
+	primary key (commentid),
+	foreign key (username) references users(username),
+	foreign key (sessionid) references sessions(sessionid),
+	foreign key (tableid) references tables(tableid)
+) ENGINE=INNODB DEFAULT CHARACTER SET = utf8;
+
 create table exercises (
 		exerciseid varchar(255),
 		exe_tipo ENUM('cardio','musculacion','estiramiento'),
@@ -59,7 +54,6 @@ create table exercises (
 		primary key (exerciseid)
 ) ENGINE=INNODB DEFAULT CHARACTER SET = utf8;
 
---Completo
 create table activities (
 		activityid varchar(255),
 		plazas int(10),
@@ -67,7 +61,6 @@ create table activities (
 		primary key (activityid)
 ) ENGINE=INNODB DEFAULT CHARACTER SET = utf8;
 
---Completo
 create table resources (
 		resourceid varchar(255),
 		resource_tipo ENUM('instalacion','material'),
@@ -77,7 +70,6 @@ create table resources (
 		primary key (resourceid)
 ) ENGINE=INNODB DEFAULT CHARACTER SET = utf8;
 
---Completo
 create table act_use_res (
 		activityid varchar(255),
 		resourceid varchar(255),
@@ -86,7 +78,6 @@ create table act_use_res (
 		foreign key (resourceid) references resources(resourceid)
 ) ENGINE=INNODB DEFAULT CHARACTER SET = utf8;
 
---Completo
 create table use_participates_act (
 		username varchar(255),
 		activityid varchar(255),
@@ -96,7 +87,6 @@ create table use_participates_act (
 		foreign key (activityid) references activities(activityid)
 ) ENGINE=INNODB DEFAULT CHARACTER SET = utf8;
 
---Completo
 create table tab_has_exe (
 		tableid varchar(255),
 		exerciseid varchar(255),
