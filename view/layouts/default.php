@@ -19,7 +19,6 @@ $currentuser = $view->getVariable("currentusername");
 		<header>
 			<div class="container">
 				<ul class="nav nav-justified">
-					<li class="active"><a href="index.php?controller=posts&amp;action=index"><?=i18n("Notes")?></a></li>
 					<li><a><?=i18n("Logged in as")?>: <?=sprintf($currentuser)?></a></li>
 					<li><a href="index.php?controller=users&amp;action=logout"><?=i18n("Logout")?></a></li>
 				</ul>

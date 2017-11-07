@@ -30,7 +30,6 @@ header {
   border-bottom: 1px solid #d5d5d5;
 }
 
-.nav-justified > li:first-child > a:hover,
 .nav-justified > li:last-child > a:hover {
   background-color: #ddd;
   background-image: none;

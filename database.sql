@@ -97,3 +97,7 @@ create table tab_has_exe (
 		foreign key (tableid) references tables(tableid),
 		foreign key (exerciseid) references exercises(exerciseid)
 ) ENGINE=INNODB DEFAULT CHARACTER SET = utf8;
+
+grant all privileges on gesgym.* to gguser@localhost identified by "ggpass";
+
+INSERT INTO users values ('12345','12345',666225577,'administrador','Avenida Nula Nº0','Nulilandia','30000');
