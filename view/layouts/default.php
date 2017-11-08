@@ -3,6 +3,7 @@
 
 $view = ViewManager::getInstance();
 $currentuser = $view->getVariable("currentusername");
+$currentusertype = $view->getVariable("currentusertype");
 ?><!DOCTYPE html>
 <html>
 	<head>
@@ -19,7 +20,8 @@ $currentuser = $view->getVariable("currentusername");
 		<header>
 			<div class="container">
 				<ul class="nav nav-justified">
-					<li><a><?=i18n("Logged in as")?>: <?=sprintf($currentuser)?></a></li>
+					<li><a href="index.php?controller=users&amp;action=mainMenu"><?=i18n("Main Menu")?></a></li>
+					<li><a><?=i18n("Logged in as")?>: <?=sprintf($currentuser)?> (<?=sprintf($currentusertype)?>)</a></li>
 					<li><a href="index.php?controller=users&amp;action=logout"><?=i18n("Logout")?></a></li>
 				</ul>
 			</div>

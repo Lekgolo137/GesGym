@@ -33,6 +33,6 @@ $view->setVariable("header", i18n("New User"));
 				</div>
 				<button type="submit" class="btn btn-lg btn-primary btn-block"><?=i18n("Create new user")?></button>
 			</form>
-			<a class="btn btn-lg btn-primary btn-block" href="index.php?controller=users&amp;action=login"><?=i18n("Cancel")?></a>
+			<a class="btn btn-lg btn-primary btn-block" href="index.php?controller=users&amp;action=usersMenu"><?=i18n("Cancel")?></a>
 <?=$view->moveToFragment("css")?>		<link rel="stylesheet" type="text/css" href="css/addUserStyle.css">
 <?=$view->moveToFragment("javascript")?>		<script type="text/javascript" src="js/password.js"></script>

@@ -66,6 +66,18 @@ class UserMapper {
 	}
 	
 	/**
+	* Retrieves the user type
+	*/
+	public function findType($username) {
+		$stmt = $this->db->prepare("SELECT * FROM users where username=?");
+		$stmt->execute(array($username));
+		$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+		return $user["tipo"];
+	}
+	
+	
+	/**
 	* Retrieves all usernames
 	*/
 	public function findAll() {
@@ -75,7 +87,7 @@ class UserMapper {
 		$users = array();
 
 		foreach ($users_db as $user) {
-			array_push($users, new User($user["username"], $user["passwd"]));
+			array_push($users, new User($user["username"], $user["passwd"], $user["tlf"], $user["tipo"], $user["calle"], $user["ciudad"], $user["codPostal"]));
 		}
 
 		return $users;
