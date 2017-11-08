@@ -70,7 +70,7 @@ class UsersController extends BaseController {
 		
 		if (isset($_POST["username"])){ // reaching via HTTP Post...
 			//process login form
-			if ($this->userMapper->isValidUser($_POST["username"], 							 $_POST["passwd"])) {
+			if ($this->userMapper->isValidUser($_POST["username"], $_POST["passwd"])) {
 
 				$_SESSION["currentuser"]=$_POST["username"];
 
@@ -153,7 +153,7 @@ class UsersController extends BaseController {
 					// perform the redirection. More or less:
 					// header("Location: index.php?controller=users&action=login")
 					// die();
-					$this->view->redirect("users", "login");
+					$this->view->redirect("users", "usersMenu");
 				} else {
 					$errors = array();
 					$errors["username"] = i18n("That username already exists");
@@ -176,8 +176,31 @@ class UsersController extends BaseController {
 	}
 
 	public function mainMenu(){
+		
+		$type = $this->userMapper->findType($_SESSION["currentuser"]);
+		$this->view->setVariable("currentusertype", $type);
 		$this->view->setLayout("default");
 		$this->view->render("users", "mainMenu");
+	}
+	
+	public function usersMenu(){
+		
+		$type = $this->userMapper->findType($_SESSION["currentuser"]);
+		$this->view->setVariable("currentusertype", $type);
+		$this->view->setLayout("default");
+		$this->view->render("users", "usersMenu");
+	}
+	
+	public function usersList(){
+		
+		$type = $this->userMapper->findType($_SESSION["currentuser"]);
+		$this->view->setVariable("currentusertype", $type);
+		
+		$users = $this->userMapper->findAll();
+		$this->view->setVariable("users", $users);
+		
+		$this->view->setLayout("default");
+		$this->view->render("users", "usersList");
 	}
 	
 	/**
