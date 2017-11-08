@@ -5,13 +5,13 @@
 * Default controller if any controller is passed in the URL
 */
 define("DEFAULT_CONTROLLER", "users");
-define("DEFAULT_CONTROLLER_LOGGED", "posts");
+define("DEFAULT_CONTROLLER_LOGGED", "users");
 
 /**
 * Default action if any action is passed in the URL
 */
 define("DEFAULT_ACTION", "login");
-define("DEFAULT_ACTION_LOGGED", "index");
+define("DEFAULT_ACTION_LOGGED", "mainMenu");
 
 /**
 * Main router (single entry-point for all requests)
