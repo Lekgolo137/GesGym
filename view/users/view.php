@@ -15,7 +15,9 @@ $view->setVariable("header", i18n("View User"));
 					<?=i18n("Password")?>:
 					<input disabled type="text" class="form-control" placeholder="<?=i18n("Password")?>" value="<?=$user->getPasswd()?>">
 					<?=i18n("Type")?>:
-					<input disabled type="text" class="form-control" placeholder="<?=i18n("Type")?>" value="<?=$user->getTipo()?>">
+					<input disabled type="text" class="form-control" placeholder="<?=i18n("Type")?>" value="<?php if($user->getTipo() == "cliente"){print i18n("Client");}
+																												  if($user->getTipo() == "entrenador"){print i18n("Trainer");}
+																												  if($user->getTipo() == "administrador"){print i18n("Administrator");} ?>">
 					<?=i18n("Telephone")?>:
 					<input disabled type="text" class="form-control" placeholder="<?=i18n("Telephone")?>" value="<?=$user->getTlf()?>">
 					<?=i18n("Address")?>:
@@ -27,6 +29,59 @@ $view->setVariable("header", i18n("View User"));
 				</div>
 				<div class="col-sm-6">
 					<div><?=i18n("Sessions")?></div>
+					<table class="table table-striped table-hover">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Fecha</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Ejemplo</td>
+								<td>Ejemplo</td>
+							</tr>
+							<tr>
+								<td>Ejemplo</td>
+								<td>Ejemplo</td>
+							</tr>
+							<tr>
+								<td>Ejemplo</td>
+								<td>Ejemplo</td>
+							</tr>
+							<tr>
+								<td>Ejemplo</td>
+								<td>Ejemplo</td>
+							</tr>
+						</tbody>
+					</table>
+					<div><?=i18n("Activities")?></div>
+					<table class="table table-striped table-hover">
+						<thead>
+							<tr>
+								<th>Nombre</th>
+								<th>Fecha</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Ejemplo</td>
+								<td>Ejemplo</td>
+							</tr>
+							<tr>
+								<td>Ejemplo</td>
+								<td>Ejemplo</td>
+							</tr>
+							<tr>
+								<td>Ejemplo</td>
+								<td>Ejemplo</td>
+							</tr>
+							<tr>
+								<td>Ejemplo</td>
+								<td>Ejemplo</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 			<a class="btn btn-lg btn-primary btn-block" href="index.php?controller=users&amp;action=usersList"><?=i18n("Return")?></a>

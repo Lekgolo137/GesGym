@@ -1,3 +1,5 @@
+drop database gesgym;
+
 create database gesgym;
 
 use gesgym;

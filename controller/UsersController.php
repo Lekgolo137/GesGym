@@ -25,6 +25,7 @@ class UsersController extends BaseController {
 			if ($this->userMapper->isValidUser($_POST["username"], $_POST["passwd"])) {
 				// Si es válido se inicia" la sesión guardando el nombre de usuario en la variable de sesión currentuser.
 				$_SESSION["currentuser"]=$_POST["username"];
+				$_SESSION["currentusertype"]=$this->userMapper->findType($_POST["username"]);
 				// Se redirige al usuario al menú principal.
 				$this->view->redirect("users", "mainMenu");
 			}else{
@@ -39,7 +40,40 @@ class UsersController extends BaseController {
 		$this->view->render("users", "login");
 	}
 
+	public function logout() {
+		if (!isset($this->currentUser)) {
+			throw new Exception(i18n("You must log in to access this feature."));
+		}
+		// Se cierra la sesión actual del usuario.
+		session_destroy();
+		// Se redirige al usuario a Login.
+		$this->view->redirect("users", "login");
+	}
+	
+	public function mainMenu(){
+		if (!isset($this->currentUser)) {
+			throw new Exception(i18n("You must log in to access this feature."));
+		}
+		// Se elige la plantilla y renderiza la vista.
+		$this->view->setLayout("default");
+		$this->view->render("users", "mainMenu");
+	}
+	
+	public function usersMenu(){
+		$type = $this->view->getVariable("currentusertype");
+		if ($type != "administrador") {
+			throw new Exception(i18n("You must be an administrator to access this feature."));
+		}
+		// Se elige la plantilla y renderiza la vista.
+		$this->view->setLayout("default");
+		$this->view->render("users", "usersMenu");
+	}
+	
 	public function add() {
+		$type = $this->view->getVariable("currentusertype");
+		if ($type != "administrador") {
+			throw new Exception(i18n("You must be an administrator to access this feature."));
+		}
 		// Se crea una variable usuario donde guardar los datos de un nuevo usuario.
 		$user = new User();
 		// Cuando el usuario le da al botón de crear nuevo usuario...
@@ -83,29 +117,12 @@ class UsersController extends BaseController {
 		$this->view->render("users", "add");
 
 	}
-
-	public function mainMenu(){
-		// Guarda el tipo del usuario logeado en una variable.
-		$type = $this->userMapper->findType($_SESSION["currentuser"]);
-		$this->view->setVariable("currentusertype", $type);
-		// Se elige la plantilla y renderiza la vista.
-		$this->view->setLayout("default");
-		$this->view->render("users", "mainMenu");
-	}
-	
-	public function usersMenu(){
-		// Guarda el tipo del usuario logeado en una variable.
-		$type = $this->userMapper->findType($_SESSION["currentuser"]);
-		$this->view->setVariable("currentusertype", $type);
-		// Se elige la plantilla y renderiza la vista.
-		$this->view->setLayout("default");
-		$this->view->render("users", "usersMenu");
-	}
 	
 	public function usersList(){
-		// Guarda el tipo del usuario logeado en una variable.
-		$type = $this->userMapper->findType($_SESSION["currentuser"]);
-		$this->view->setVariable("currentusertype", $type);
+		$type = $this->view->getVariable("currentusertype");
+		if ($type != "administrador") {
+			throw new Exception(i18n("You must be an administrator to access this feature."));
+		}
 		// Guarda todos los usuarios de la base de datos en una variable.
 		$users = $this->userMapper->findAll();
 		$this->view->setVariable("users", $users);
@@ -114,27 +131,11 @@ class UsersController extends BaseController {
 		$this->view->render("users", "usersList");
 	}
 	
-	public function delete(){
-		// Se guarda el nombre del usuario seleccionado
-		$username = $_REQUEST["username"];
-		// Se coge de la BD el usuario seleccionado.
-		$user = $this->userMapper->findByUsername($username);
-		// Se borra al usuario seleccionado.
-		$this->userMapper->delete($user);
-		// Se muestra un mensaje de confirmación.
-		$this->view->setFlash(sprintf(i18n("User \"%s\" successfully deleted."),$user->getUsername()));
-		// Se recarga la lista de usuarios mostrada.
-		$this->view->redirect("users", "usersList");
-	}
-	
-	public function logout() {
-		// Se cierra la sesión actual del usuario.
-		session_destroy();
-		// Se redirige al usuario a Login.
-		$this->view->redirect("users", "login");
-	}
-
 	public function view(){
+		$type = $this->view->getVariable("currentusertype");
+		if ($type != "administrador") {
+			throw new Exception(i18n("You must be an administrator to access this feature."));
+		}
 		// Se guarda el nombre de usuario seleccionado en una variable.
 		$username = $_REQUEST["username"];
 		// Se coge de la BD el usuario seleccionado.
@@ -147,6 +148,10 @@ class UsersController extends BaseController {
 	}
 	
 	public function edit(){
+		$type = $this->view->getVariable("currentusertype");
+		if ($type != "administrador") {
+			throw new Exception(i18n("You must be an administrator to access this feature."));
+		}
 		// Se guarda el nombre de usuario seleccionado en una variable.
 		$username = $_REQUEST["username"];
 		// Se coge de la BD el usuario seleccionado.
@@ -181,6 +186,23 @@ class UsersController extends BaseController {
 		// Se elige la plantilla y renderiza la vista.
 		$this->view->setLayout("welcome");
 		$this->view->render("users", "edit");
+	}
+	
+	public function delete(){
+		$type = $this->view->getVariable("currentusertype");
+		if ($type != "administrador") {
+			throw new Exception(i18n("You must be an administrator to access this feature."));
+		}
+		// Se guarda el nombre del usuario seleccionado
+		$username = $_REQUEST["username"];
+		// Se coge de la BD el usuario seleccionado.
+		$user = $this->userMapper->findByUsername($username);
+		// Se borra al usuario seleccionado.
+		$this->userMapper->delete($user);
+		// Se muestra un mensaje de confirmación.
+		$this->view->setFlash(sprintf(i18n("User \"%s\" successfully deleted."),$user->getUsername()));
+		// Se recarga la lista de usuarios mostrada.
+		$this->view->redirect("users", "usersList");
 	}
 	
 }

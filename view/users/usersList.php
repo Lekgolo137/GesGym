@@ -28,7 +28,9 @@ $view->setVariable("title", i18n("GesGym - User List"));
 							<tr>
 								<td><?=$user->getUsername()?></td>
 								<td><?=$user->getPasswd()?></td>
-								<td><?=$user->getTipo()?></td>
+								<td><?php if($user->getTipo() == "cliente"){print i18n("Client");}
+										  if($user->getTipo() == "entrenador"){print i18n("Trainer");}
+										  if($user->getTipo() == "administrador"){print i18n("Administrator");} ?></td>
 								<td><?=$user->getTlf()?></td>
 								<td><?=$user->getCalle()?></td>
 								<td><?=$user->getCiudad()?></td>
