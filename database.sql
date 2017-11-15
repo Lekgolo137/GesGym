@@ -100,4 +100,9 @@ create table tab_has_exe (
 
 grant all privileges on gesgym.* to gguser@localhost identified by "ggpass";
 
-INSERT INTO users values ('12345','12345',666225577,'administrador','Avenida Nula Nº0','Nulilandia','30000');
+INSERT INTO users values ('12345','12345',666225577,'administrador','Avenida Nula N0','Nulilandia','30000');
+INSERT INTO users values ('ejemplo1','ejemplo1',666224466,'cliente','ejemplo1','ejemplo1','ejemplo1');
+INSERT INTO users values ('ejemplo2','ejemplo2',666224466,'entrenador','ejemplo2','ejemplo2','ejemplo2');
+INSERT INTO users values ('ejemplo3','ejemplo3',666224466,'cliente','ejemplo3','ejemplo3','ejemplo3');
+INSERT INTO users values ('ejemplo4','ejemplo4',666224466,'entrenador','ejemplo4','ejemplo4','ejemplo4');
+INSERT INTO users values ('ejemplo5','ejemplo5',666224466,'cliente','ejemplo5','ejemplo5','ejemplo5');
