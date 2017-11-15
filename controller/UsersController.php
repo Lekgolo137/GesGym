@@ -1,131 +1,50 @@
 <?php
+//file: controller/UsersController.php
 
 require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../core/I18n.php");
-
 require_once(__DIR__."/../model/User.php");
 require_once(__DIR__."/../model/UserMapper.php");
-
 require_once(__DIR__."/../controller/BaseController.php");
 
-/**
-* Class UsersController
-*
-* Controller to login, logout and user registration
-*
-* @author lipido <lipido@gmail.com>
-*/
 class UsersController extends BaseController {
 
-	/**
-	* Reference to the UserMapper to interact
-	* with the database
-	*
-	* @var UserMapper
-	*/
+	// Se instancia al Mapper para poder interaccionar con la base de datos.
 	private $userMapper;
-
+	
+	// Se añade la instanciación del Mapper al constructor.
 	public function __construct() {
 		parent::__construct();
-
 		$this->userMapper = new UserMapper();
 	}
-	
-	public function listUsers(){
-		return $this->userMapper->findAll();
-	}
 
-	/**
-	* Action to login
-	*
-	* Logins a user checking its creedentials agains
-	* the database
-	*
-	* When called via GET, it shows the login form
-	* When called via POST, it tries to login
-	*
-	* The expected HTTP parameters are:
-	* <ul>
-	* <li>login: The username (via HTTP POST)</li>
-	* <li>passwd: The password (via HTTP POST)</li>
-	* </ul>
-	*
-	* The views are:
-	* <ul>
-	* <li>posts/login: If this action is reached via HTTP GET (via include)</li>
-	* <li>posts/index: If login succeds (via redirect)</li>
-	* <li>users/login: If validation fails (via include). Includes these view variables:</li>
-	* <ul>
-	*	<li>errors: Array including validation errors</li>
-	* </ul>
-	* </ul>
-	*
-	* @return void
-	*/
 	public function login() {
-		// Users controller operates in a "welcome" layout
-		// different to the "default" layout where the internal
-		// menu is displayed
-		$this->view->setLayout("welcome");
-		
-		if (isset($_POST["username"])){ // reaching via HTTP Post...
-			//process login form
+		// Cuando el usuario le da al botón de iniciar sesión...
+		if (isset($_POST["username"])){
+			// Se comprueba que el login sea válido.
 			if ($this->userMapper->isValidUser($_POST["username"], $_POST["passwd"])) {
-
+				// Si es válido se inicia" la sesión guardando el nombre de usuario en la variable de sesión currentuser.
 				$_SESSION["currentuser"]=$_POST["username"];
-
-				// send user to the restricted area (HTTP 302 code)
+				// Se redirige al usuario al menú principal.
 				$this->view->redirect("users", "mainMenu");
-
 			}else{
+				// En caso de que el login no sea válido se muestra un mensaje de error al usuario.
 				$errors = array();
 				$errors["general"] = i18n("Incorrect login");
 				$this->view->setVariable("errors", $errors);
 			}
 		}
-
-		// render the view (/view/users/login.php)
+		// Se elige la plantilla y renderiza la vista.
+		$this->view->setLayout("welcome");
 		$this->view->render("users", "login");
 	}
 
-	/**
-	* Action to register
-	*
-	* When called via GET, it shows the register form.
-	* When called via POST, it tries to add the user
-	* to the database.
-	*
-	* The expected HTTP parameters are:
-	* <ul>
-	* <li>login: The username (via HTTP POST)</li>
-	* <li>passwd: The password (via HTTP POST)</li>
-	* </ul>
-	*
-	* The views are:
-	* <ul>
-	* <li>users/register: If this action is reached via HTTP GET (via include)</li>
-	* <li>users/login: If login succeds (via redirect)</li>
-	* <li>users/register: If validation fails (via include). Includes these view variables:</li>
-	* <ul>
-	*	<li>user: The current User instance, empty or being added
-	*	(but not validated)</li>
-	*	<li>errors: Array including validation errors</li>
-	* </ul>
-	* </ul>
-	*
-	* @return void
-	*/
 	public function add() {
-		// Users controller operates in a "welcome" layout
-		// different to the "default" layout where the internal
-		// menu is displayed
-		$this->view->setLayout("welcome");
-	
+		// Se crea una variable usuario donde guardar los datos de un nuevo usuario.
 		$user = new User();
-
-		if (isset($_POST["username"])){ // reaching via HTTP Post...
-
-			// populate the User object with data from the form
+		// Cuando el usuario le da al botón de crear nuevo usuario...
+		if (isset($_POST["username"])){
+			// Se guardan los datos introducidos por el usuario en la variable creada
 			$user->setUsername($_POST["username"]);
 			$user->setPassword($_POST["passwd"]);
 			$user->setTipo($_POST["tipo"]);
@@ -133,98 +52,135 @@ class UsersController extends BaseController {
 			$user->setCalle($_POST["calle"]);
 			$user->setCiudad($_POST["ciudad"]);
 			$user->setCodPostal($_POST["codPostal"]);
-
 			try{
-				$user->checkIsValidForRegister(); // if it fails, ValidationException
-
-				// check if user exists in the database
+				// Se comprueba que los datos introducidos sean válidos.
+				$user->checkIsValidForRegister();
+				// Se comprueba si ya existe otro usuario con ese nombre.
 				if (!$this->userMapper->usernameExists($_POST["username"])){
-
-					// save the User object into the database
+					// Si no existe se guarda el nuevo usuario en la base de datos.
 					$this->userMapper->save($user);
-
-					// POST-REDIRECT-GET
-					// Everything OK, we will redirect the user to the list of posts
-					// We want to see a message after redirection, so we establish
-					// a "flash" message (which is simply a Session variable) to be
-					// get in the view after redirection.
+					// Se genera un mensaje de confirmación de la operación para el usuario.
 					$this->view->setFlash(i18n("User successfully created."));
-
-					// perform the redirection. More or less:
-					// header("Location: index.php?controller=users&action=login")
-					// die();
+					// Se redirige al usuario de vuelta al menú.
 					$this->view->redirect("users", "usersMenu");
 				} else {
+					// En caso de que el nombre de usuario ya exista se muestra un mensaje de error al usuario.
 					$errors = array();
 					$errors["username"] = i18n("That username already exists");
 					$this->view->setVariable("errors", $errors);
 				}
 			}catch(ValidationException $ex) {
-				// Get the errors array inside the exepction...
+				// En caso de que los datos introducidos no sean válidos se captura el error y se muestra al usuario.
 				$errors = $ex->getErrors();
-				// And put it to the view as "errors" variable
 				$this->view->setVariable("errors", $errors);
 			}
 		}
-
-		// Put the User object visible to the view
+		// Se envía la variable a la vista, de esta forma en caso de que haya ocurrido un error
+		// los campos que el usuario ya había rellenado aparecerán rellenos.
 		$this->view->setVariable("user", $user);
-
-		// render the view (/view/users/add.php)
+		// Se elige la plantilla y renderiza la vista.
+		$this->view->setLayout("welcome");
 		$this->view->render("users", "add");
 
 	}
 
 	public function mainMenu(){
-		
+		// Guarda el tipo del usuario logeado en una variable.
 		$type = $this->userMapper->findType($_SESSION["currentuser"]);
 		$this->view->setVariable("currentusertype", $type);
+		// Se elige la plantilla y renderiza la vista.
 		$this->view->setLayout("default");
 		$this->view->render("users", "mainMenu");
 	}
 	
 	public function usersMenu(){
-		
+		// Guarda el tipo del usuario logeado en una variable.
 		$type = $this->userMapper->findType($_SESSION["currentuser"]);
 		$this->view->setVariable("currentusertype", $type);
+		// Se elige la plantilla y renderiza la vista.
 		$this->view->setLayout("default");
 		$this->view->render("users", "usersMenu");
 	}
 	
 	public function usersList(){
-		
+		// Guarda el tipo del usuario logeado en una variable.
 		$type = $this->userMapper->findType($_SESSION["currentuser"]);
 		$this->view->setVariable("currentusertype", $type);
-		
+		// Guarda todos los usuarios de la base de datos en una variable.
 		$users = $this->userMapper->findAll();
 		$this->view->setVariable("users", $users);
-		
+		// Se elige la plantilla y renderiza la vista.
 		$this->view->setLayout("default");
 		$this->view->render("users", "usersList");
 	}
 	
-	/**
-	* Action to logout
-	*
-	* This action should be called via GET
-	*
-	* No HTTP parameters are needed.
-	*
-	* The views are:
-	* <ul>
-	* <li>users/login (via redirect)</li>
-	* </ul>
-	*
-	* @return void
-	*/
+	public function delete(){
+		// Se guarda el nombre del usuario seleccionado
+		$username = $_REQUEST["username"];
+		// Se coge de la BD el usuario seleccionado.
+		$user = $this->userMapper->findByUsername($username);
+		// Se borra al usuario seleccionado.
+		$this->userMapper->delete($user);
+		// Se muestra un mensaje de confirmación.
+		$this->view->setFlash(sprintf(i18n("User \"%s\" successfully deleted."),$user->getUsername()));
+		// Se recarga la lista de usuarios mostrada.
+		$this->view->redirect("users", "usersList");
+	}
+	
 	public function logout() {
+		// Se cierra la sesión actual del usuario.
 		session_destroy();
-
-		// perform a redirection. More or less:
-		// header("Location: index.php?controller=users&action=login")
-		// die();
+		// Se redirige al usuario a Login.
 		$this->view->redirect("users", "login");
-
 	}
 
+	public function view(){
+		// Se guarda el nombre de usuario seleccionado en una variable.
+		$username = $_REQUEST["username"];
+		// Se coge de la BD el usuario seleccionado.
+		$user = $this->userMapper->findByUsername($username);
+		// Se envia la variable a la vista.
+		$this->view->setVariable("user", $user);
+		// Se elige la plantilla y renderiza la vista.
+		$this->view->setLayout("welcome");
+		$this->view->render("users", "view");
+	}
+	
+	public function edit(){
+		// Se guarda el nombre de usuario seleccionado en una variable.
+		$username = $_REQUEST["username"];
+		// Se coge de la BD el usuario seleccionado.
+		$user = $this->userMapper->findByUsername($username);
+		// Cuando el usuario le da al botón de crear nuevo usuario...
+		if (isset($_POST["passwd"])){
+			// Se guardan los datos introducidos por el usuario en la variable creada
+			$user->setPassword($_POST["passwd"]);
+			$user->setTipo($_POST["tipo"]);
+			$user->setTlf($_POST["tlf"]);
+			$user->setCalle($_POST["calle"]);
+			$user->setCiudad($_POST["ciudad"]);
+			$user->setCodPostal($_POST["codPostal"]);
+			try{
+				// Se comprueba que los datos introducidos sean válidos.
+				$user->checkIsValidForRegister();
+				// See guardan los cambios en la base de datos.
+				$this->userMapper->update($user);
+				// Se genera un mensaje de confirmación de la operación para el usuario.
+				$this->view->setFlash(i18n("User successfully modified."));
+				// Se redirige al usuario de vuelta al menú.
+				$this->view->redirect("users", "usersList");
+			}catch(ValidationException $ex) {
+				// En caso de que los datos introducidos no sean válidos se captura el error y se muestra al usuario.
+				$errors = $ex->getErrors();
+				$this->view->setVariable("errors", $errors);
+			}
+		}
+		// Se envía la variable a la vista, de esta forma en caso de que haya ocurrido un error
+		// los campos que el usuario ya había rellenado aparecerán rellenos.
+		$this->view->setVariable("user", $user);
+		// Se elige la plantilla y renderiza la vista.
+		$this->view->setLayout("welcome");
+		$this->view->render("users", "edit");
+	}
+	
 }

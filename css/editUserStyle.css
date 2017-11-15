@@ -7,6 +7,7 @@ h1 {
 	text-align: center;
 	padding-bottom: 50px;
 	font-size: 70px;
+	margin-top: -20px;
 }
 
 main {
@@ -19,7 +20,7 @@ input {
 	margin-bottom: 10px;
 }
 
-form > div {
+form > div > div > div {
 	font-size: 10px;
 	color: red;
 	text-align: center;
@@ -31,6 +32,10 @@ a {
 
 button {
 	margin-top: 10px;
+}
+
+select {
+	margin-top: 0px;
 }
 
 .form-signin .form-control {
