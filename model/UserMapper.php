@@ -3,43 +3,29 @@
 
 require_once(__DIR__."/../core/PDOConnection.php");
 
-/**
-* Class UserMapper
-*
-* Database interface for User entities
-*
-* @author lipido <lipido@gmail.com>
-*/
 class UserMapper {
 
-	/**
-	* Reference to the PDO connection
-	* @var PDO
-	*/
+	// Referencia a la conexión PDO
 	private $db;
 
+	// Constructor
 	public function __construct() {
 		$this->db = PDOConnection::getInstance();
 	}
 
-	/**
-	* Saves a User into the database
-	*
-	* @param User $user The user to be saved
-	* @throws PDOException if a database error occurs
-	* @return void
-	*/
+	// Guarda un usuario.
 	public function save($user) {
 		$stmt = $this->db->prepare("INSERT INTO users values (?,?,?,?,?,?,?)");
 		$stmt->execute(array($user->getUsername(), $user->getPasswd(), $user->getTlf(), $user->getTipo(), $user->getCalle(), $user->getCiudad(), $user->getCodPostal()));
 	}
+	
+	// Actualiza un usuario.
+	public function update($user){
+		$stmt = $this->db->prepare("UPDATE users set passwd=?, tlf=?, tipo=?, calle=?, ciudad=?, codPostal=? where username=?");
+		$stmt->execute(array($user->getPasswd(), $user->getTlf(), $user->getTipo(), $user->getCalle(), $user->getCiudad(), $user->getCodPostal(), $user->getUsername()));
+	}
 
-	/**
-	* Checks if a given username is already in the database
-	*
-	* @param string $username the username to check
-	* @return boolean true if the username exists, false otherwise
-	*/
+	// Comprueba si un nombre de usuario ya existe.
 	public function usernameExists($username) {
 		$stmt = $this->db->prepare("SELECT count(username) FROM users where username=?");
 		$stmt->execute(array($username));
@@ -49,13 +35,7 @@ class UserMapper {
 		}
 	}
 
-	/**
-	* Checks if a given pair of username/password exists in the database
-	*
-	* @param string $username the username
-	* @param string $passwd the password
-	* @return boolean true the username/passwrod exists, false otherwise.
-	*/
+	// Comprueba que un login sea válido.
 	public function isValidUser($username, $passwd) {
 		$stmt = $this->db->prepare("SELECT count(username) FROM users where username=? and passwd=?");
 		$stmt->execute(array($username, $passwd));
@@ -65,9 +45,7 @@ class UserMapper {
 		}
 	}
 	
-	/**
-	* Retrieves the user type
-	*/
+	// Devuelve el tipo de un usuario a partir de su nombre,
 	public function findType($username) {
 		$stmt = $this->db->prepare("SELECT * FROM users where username=?");
 		$stmt->execute(array($username));
@@ -76,10 +54,26 @@ class UserMapper {
 		return $user["tipo"];
 	}
 	
+	// Devuelve un usuario a partir de su nombre.
+	public function findByUsername($username){
+		$stmt = $this->db->prepare("SELECT * FROM users WHERE username=?");
+		$stmt->execute(array($username));
+		$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+		if($user != null) {
+			return new User($user["username"],
+							$user["passwd"],
+							$user["tlf"],
+							$user["tipo"],
+							$user["calle"],
+							$user["ciudad"],
+							$user["codPostal"]);
+		} else {
+			return NULL;
+		}
+	}
 	
-	/**
-	* Retrieves all usernames
-	*/
+	// Encontra todos los usuarios.
 	public function findAll() {
 		$stmt = $this->db->query("SELECT * FROM users");
 		$users_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -87,9 +81,21 @@ class UserMapper {
 		$users = array();
 
 		foreach ($users_db as $user) {
-			array_push($users, new User($user["username"], $user["passwd"], $user["tlf"], $user["tipo"], $user["calle"], $user["ciudad"], $user["codPostal"]));
+			array_push($users, new User($user["username"],
+										$user["passwd"],
+										$user["tlf"],
+										$user["tipo"],
+										$user["calle"],
+										$user["ciudad"],
+										$user["codPostal"]));
 		}
 
 		return $users;
+	}
+
+	// Elimina un usuario
+	public function delete(User $user) {
+		$stmt = $this->db->prepare("DELETE from users WHERE username=?");
+		$stmt->execute(array($user->getUsername()));
 	}
 }

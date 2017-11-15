@@ -1,25 +1,26 @@
 <?php
-//file: view/users/mainMenu.php
+//file: view/users/usersList.php
 
 require_once(__DIR__."/../../core/ViewManager.php");
 $view = ViewManager::getInstance();
 $errors = $view->getVariable("errors");
 $users = $view->getVariable("users");
-$view->setVariable("title", i18n("GesGym - Main Menu"));
+$view->setVariable("title", i18n("GesGym - User List"));
 ?>
-			<h1>Listado de Usuarios</h1>
+			<h1><?=i18n("User List")?></h1>
 			<div class="container">
 				<div class="table-responsive">
 					<table class="table table-striped table-hover">
 						<thead>
 							<tr>
-								<th>Nombre de usuario</th>
-								<th>Contraseña</th>
-								<th>Tipo de usuario</th>
-								<th>Teléfono</th>
-								<th>Dirección</th>
-								<th>Ciudad</th>
-								<th>Código postal</th>
+								<th><?=i18n("Username")?></th>
+								<th><?=i18n("Password")?></th>
+								<th><?=i18n("Type")?></th>
+								<th><?=i18n("Telephone")?></th>
+								<th><?=i18n("Address")?></th>
+								<th><?=i18n("City")?></th>
+								<th><?=i18n("Postal Code")?></th>
+								<th><?=i18n("Actions")?></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -32,6 +33,13 @@ $view->setVariable("title", i18n("GesGym - Main Menu"));
 								<td><?=$user->getCalle()?></td>
 								<td><?=$user->getCiudad()?></td>
 								<td><?=$user->getCodPostal()?></td>
+								<td>
+									<a class="btn btn-sm btn-success" href="index.php?controller=users&amp;action=view&amp;username=<?=$user->getUsername()?>"><?=i18n("View")?></a>
+									<a class="btn btn-sm btn-primary" href="index.php?controller=users&amp;action=edit&amp;username=<?=$user->getUsername()?>"><?=i18n("Modify")?></a>
+									<form id="<?=$user->getUsername()?>"  method="POST" action="index.php?controller=users&amp;action=delete&amp;username=<?=$user->getUsername()?>">
+										<a class="btn btn-sm btn-danger" onclick="eliminar('<?=i18n("Are you sure?")?>','<?=$user->getUsername()?>')"><?=i18n("Delete")?></a>
+									</form>
+								</td>
 							</tr>
 <?php endforeach; ?>
 						</tbody>
@@ -39,3 +47,4 @@ $view->setVariable("title", i18n("GesGym - Main Menu"));
 				</div>
 			</div>
 <?=$view->moveToFragment("css")?>		<link rel="stylesheet" type="text/css" href="css/usersList.css">
+<?=$view->moveToFragment("javascript")?>		<script type="text/javascript" src="js/eliminar.js"></script>
