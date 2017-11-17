@@ -4,7 +4,7 @@ $i18n_messages =
 array(
 	// Header
 	"Main Menu" => "Menú principal",
-	"Logged in as" => "Sesión iniciada como",
+	"User" => "Usuario",
 	"Logout" => "Cerrar sesión",
 	// Footer
 	"Language" => "Idioma",
@@ -18,7 +18,6 @@ array(
 	"That username already exists" => "Ese nombre de usuario ya existe",
 	"Username must be at least 5 characters in length" => "El nombre de usuario debe tener por lo menos 5 caracteres",
 	"Password must be at least 5 characters in length" => "La contraseña debe tener por lo menos 5 caracteres",
-	"Incorrect login" => "Datos incorrectos",
 	// Confirmations
 	"User \"%s\" successfully modified." => "Usuario \"%s\" modificado con éxito.",
 	"User \"%s\" successfully deleted." => "Usuario \"%s\" eliminado con éxito.",
@@ -34,8 +33,15 @@ array(
 	"GesGym - Login" => "GesGym - Inicio de sesión",
 	"GesGym" => "GesGym",
 	"Login" => "Iniciar sesión",
+	"Incorrect login" => "Datos incorrectos",
 	// Main Menu
 	"GesGym - Main Menu" => "GesGym - Menú principal",
+	"Profile" => "Perfil",
+	"Manage Activities" => "Gestionar actividades",
+	"Manage Tables" => "Gestionar tablas",
+	"Manage Exercises" => "Gestionar ejercicios",
+	"Manage Users" => "Gestionar usuarios",
+	"Manage Resources" => "Gestionar recursos",
 	// Manage Users
 	"GesGym - Manage Users" => "GesGym - Gestionar usuarios",
 	// New User
@@ -48,9 +54,9 @@ array(
 	"Administrator" => "Administrador",
 	"Create new user" => "Crear nuevo usuario",
 	"Cancel" => "Cancelar",
-	// User List
-	"GesGym - User List" => "GesGym - Lista de usuarios",
-	"User List" => "Listado de usuarios",
+	// Users List
+	"GesGym - Users List" => "GesGym - Lista de usuarios",
+	"Users List" => "Listado de usuarios",
 	"Actions" => "Acciones",
 	"View" => "Consultar",
 	"Modify" => "Modificar",

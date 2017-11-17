@@ -9,11 +9,9 @@ $currentusertype = $view->getVariable("currentusertype");
 	<head>
 		<meta charset="utf-8">
 		<title><?=$view->getVariable("title","no title")?></title>
-		<link rel="stylesheet" type="text/css" href="css/style.css">
-		<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-		<link rel="stylesheet" type="text/css" href="css/headerStyle.css">
+		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="css/layoutStyle.css">
 <?=$view->getFragment("css")?>
-		<script src="index.php?controller=language&amp;action=i18njs"></script>
 <?=$view->getFragment("javascript")?>
 	</head>
 	<body>
@@ -21,7 +19,12 @@ $currentusertype = $view->getVariable("currentusertype");
 			<div class="container">
 				<ul class="nav nav-justified">
 					<li><a href="index.php?controller=users&amp;action=mainMenu"><?=i18n("Main Menu")?></a></li>
-					<li><a><?=i18n("Logged in as")?>: <?=sprintf($currentuser)?> (<?=sprintf($currentusertype)?>)</a></li>
+<?php if( ($view->getVariable("title")) == i18n("GesGym - Users List")){?>
+					<li><a id="list" href="index.php?controller=users&amp;action=usersMenu"><?=i18n("Manage Users")?></a></li>
+<?php } ?>
+					<li><a id="user"><?=i18n("User")?>: <?=sprintf($currentuser)?> (<?php if($currentusertype == "cliente"){print i18n("Client");}
+																						if($currentusertype == "entrenador"){print i18n("Trainer");}
+																						if($currentusertype == "administrador"){print i18n("Administrator");} ?>)</a></li>
 					<li><a href="index.php?controller=users&amp;action=logout"><?=i18n("Logout")?></a></li>
 				</ul>
 			</div>
@@ -34,7 +37,7 @@ $currentusertype = $view->getVariable("currentusertype");
 		</main>
 		<footer>
 			<!-- INICIO DEL FOOTER -->
-<?php include(__DIR__."/language_select_element.php"); ?>
+<?php include(__DIR__."/languageSelect.php"); ?>
 			<!-- FIN DEL FOOTER -->
 		</footer>
 	</body>

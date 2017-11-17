@@ -1,3 +1,14 @@
-body {
+#menu {
 	text-align: center;
+	padding-left: 100px;
+	padding-right: 100px;
+	padding-top: 20px;
+}
+
+.glyphicon {
+    font-size: 50px;
+}
+
+.row > div {
+	margin-bottom: 20px;
 }
