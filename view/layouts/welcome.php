@@ -8,8 +8,8 @@ $view = ViewManager::getInstance();
 	<head>
 		<meta charset="utf-8">
 		<title><?=$view->getVariable("title","no title")?></title>
-		<link rel="stylesheet" type="text/css" href="css/style.css">
-		<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="css/layoutStyle.css">
 <?=$view->getFragment("css")?>
 <?=$view->getFragment("javascript")?>
 	</head>
@@ -25,7 +25,7 @@ $view = ViewManager::getInstance();
 		</main>
 		<footer>
 			<!-- INICIO DEL FOOTER -->
-<?php include(__DIR__."/language_select_element.php"); ?>
+<?php include(__DIR__."/languageSelect.php"); ?>
 			<!-- FIN DEL FOOTER -->
 		</footer>
 	</body>

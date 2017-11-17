@@ -5,9 +5,9 @@ require_once(__DIR__."/../../core/ViewManager.php");
 $view = ViewManager::getInstance();
 $errors = $view->getVariable("errors");
 $users = $view->getVariable("users");
-$view->setVariable("title", i18n("GesGym - User List"));
+$view->setVariable("title", i18n("GesGym - Users List"));
 ?>
-			<h1><?=i18n("User List")?></h1>
+			<h1><?=i18n("Users List")?></h1>
 			<div class="container">
 				<div class="table-responsive">
 					<table class="table table-striped table-hover">
