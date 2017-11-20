@@ -18,6 +18,7 @@ class UsersController extends BaseController {
 		$this->userMapper = new UserMapper();
 	}
 
+	
 	public function login() {
 		// Cuando el usuario le da al botón de iniciar sesión...
 		if (isset($_POST["username"])){
@@ -40,6 +41,7 @@ class UsersController extends BaseController {
 		$this->view->render("users", "login");
 	}
 
+	// No tiene una vista asociada, simplemente cierra sesión y redirige al usuario.
 	public function logout() {
 		if (!isset($this->currentUser)) {
 			throw new Exception(i18n("You must log in to access this feature."));
@@ -171,7 +173,7 @@ class UsersController extends BaseController {
 				// See guardan los cambios en la base de datos.
 				$this->userMapper->update($user);
 				// Se genera un mensaje de confirmación de la operación para el usuario.
-				$this->view->setFlash(i18n("User successfully modified."));
+				$this->view->setFlash(sprintf(i18n("User \"%s\" successfully modified."),$user->getUsername()));
 				// Se redirige al usuario de vuelta al menú.
 				$this->view->redirect("users", "usersList");
 			}catch(ValidationException $ex) {

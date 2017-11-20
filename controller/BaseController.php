@@ -7,26 +7,28 @@ require_once(__DIR__."/../model/User.php");
 
 class BaseController {
 
-	// The view manager instance
+	// Instancia del view manager.
 	protected $view;
 
-	// The current user instance
+	// Instancia del usuario actual.
 	protected $currentUser;
 
 	public function __construct() {
 
+		// Genera la instancia del view manager y la guarda en $view.
 		$this->view = ViewManager::getInstance();
 
-		// get the current user and put it to the view
+		// Se inica una sesión en caso de que no se haya hecho ya.
 		if (session_status() == PHP_SESSION_NONE) {
 			session_start();
 		}
 
+		// Si el usuario está logeado se guarda su nombre y tipo en $currentUser.
 		if(isset($_SESSION["currentuser"])) {
-
 			$this->currentUser = new User($_SESSION["currentuser"]);
 			$this->currentUser->setTipo($_SESSION["currentusertype"]);
-			//add current user to the view, since some views require it
+			
+			// Se ponen los datos del usuario en $view, ya que algunas vistas los utilizan.
 			$this->view->setVariable("currentusername", $this->currentUser->getUsername());
 			$this->view->setVariable("currentusertype", $this->currentUser->getTipo());
 		}
