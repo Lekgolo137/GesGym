@@ -1,21 +1,7 @@
 <?php
-//file: /core/I18n.php
+//file: core/I18n.php
 
-/**
-* Class I18n
-*
-* This class implements a helper class for Internationalization (I18n).
-* Basically this Singleton class manages a set of translation files
-* (located in /view/messages/language_[lang].php) and provides a
-* translation function: i18n(string)
-* You can also change the current language with the setLanguage function.
-* The last selected language is saved in the user session so it is the
-* language retrieved each time this class is instantiated.
-* In addition this file creates a global function, i18n(), as a shortcut
-* to the function.
-*
-* @author lipido <lipido@gmail.com>
-*/
+// Clase singleton que gestiona los archivos de traducción y el cambio de idioma.
 class I18n {
 
 	private $messages;
@@ -36,12 +22,7 @@ class I18n {
 		}
 	}
 
-	/**
-	* Sets the language (and keeps it in the user session)
-	*
-	* @param string $language The language to be set. For example: "en"
-	* @return void
-	*/
+	// Cambia el idioma y lo guarda en la sesión.
 	public function setLanguage($language) {
 		//include language file
 		include(__DIR__."/../view/messages/messages_$language.php");
@@ -51,11 +32,7 @@ class I18n {
 		$_SESSION[self::CURRENT_LANGUAGE_SESSION_VAR] = $language;
 	}
 
-	/**
-	* Finds the current language translation of a given key
-	* @param string $key The key to tranlate
-	* @return string The translation of the given key
-	*/
+	// Encuentra la traducción el la cadena pasada como parámetro
 	public function i18n($key) {
 		if (isset($this->messages[$key])){
 			return $this->messages[$key];
@@ -64,14 +41,10 @@ class I18n {
 		}
 	}
 
-	//singleton
+	// Singleton
 	private static $i18n_singleton = null;
 
-	/**
-	* Gets the singleton instance of this class
-	*
-	* @return I18n The singleton instance
-	*/
+	// Retorna una instancia singleton de esta clase.
 	public static function getInstance() {
 		if (self::$i18n_singleton == NULL) {
 			self::$i18n_singleton = new I18n();
@@ -79,23 +52,13 @@ class I18n {
 		return self::$i18n_singleton;
 	}
 
-	/**
-	* Gets all the messages in the current language
-	*
-	* @return mixed Array of translations
-	*/
+	// Retorna todos los mensajes en el idioma actual.
 	public function getAllMessages() {
 		return $this->messages;
 	}
 }
 
-/**
-* Shortcut global i18n function for
-* the @link I18n::i18n()
-*
-* @param string $key The key to translate
-* @return string The translation of the given key
-*/
+// Atajo global para la función de traducción (llamada desde las vistas).
 function i18n($key) {
 	return I18n::getInstance()->i18n($key);
 }

@@ -14,7 +14,7 @@ class User {
 	// Integer
 	private $tlf;
 
-	// String
+	// ENUM String (cliente, entrenador, administrador)
 	private $tipo;
 
 	// String
@@ -96,7 +96,7 @@ class User {
 		$this->codPostal = $codPostal;
 	}
 
-	// Función para comprobar si el usuario es válido para ser creado
+	// Comprueba si el nombre de usuario y contraseña tienen por lo menos 5 caracteres.
 	public function checkIsValidForRegister() {
 		$errors = array();
 		if (strlen($this->username) < 5) {

@@ -73,7 +73,7 @@ class UserMapper {
 		}
 	}
 	
-	// Encontra todos los usuarios.
+	// Devuelve todos los usuarios.
 	public function findAll() {
 		$stmt = $this->db->query("SELECT * FROM users");
 		$users_db = $stmt->fetchAll(PDO::FETCH_ASSOC);

@@ -1,43 +1,20 @@
 <?php
 // file: index.php
 
-/**
-* Default controller if any controller is passed in the URL
-*/
+// Controlador por defecto si ninguno es pasado por la URL
 define("DEFAULT_CONTROLLER", "users");
 define("DEFAULT_CONTROLLER_LOGGED", "users");
 
-/**
-* Default action if any action is passed in the URL
-*/
+// Acción por defecto si ninguna es pasada por la URL
 define("DEFAULT_ACTION", "login");
 define("DEFAULT_ACTION_LOGGED", "mainMenu");
 
-/**
-* Main router (single entry-point for all requests)
-* of the MVC implementation.
-*
-* This router will create an instance of the corresponding
-* controller, based on the "controller" parameter and call
-* the corresponding method, based on the "action" parameter.
-*
-* The rest of GET or POST parameters should be handled by
-* the controller itself.
-*
-* Parameters:
-* <ul>
-* <li>controller: The controller name (via HTTP GET)
-* <li>action: The name inside the controller (via HTTP GET)
-* </ul>
-*
-* @return void
-*
-* @author lipido <lipido@gmail.com>
-*/
+// Carga el controlador y acción que son pasados por la URL.
 function run() {
-	// invoke action!
 	try {
+		// Inicia una sesión.
 		session_start();
+		// Comprueba que se haya pasado un controlador, sino pone el por defecto.
 		if (!isset($_GET["controller"])) {
 			if (isset($_SESSION["currentuser"])) {
 				$_GET["controller"] = DEFAULT_CONTROLLER_LOGGED;
@@ -45,7 +22,7 @@ function run() {
 				$_GET["controller"] = DEFAULT_CONTROLLER;
 			}
 		}
-
+		// Comprueba que se haya pasado una acción, sino pone la por defecto.
 		if (!isset($_GET["action"])) {
 			if (isset($_SESSION["currentuser"])) {
 				$_GET["action"] = DEFAULT_ACTION_LOGGED;
@@ -53,29 +30,18 @@ function run() {
 				$_GET["action"] = DEFAULT_ACTION;
 			}
 		}
-
-		// Here is where the "magic" occurs.
-		// URLs like: index.php?controller=posts&action=add
-		// will provoke a call to: new PostsController()->add()
-
-		// Instantiate the corresponding controller
+		// Instancia el controlador.
 		$controller = loadController($_GET["controller"]);
-
-		// Call the corresponding action
+		// Llama a la función correspondiente.
 		$actionName = $_GET["action"];
 		$controller->$actionName();
 	} catch(Exception $ex) {
-		//uniform treatment of exceptions
+		// En caso de que haya alguna excepción/error, este es el punto final de captura.
 		die(i18n("An error has ocurred.<br>").$ex->getMessage());
 	}
 }
 
-/**
-* Load the required controller file and create the controller instance
-*
-* @param string $controllerName The controller name found in the URL
-* @return Object A Controller instance
-*/
+// Carga un controlador a partir de su nombre pasado como parámetro.
 function loadController($controllerName) {
 	$controllerClassName = getControllerClassName($controllerName);
 
@@ -83,19 +49,12 @@ function loadController($controllerName) {
 	return new $controllerClassName();
 }
 
-/**
-* Obtain the class name for a controller name in the URL
-*
-* For example $controllerName = "users" will return "UsersController"
-*
-* @param $controllerName The name of the controller found in the URL
-* @return string The controller class name
-*/
+// Obtiene el nombre de la clase del controlador mediante concatenación.
 function getControllerClassName($controllerName) {
 	return strToUpper(substr($controllerName, 0, 1)).substr($controllerName, 1)."Controller";
 }
 
-//run!
+// Se ejecuta el método run.
 run();
 
 ?>
