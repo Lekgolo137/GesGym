@@ -51,7 +51,8 @@ create table comments (
 
 create table exercises (
 		exerciseid varchar(255),
-		exe_tipo ENUM('cardio','musculacion','estiramiento'),
+		exer_name varchar(255),
+		exer_tipo ENUM('cardio','musculacion','estiramiento'),
 		
 		primary key (exerciseid)
 ) ENGINE=INNODB DEFAULT CHARACTER SET = utf8;
@@ -64,12 +65,12 @@ create table activities (
 ) ENGINE=INNODB DEFAULT CHARACTER SET = utf8;
 
 create table resources (
-		resourceid varchar(255),
-		resource_tipo ENUM('instalacion','material'),
+		id varchar(255),
+		tipo ENUM('instalacion','material'),
 		location varchar(255),
-		cant_afor int(10),
+		canafo int(10),
 		
-		primary key (resourceid)
+		primary key (id)
 ) ENGINE=INNODB DEFAULT CHARACTER SET = utf8;
 
 create table act_use_res (
@@ -77,7 +78,7 @@ create table act_use_res (
 		resourceid varchar(255),
 		
 		foreign key (activityid) references activities(activityid),
-		foreign key (resourceid) references resources(resourceid)
+		foreign key (resourceid) references resources(id)
 ) ENGINE=INNODB DEFAULT CHARACTER SET = utf8;
 
 create table use_participates_act (
@@ -103,8 +104,21 @@ create table tab_has_exe (
 grant all privileges on gesgym.* to gguser@localhost identified by "ggpass";
 
 INSERT INTO users values ('12345','12345',666225577,'administrador','Avenida Nula N0','Nulilandia','30000');
+
 INSERT INTO users values ('ejemplo1','ejemplo1',666224466,'cliente','ejemplo1','ejemplo1','ejemplo1');
 INSERT INTO users values ('ejemplo2','ejemplo2',666224466,'entrenador','ejemplo2','ejemplo2','ejemplo2');
 INSERT INTO users values ('ejemplo3','ejemplo3',666224466,'cliente','ejemplo3','ejemplo3','ejemplo3');
 INSERT INTO users values ('ejemplo4','ejemplo4',666224466,'entrenador','ejemplo4','ejemplo4','ejemplo4');
 INSERT INTO users values ('ejemplo5','ejemplo5',666224466,'cliente','ejemplo5','ejemplo5','ejemplo5');
+
+INSERT INTO resources values ('ejemplo1','material', 'ejemplo1', 100);
+INSERT INTO resources values ('ejemplo2','instalacion', 'ejemplo2', 100);
+INSERT INTO resources values ('ejemplo3','material', 'ejemplo3', 100);
+INSERT INTO resources values ('ejemplo4','instalacion', 'ejemplo4', 100);
+INSERT INTO resources values ('ejemplo5','material', 'ejemplo5', 100);
+
+INSERT INTO exercises values ('ejemplo1','ejemplo1', 'cardio');
+INSERT INTO exercises values ('ejemplo2','ejemplo2', 'musculacion');
+INSERT INTO exercises values ('ejemplo3','ejemplo3', 'estiramiento');
+INSERT INTO exercises values ('ejemplo4','ejemplo4', 'cardio');
+INSERT INTO exercises values ('ejemplo5','ejemplo5', 'musculacion');

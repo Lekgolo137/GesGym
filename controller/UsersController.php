@@ -17,7 +17,6 @@ class UsersController extends BaseController {
 		parent::__construct();
 		$this->userMapper = new UserMapper();
 	}
-
 	
 	public function login() {
 		// Cuando el usuario le da al botón de iniciar sesión...
@@ -59,6 +58,15 @@ class UsersController extends BaseController {
 		// Se elige la plantilla y renderiza la vista.
 		$this->view->setLayout("default");
 		$this->view->render("users", "mainMenu");
+	}
+	
+	public function profile(){
+		if (!isset($this->currentUser)) {
+			throw new Exception(i18n("You must log in to access this feature."));
+		}
+		// Se elige la plantilla y renderiza la vista.
+		$this->view->setLayout("default");
+		$this->view->render("users", "profile");
 	}
 	
 	public function usersMenu(){

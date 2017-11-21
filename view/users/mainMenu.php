@@ -42,7 +42,7 @@ $currentusertype = $view->getVariable("currentusertype");
 						</a>
 					</div>
 					<div class="col-sm-4 col-md-2">
-						<a href="index.php?controller=resourcers&amp;action=resourcesMenu">
+						<a href="index.php?controller=resources&amp;action=resourcesMenu">
 							<span class="glyphicon glyphicon-home"></span>
 							<br><?=i18n("Manage Resources")?>
 						</a>

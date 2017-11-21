@@ -22,6 +22,12 @@ $currentusertype = $view->getVariable("currentusertype");
 <?php if( ($view->getVariable("title")) == i18n("GesGym - Users List")){?>
 					<li><a id="list" href="index.php?controller=users&amp;action=usersMenu"><?=i18n("Manage Users")?></a></li>
 <?php } ?>
+<?php if( ($view->getVariable("title")) == i18n("GesGym - Resources List")){?>
+					<li><a id="list" href="index.php?controller=resources&amp;action=resourcesMenu"><?=i18n("Manage Resources")?></a></li>
+<?php } ?>
+<?php if( ($view->getVariable("title")) == i18n("GesGym - Exercises List")){?>
+					<li><a id="list" href="index.php?controller=exercises&amp;action=exercisesMenu"><?=i18n("Manage Exercises")?></a></li>
+<?php } ?>
 					<li><a id="user"><?=i18n("User")?>: <?=sprintf($currentuser)?> (<?php if($currentusertype == "cliente"){print i18n("Client");}
 																						if($currentusertype == "entrenador"){print i18n("Trainer");}
 																						if($currentusertype == "administrador"){print i18n("Administrator");} ?>)</a></li>
