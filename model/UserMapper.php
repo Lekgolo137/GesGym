@@ -94,7 +94,7 @@ class UserMapper {
 	}
 
 	// Elimina un usuario
-	public function delete(User $user) {
+	public function delete($user) {
 		$stmt = $this->db->prepare("DELETE from users WHERE username=?");
 		$stmt->execute(array($user->getUsername()));
 	}

@@ -16,8 +16,12 @@ array(
 	"You must be an administrator to access this feature." => "Debes ser un administrador para acceder a esta característica.",
 	"user is not valid" => "El usuario no es válido",
 	// Shared
+	"New Exercise" => "Nuevo ejercicio",
+	"Exercises List" => "Listado de ejercicios",
 	"New User" => "Nuevo usuario",
 	"Users List" => "Listado de usuarios",
+	"New Resource" => "Nuevo recurso",
+	"Resources List" => "Listado de recursos",
 	"Username" => "Nombre de usuario",
 	"Password" => "Contraseña",
 	"Telephone" => "Teléfono",
@@ -71,6 +75,46 @@ array(
 	"User \"%s\" successfully modified." => "Usuario \"%s\" modificado con éxito.",
 	// Delete User
 	"Are you sure?" => "¿Está seguro?",
-	"User \"%s\" successfully deleted." => "Usuario \"%s\" eliminado con éxito."
+	"User \"%s\" successfully deleted." => "Usuario \"%s\" eliminado con éxito.",
+	// Manage Resources
+	"GesGym - Manage Resources" => "GesGym - Gestionar recursos",
+	// New Resource
+	"Resource successfully created." => "El recurso se ha creado correctamente.",
+	"That ID already exists" => "Ese ID ya existe.",
+	"GesGym - New Resource" => "GesGym - Nuevo recurso",
+	"Create new resource" => "Crear nuevo recurso",
+	"Equipment" => "Material",
+	"Installation" => "Instalación",
+	"Location" => "Localización",
+	"Amount or Capacity" => "Cantidad o Aforo",
+	// Resources List
+	"GesGym - Resources List" => "GesGym - Listado de recursos",
+	"Resource \"%s\" successfully deleted." => "Recurso \"%s\" eliminado con éxito.",
+	// Modify Resource
+	"Resource \"%s\" successfully modified." => "Recurso \"%s\" modificado con éxito.",
+	"Modify Resource" => "Modificar recurso",
+	"GesGym - Modify Resource" => "GesGym - Modificar recurso",
+	// View Resource
+	"GesGym - View Resource" => "GesGym - Consultar recurso",
+	"View Resource" => "Consultar recurso",
+	// Manage Exercises
+	"GesGym - Manage Exercises" => "GesGym - Gestionar ejercicios",
+	// Add Exercise
+	"GesGym - New Exercise" => "GesGym - Nuevo ejercicio",
+	"Name" => "Nombre",
+	"Create new exercise" => "Crear nuevo ejercicio",
+	"Muscle Training" => "Musculación",
+	"Stretching" => "Estiramiento",
+	"ID must be at least 5 characters in length" => "El ID debe tener por lo menos 5 caracteres.",
+	"Exercise successfully created." => "Ejercicio creado correctamente.",
+	// Exercises List
+	"GesGym - Exercises List" => "GesGym - Listado de ejercicios",
+	// Modify Exercise
+	"GesGym - Modify Exercise" => "GesGym - Modificar ejercicio",
+	"Modify Exercise" => "Modificar ejercicio",
+	"Exercise \"%s\" successfully modified." => "Ejercicio \"%s\" modificado con éxito.",
+	// View Exercise
+	"GesGym - View Exercise" => "GesGym - Consultar ejercicio",
+	"View Exercise" => "Consultar ejercicio"
 )
 ?>
