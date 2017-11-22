@@ -39,7 +39,11 @@ class SessionMapper {
     $sessions = array();
 
     foreach ($sessions_db as $session) {
-      array_push($sessions, new Session($session["sessionid"],$session["username"],$session["tableid"],$session["fechaInicio"],$session["fechaFin"]));
+      array_push($sessions, new Session($session["sessionid"],
+										$session["username"],
+										$session["tableid"],
+										$session["fechaInicio"],
+										$session["fechaFin"]));
     }
 
     return $sessions;

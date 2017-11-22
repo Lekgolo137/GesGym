@@ -17,10 +17,23 @@ class TablesController extends BaseController {
     $this->tableMapper = new TableMapper();
   }
 
+  
+  	// Gestionar recursos
+	public function tablesMenu(){
+		// Se comprueba que el usuario sea un administrador.
+		$type = $this->view->getVariable("currentusertype");
+		if ($type == "cliente") {
+			throw new Exception(i18n("You must can't access this feature."));
+		}
+		// Se elige la plantilla y renderiza la vista.
+		$this->view->setLayout("default");
+		$this->view->render("tables", "tablesMenu");
+	}
+  
   /***********************************************************************************/
   /***********************************************************************************/
   //Action to list tables
-  public function index() {
+  public function tablesList() {
     if (!isset($this->currentUser)) {
       throw new Exception("Not in session. This action requires login");
     }
@@ -36,7 +49,8 @@ class TablesController extends BaseController {
     $this->view->setVariable("tables", $tables);
 
     // render the view (/view/tables/index.php)
-    $this->view->render("tables", "index");
+	$this->view->setLayout("default");
+    $this->view->render("tables", "tablesList");
   }
 
   /*************************************************************************************/
@@ -69,7 +83,7 @@ class TablesController extends BaseController {
         // get in the view after redirection.
         $this->view->setFlash(sprintf(i18n("Table \"%s\" successfully added."),$tables ->getTableid()));
 
-        $this->view->redirect("tables", "index");
+        $this->view->redirect("tables", "tablesMenu");
 
       }catch(ValidationException $ex) {
         // Get the errors array inside the exepction...
@@ -83,6 +97,7 @@ class TablesController extends BaseController {
     $this->view->setVariable("tables", $tables);
 
     // render the view (/view/tables/add.php)
+	$this->view->setLayout("welcome");
     $this->view->render("tables", "add");
 
   }
