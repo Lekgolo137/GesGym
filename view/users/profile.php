@@ -8,16 +8,22 @@ $currentusername = $view->getVariable("currentusername");
 ?>
 			<div id="menu" class="container">
 				<div class="row">
-					<div class="col-sm-6">
-						<a href="index.php?controller=users&amp;action=edit&amp;username=<?=$currentusername?>">
+					<div class="col-sm-4">
+						<a href="index.php?controller=users&amp;action=editProfile">
 							<span class="glyphicon glyphicon-cog"></span>
-							<br><?=i18n("Modify profile")?>
+							<br><?=i18n("Modify Profile")?>
 						</a>
 					</div>
-					<div class="col-sm-6">
-						<a href="index.php?controller=sessions&amp;action=index">
+					<div class="col-sm-4">
+						<a href="index.php?controller=sessions&amp;action=add">
 							<span class="glyphicon glyphicon-hourglass"></span>
-							<br><?=i18n("Manage sessions")?>
+							<br><?=i18n("New Session")?>
+						</a>
+					</div>
+					<div class="col-sm-4">
+						<a href="index.php?controller=sessions&amp;action=sessionsList">
+							<span class="glyphicon glyphicon-list"></span>
+							<br><?=i18n("Sessions List")?>
 						</a>
 					</div>
 				</div>

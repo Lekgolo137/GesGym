@@ -28,6 +28,15 @@ $currentusertype = $view->getVariable("currentusertype");
 <?php if( ($view->getVariable("title")) == i18n("GesGym - Exercises List")){?>
 					<li><a id="list" href="index.php?controller=exercises&amp;action=exercisesMenu"><?=i18n("Manage Exercises")?></a></li>
 <?php } ?>
+<?php if( ($view->getVariable("title")) == i18n("GesGym - Activities List")){?>
+					<li><a id="list" href="index.php?controller=activities&amp;action=activitiesMenu"><?=i18n("Manage Activities")?></a></li>
+<?php } ?>
+<?php if( ($view->getVariable("title")) == i18n("GesGym - Sessions List")){?>
+					<li><a id="list" href="index.php?controller=users&amp;action=profile"><?=i18n("Profile")?></a></li>
+<?php } ?>
+<?php if( ($view->getVariable("title")) == i18n("GesGym - Tables List")){?>
+					<li><a id="list" href="index.php?controller=tables&amp;action=tablesMenu"><?=i18n("Manage Tables")?></a></li>
+<?php } ?>
 					<li><a id="user"><?=i18n("User")?>: <?=sprintf($currentuser)?> (<?php if($currentusertype == "cliente"){print i18n("Client");}
 																						if($currentusertype == "entrenador"){print i18n("Trainer");}
 																						if($currentusertype == "administrador"){print i18n("Administrator");} ?>)</a></li>
