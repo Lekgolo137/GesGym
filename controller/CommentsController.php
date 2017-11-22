@@ -72,7 +72,7 @@ class CommentsController extends BaseController {
         $this->view->setFlash(sprintf(i18n("Table \"%s\" successfully added."),$comments->getCommentid()));
 
         $this->view->setVariable("comments", $comments);
-        $this->view->redirect("comments", "add");
+        $this->view->redirect("sessions", "sessionsList");
 
       }catch(ValidationException $ex) {
         // Get the errors array inside the exepction...
@@ -86,6 +86,7 @@ class CommentsController extends BaseController {
     $this->view->setVariable("comments", $comments);
 
     // render the view (/view/tables/add.php)
+	$this->view->setLayout("welcome");
     $this->view->render("comments", "add");
 
   }

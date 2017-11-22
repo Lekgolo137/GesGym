@@ -127,7 +127,6 @@ class TablesController extends BaseController {
     if (isset($_POST["submit"])) { // reaching via HTTP Table...
 
       // populate the Table object with data form the form
-      $tables->setTableid($_POST["tableid"]);
       $tables->setTabletipo($_POST["tabletipo"]);
 
       try {
@@ -147,7 +146,7 @@ class TablesController extends BaseController {
         // perform the redirection. More or less:
         // header("Location: index.php?controller=tables&action=index")
         // die();
-        $this->view->redirect("tables", "index");
+        $this->view->redirect("tables", "tablesList");
 
       }catch(ValidationException $ex) {
         // Get the errors array inside the exepction...
@@ -161,6 +160,7 @@ class TablesController extends BaseController {
     $this->view->setVariable("tables", $tables);
 
     // render the view (/view/tables/add.php)
+	$this->view->setLayout("welcome");
     $this->view->render("tables", "edit");
   }
 
