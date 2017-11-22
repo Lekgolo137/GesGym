@@ -29,12 +29,13 @@ $view->setVariable("title", i18n("GesGym - Sessions List"));
 								<td><?=$session->getFechaInicio()?></td>
 								<td><?=$session->getFechaFin()?></td>
 								<td>
-									<a class="btn btn-sm btn-success" href="index.php?controller=comments&amp;action=index&amp;id=<?=$session->getSessionid()?>"><?= i18n("Comment") ?></a>
+									<a class="btn btn-sm btn-success" href="index.php?controller=comments&amp;action=add&amp;idtable=<?=$session->getTableid()?>&amp;idsession=<?=$session->getSessionid()?>"><?= i18n("Comment") ?></a>
+									<a class="btn btn-sm btn-primary" href="index.php?controller=comments&amp;action=index&amp;id=<?=$session->getSessionid()?>"><?= i18n("View Comments") ?></a>
 									<form action="index.php?controller=sessions&amp;action=close" method="POST" id="close_session_<?= $session->getSessionid(); ?>" style="display: inline">
 										<input type="hidden" name="id" value="<?= $session->getSessionid() ?>">
 										<input type="hidden" name="tableId" value="<?= $session->getTableid() ?>">
 										<input type="hidden" name="usernameId" value="<?= $session->getUsername() ?>">
-										<a class="btn btn-sm btn-primary" href="#" onclick="if (confirm('<?= i18n("Are you sure?")?>')) {document.getElementById('close_session_<?= $session->getSessionid() ?>').submit()}"><?= i18n("Close") ?></a>
+										<a class="btn btn-sm btn-danger" href="#" onclick="if (confirm('<?= i18n("Are you sure?")?>')) {document.getElementById('close_session_<?= $session->getSessionid() ?>').submit()}"><?= i18n("Close") ?></a>
 									</form>
 								</td>
 							</tr>

@@ -155,6 +155,7 @@ array(
 	"Session \"%s\" successfully closed." => "Sesion \"%s\" cerrada con éxito.",
 	"Comment" => "Comentar",
 	"Close" => "Cerrar",
+	"View Comments" => "Consultar comentarios",
 	// New Session
 	"GesGym - New Session" => "Nueva sesion",
 	"Session ID" => "ID de la sesión",
@@ -170,6 +171,9 @@ array(
 	"GesGym - New Table" => "GesGym - Nueva tabla",
 	// Tables List
 	"Custom" => "Personalizada",
-	"Standard" => "Estándar"
+	"Standard" => "Estándar",
+	// Edit Table
+	"Modify Table" => "Modificar tabla",
+	"GesGym - Modify Table" => "GesGym - Modificar tabla"
 )
 ?>

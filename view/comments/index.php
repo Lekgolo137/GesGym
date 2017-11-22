@@ -47,7 +47,7 @@ $comments = $view->getVariable("comments");
 
         <a href="#"
         onclick="
-        if (confirm('<?= i18n("are you sure?")?>')) {
+        if (confirm('<?= i18n("Are you sure?")?>')) {
           document.getElementById('delete_comment_<?= $comment->getCommentid() ?>').submit()
         }"
         ><?= i18n("Delete") ?></a>
@@ -60,5 +60,4 @@ $comments = $view->getVariable("comments");
 <?php endforeach; ?>
 </table>
 
-<a href="index.php?controller=comments&amp;action=add&amp;idtable=<?=$comment->getTableid()?>&amp;idsession=<?=$comment->getSessionid()?>"><?= i18n("Create comment") ?></a>
 </div>
