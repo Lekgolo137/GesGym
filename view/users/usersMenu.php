@@ -3,7 +3,6 @@
 
 require_once(__DIR__."/../../core/ViewManager.php");
 $view = ViewManager::getInstance();
-$errors = $view->getVariable("errors");
 $view->setVariable("title", i18n("GesGym - Manage Users"));
 ?>
 			<div id="menu" class="container">

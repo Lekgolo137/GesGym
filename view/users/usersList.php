@@ -1,9 +1,8 @@
 <?php
-//file: view/users/usersList.php
+//file: view/users/sessionsList.php
 
 require_once(__DIR__."/../../core/ViewManager.php");
 $view = ViewManager::getInstance();
-$errors = $view->getVariable("errors");
 $users = $view->getVariable("users");
 $view->setVariable("title", i18n("GesGym - Users List"));
 ?>

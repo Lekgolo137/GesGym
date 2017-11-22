@@ -198,6 +198,46 @@ class UsersController extends BaseController {
 		$this->view->render("users", "edit");
 	}
 	
+	public function editProfile(){
+		// Se comprueba que el usuario esté logeado.
+		if (!isset($this->currentUser)) {
+			throw new Exception(i18n("You must log in to access this feature."));
+		}
+		// Se guarda el nombre de usuario seleccionado en una variable.
+		$username = $this->view->getVariable("currentusername");
+		// Se coge de la BD el usuario seleccionado.
+		$user = $this->userMapper->findByUsername($username);
+		// Cuando el usuario le da al botón de crear nuevo usuario...
+		if (isset($_POST["passwd"])){
+			// Se guardan los datos introducidos por el usuario en la variable creada
+			$user->setPassword($_POST["passwd"]);
+			$user->setTlf($_POST["tlf"]);
+			$user->setCalle($_POST["calle"]);
+			$user->setCiudad($_POST["ciudad"]);
+			$user->setCodPostal($_POST["codPostal"]);
+			try{
+				// Se comprueba que los datos introducidos sean válidos.
+				$user->checkIsValidForRegister();
+				// See guardan los cambios en la base de datos.
+				$this->userMapper->update($user);
+				// Se genera un mensaje de confirmación de la operación para el usuario.
+				$this->view->setFlash(i18n("Profile successfully modified."));
+				// Se redirige al usuario de vuelta al menú.
+				$this->view->redirect("users", "profile");
+			}catch(ValidationException $ex) {
+				// En caso de que los datos introducidos no sean válidos se captura el error y se muestra al usuario.
+				$errors = $ex->getErrors();
+				$this->view->setVariable("errors", $errors);
+			}
+		}
+		// Se envía la variable a la vista, de esta forma en caso de que haya ocurrido un error
+		// los campos que el usuario ya había rellenado aparecerán rellenos.
+		$this->view->setVariable("user", $user);
+		// Se elige la plantilla y renderiza la vista.
+		$this->view->setLayout("welcome");
+		$this->view->render("users", "editProfile");
+	}
+	
 	public function delete(){
 		$type = $this->view->getVariable("currentusertype");
 		if ($type != "administrador") {

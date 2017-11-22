@@ -8,6 +8,10 @@ h1 {
 	font-size: 70px;
 }
 
+#error {
+	color: red;
+}
+
 #flash {
 	color: green;
 	text-align: center;

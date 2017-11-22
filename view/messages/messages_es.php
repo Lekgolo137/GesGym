@@ -115,6 +115,61 @@ array(
 	"Exercise \"%s\" successfully modified." => "Ejercicio \"%s\" modificado con éxito.",
 	// View Exercise
 	"GesGym - View Exercise" => "GesGym - Consultar ejercicio",
-	"View Exercise" => "Consultar ejercicio"
+	"View Exercise" => "Consultar ejercicio",
+	// Profile
+	"GesGym - Profile" => "GesGym - Perfil",
+	"Modify Profile" => "Modificar perfil",
+	"Manage Sessions" => "Gestionar sesiones",
+	"Profile successfully modified." => "Perfil modificado con éxito.",
+	"New Session" => "Nueva sesión",
+	// Activities Menu
+	"New Activity" => "Nueva actividad",
+	"Activities List" => "Listado de actividades",
+	"GesGym - Manage Activities " => "GesGym - Gestionar actividades",
+	// New Activity
+	"GesGym - New Activity" => "GesGym - Nueva actividad",
+	"Places" => "Plazas",
+	"Create New Activity" => "Crear nueva actividad",
+	"That activity ID already exists" => "Ya existe una actividad con ese ID.",
+	"Activity successfully created." => "Actividad creada con éxito",
+	// Activities List
+	"GesGym - Activities List" => "GesGym - Listado de actividades",
+	// View Activity
+	"GesGym - View Activity" => "GesGym - Consultar actividad",
+	"View Activity" => "Consultar actividad",
+	"Users" => "Usuarios",
+	// Modify Activity
+	"GesGym - Modify Activity" => "GesGym - Modificar actividad",
+	"Modify Activity" => "Modificar actividad",
+	"Date" => "Fecha",
+	"Add User" => "Añadir usuario",
+	"User successfully added to the activity." => "Usuario añadido correctamente a la actividad.",
+	"That user is already asigned to the activity" => "Ese usuario ya está en esta actividad.",
+	"That user doesn't exist." => "Ese usuario no existe.",
+	// Sessions List
+	"GesGym - Sessions List" => "GesGym - Listado de sesiones",
+	"Sessions List" => "Listado de sesiones",
+	"Start Date" => "Fecha de inicio",
+	"End Date" => "Fecha de fin",
+	"Table" => "Tabla",
+	"Session \"%s\" successfully closed." => "Sesion \"%s\" cerrada con éxito.",
+	"Comment" => "Comentar",
+	"Close" => "Cerrar",
+	// New Session
+	"GesGym - New Session" => "Nueva sesion",
+	"Session ID" => "ID de la sesión",
+	"Table ID" => "ID de la tabla",
+	"Create new session" => "Crear nueva sesión",
+	"Session \"%s\" successfully added." => "Sesion \"%s\" creada con éxito.",
+	// Manage Tables
+	"GesGym - Manage Tables" => "GesGym - Gestionar tablas",
+	"New Table" => "Nueva tabla",
+	"Tables List" => "Listado de tablas",
+	// New Table
+	"Create new table" => "Crear nueva tabla",
+	"GesGym - New Table" => "GesGym - Nueva tabla",
+	// Tables List
+	"Custom" => "Personalizada",
+	"Standard" => "Estándar"
 )
 ?>
