@@ -22,7 +22,7 @@ class UsersController extends BaseController {
 		// Cuando el usuario le da al botón de iniciar sesión...
 		if (isset($_POST["username"])){
 			// Se comprueba que el login sea válido.
-			if ($this->userMapper->isValidUser($_POST["username"], $_POST["passwd"])) {
+			if ($this->userMapper->isValid($_POST["username"], $_POST["password"])) {
 				// Si es válido se inicia" la sesión guardando el nombre de usuario en la variable de sesión currentuser.
 				$_SESSION["currentuser"]=$_POST["username"];
 				$_SESSION["currentusertype"]=$this->userMapper->findType($_POST["username"]);
@@ -42,6 +42,7 @@ class UsersController extends BaseController {
 
 	// No tiene una vista asociada, simplemente cierra sesión y redirige al usuario.
 	public function logout() {
+		// Se comprueba que el usuario esté logeado.
 		if (!isset($this->currentUser)) {
 			throw new Exception(i18n("You must log in to access this feature."));
 		}
@@ -52,6 +53,7 @@ class UsersController extends BaseController {
 	}
 	
 	public function mainMenu(){
+		// Se comprueba que el usuario esté logeado.
 		if (!isset($this->currentUser)) {
 			throw new Exception(i18n("You must log in to access this feature."));
 		}
@@ -61,6 +63,7 @@ class UsersController extends BaseController {
 	}
 	
 	public function profile(){
+		// Se comprueba que el usuario esté logeado.
 		if (!isset($this->currentUser)) {
 			throw new Exception(i18n("You must log in to access this feature."));
 		}
@@ -70,6 +73,7 @@ class UsersController extends BaseController {
 	}
 	
 	public function usersMenu(){
+		// Se comprueba que el usuario esté logeado como administrador.
 		$type = $this->view->getVariable("currentusertype");
 		if ($type != "administrador") {
 			throw new Exception(i18n("You must be an administrator to access this feature."));
@@ -80,6 +84,7 @@ class UsersController extends BaseController {
 	}
 	
 	public function add() {
+		// Se comprueba que el usuario esté logeado como administrador.
 		$type = $this->view->getVariable("currentusertype");
 		if ($type != "administrador") {
 			throw new Exception(i18n("You must be an administrator to access this feature."));
@@ -90,19 +95,20 @@ class UsersController extends BaseController {
 		if (isset($_POST["username"])){
 			// Se guardan los datos introducidos por el usuario en la variable creada
 			$user->setUsername($_POST["username"]);
-			$user->setPassword($_POST["passwd"]);
+			$user->setPassword($_POST["password"]);
 			$user->setTipo($_POST["tipo"]);
-			$user->setTlf($_POST["tlf"]);
-			$user->setCalle($_POST["calle"]);
-			$user->setCiudad($_POST["ciudad"]);
-			$user->setCodPostal($_POST["codPostal"]);
+			if ($_POST["subtipo"] == "-"){
+				$user->setSubtipo(null);
+			}else{
+				$user->setSubtipo($_POST["subtipo"]);
+			}
 			try{
 				// Se comprueba que los datos introducidos sean válidos.
-				$user->checkIsValidForRegister();
+				$user->isValid();
 				// Se comprueba si ya existe otro usuario con ese nombre.
-				if (!$this->userMapper->usernameExists($_POST["username"])){
+				if (!$this->userMapper->exists($_POST["username"])){
 					// Si no existe se guarda el nuevo usuario en la base de datos.
-					$this->userMapper->save($user);
+					$this->userMapper->add($user);
 					// Se genera un mensaje de confirmación de la operación para el usuario.
 					$this->view->setFlash(i18n("User successfully created."));
 					// Se redirige al usuario de vuelta al menú.
@@ -127,6 +133,8 @@ class UsersController extends BaseController {
 		$this->view->render("users", "add");
 
 	}
+	
+	// DE AQUI EN ADELANTE AUN NO HA SIDO ADAPTADO EL CODIGO A LA NUEVA BASE DE DATOS
 	
 	public function usersList(){
 		$type = $this->view->getVariable("currentusertype");

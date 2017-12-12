@@ -4,109 +4,87 @@
 require_once(__DIR__."/../core/ValidationException.php");
 
 class User {
+	
+	// Integer
+	private $id;
 
 	// String
 	private $username;
 
 	// String
-	private $passwd;
-	
-	// Integer
-	private $tlf;
+	private $password;
 
-	// ENUM String (cliente, entrenador, administrador)
+	// ENUM String (deportista, entrenador, administrador)
 	private $tipo;
 
-	// String
-	private $calle;
-
-	// String
-	private $ciudad;
-	
-	// String
-	private $codPostal;
+	// ENUM String (tdu, pef) [null para entrenadores y administradores]
+	private $subtipo;
 
 	// Constructor
-	public function __construct($username=NULL, $passwd=NULL, $tlf=NULL, $tipo=NULL, $calle=NULL, $ciudad=NULL, $codPostal=NULL) {
+	public function __construct($id=NULL, $username=NULL, $password=NULL, $tipo=NULL, $subtipo=NULL) {
+		$this->id = $id;
 		$this->username = $username;
-		$this->passwd = $passwd;
-		$this->tlf = $tlf;
+		$this->password = $password;
 		$this->tipo = $tipo;
-		$this->calle = $calle;
-		$this->ciudad = $ciudad;
-		$this->codPostal = $codPostal;
+		$this->subtipo = $subtipo;
 	}
 
 	// GETTERS
+	
+	public function getId() {
+		return $this->id;
+	}
 	
 	public function getUsername() {
 		return $this->username;
 	}
 	
-	public function getPasswd() {
-		return $this->passwd;
-	}
-	
-	public function getTlf() {
-		return $this->tlf;
+	public function getPassword() {
+		return $this->password;
 	}
 	
 	public function getTipo() {
 		return $this->tipo;
 	}
 	
-	public function getCalle() {
-		return $this->calle;
+	public function getSubtipo() {
+		return $this->subtipo;
 	}
 	
-	public function getCiudad() {
-		return $this->ciudad;
-	}
-	
-	public function getCodPostal() {
-		return $this->codPostal;
-	}
+
 	// SETTERS
+	
+	public function setId($id) {
+		$this->id = $id;
+	}
 
 	public function setUsername($username) {
 		$this->username = $username;
 	}
 
-	public function setPassword($passwd) {
-		$this->passwd = $passwd;
-	}
-
-	public function setTlf($tlf) {
-		$this->tlf = $tlf;
+	public function setPassword($password) {
+		$this->password = $password;
 	}
 
 	public function setTipo($tipo) {
 		$this->tipo = $tipo;
 	}
 
-	public function setCalle($calle) {
-		$this->calle = $calle;
-	}
-
-	public function setCiudad($ciudad) {
-		$this->ciudad = $ciudad;
-	}
-
-	public function setCodPostal($codPostal) {
-		$this->codPostal = $codPostal;
+	public function setSubtipo($subtipo) {
+		$this->subtipo = $subtipo;
 	}
 
 	// Comprueba si el nombre de usuario y contraseña tienen por lo menos 5 caracteres.
-	public function checkIsValidForRegister() {
+	public function isValid() {
 		$errors = array();
 		if (strlen($this->username) < 5) {
 			$errors["username"] = i18n("Username must be at least 5 characters in length");
 		}
-		if (strlen($this->passwd) < 5) {
-			$errors["passwd"] = i18n("Password must be at least 5 characters in length");
+		if (strlen($this->password) < 5) {
+			$errors["password"] = i18n("Password must be at least 5 characters in length");
 		}
 		if (sizeof($errors)>0){
-			throw new ValidationException($errors, i18n("user is not valid"));
+			throw new ValidationException($errors, i18n("User is not valid"));
 		}
 	}
 }

@@ -25,7 +25,8 @@ class BaseController {
 
 		// Si el usuario está logeado se guarda su nombre y tipo en $currentUser.
 		if(isset($_SESSION["currentuser"])) {
-			$this->currentUser = new User($_SESSION["currentuser"]);
+			$this->currentUser = new User();
+			$this->currentUser->setUsername($_SESSION["currentuser"]);
 			$this->currentUser->setTipo($_SESSION["currentusertype"]);
 			
 			// Se ponen los datos del usuario en $view, ya que algunas vistas los utilizan.
