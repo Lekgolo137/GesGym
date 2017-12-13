@@ -13,4 +13,7 @@ $view->setVariable("header", i18n("GesGym"));
 				<input type="password" name="password" class="form-control" placeholder="<?=i18n("Password")?>" required>
 				<button type="submit" class="btn btn-lg btn-primary btn-block"><?=i18n("Login")?></button>
 			</form>
+			<div id="info">
+				<a class="btn btn-lg btn-primary btn-block" href="index.php?controller=users&amp;action=info"><?=i18n("View Gym Information")?></a>
+			</div>
 <?=$view->moveToFragment("css")?>		<link rel="stylesheet" type="text/css" href="css/loginStyle.css">

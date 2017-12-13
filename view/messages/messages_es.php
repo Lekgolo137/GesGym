@@ -33,11 +33,13 @@ array(
 	"Trainer" => "Entrenador",
 	"Administrator" => "Administrador",
 	"Cancel" => "Cancelar",
+	"Tables" => "Tablas",
 	// Login
 	"GesGym - Login" => "GesGym - Inicio de sesión",
 	"GesGym" => "GesGym",
 	"Login" => "Iniciar sesión",
 	"Incorrect login" => "Datos incorrectos",
+	"View Gym Information" => "Ver información del gimnasio",
 	// Main Menu
 	"GesGym - Main Menu" => "GesGym - Menú principal",
 	"Profile" => "Perfil",
@@ -68,6 +70,7 @@ array(
 	"Sessions" => "Sesiones",
 	"Activities" => "Actividades",
 	"Return" => "Volver",
+	"Other User Information" => "Otra información del usuario",
 	// Modify User
 	"GesGym - Modify User" => "GesGym - Modificar usario",
 	"Modify User" => "Modificar usuario",

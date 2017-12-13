@@ -4,4 +4,5 @@ Instrucciones para la instalación:
 
 2.Crear la base de datos importando el archivo "database.sql" desde el gestor de la base de datos (phpMyAdmin).
 	
-4.Arrancar el servidor y acceder desde un navegador con la URL que corresponda, hay un usuario pre-creado con nombre y contraseña admin.
+4.Arrancar el servidor y acceder desde un navegador con la URL que corresponda, hay un usuario de cada tipo pre-creado
+con nombres admin, entrenador y deportista, y contraseña 12345 para todos.

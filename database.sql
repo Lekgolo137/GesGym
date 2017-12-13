@@ -113,7 +113,9 @@ CREATE TABLE resources_activity (
 
 grant all privileges on gesgym.* to gguser@localhost identified by "ggpass";
 
-INSERT INTO users (username, password, tipo, subtipo) VALUES ('admin','admin','administrador',null);
+INSERT INTO users (username, password, tipo, subtipo) VALUES ('admin','12345','administrador',null);
+INSERT INTO users (username, password, tipo, subtipo) VALUES ('entrenador','12345','entrenador',null);
+INSERT INTO users (username, password, tipo, subtipo) VALUES ('deportista','12345','deportista',null);
 
 INSERT INTO users (username, password, tipo, subtipo) VALUES ('juan','admin','administrador',null);
 INSERT INTO users (username, password, tipo, subtipo) VALUES ('marcos','admin','administrador',null);
