@@ -1,166 +1,228 @@
-drop database gesgym;
+DROP DATABASE IF EXISTS gesgym;
 
-create database gesgym;
+CREATE DATABASE gesgym;
 
-use gesgym;
+USE gesgym;
 
-create table users (
-		username varchar(255),
-		passwd varchar(255),
-		tlf integer(9),
-		tipo ENUM('cliente','entrenador','administrador'),
-		calle varchar(255),
-		ciudad varchar(255),
-		codPostal varchar(255),
-		
-		primary key (username)
-) ENGINE=INNODB DEFAULT CHARACTER SET = utf8;
+-- TABLAS PRINCIPALES --
 
-create table tables (
-		tableid varchar(255),
-		tabletipo ENUM('person','noPerson'),
-		
-		primary key (tableid)
-) ENGINE=INNODB DEFAULT CHARACTER SET = utf8;
+CREATE TABLE users (
+	id INT(11) NOT NULL AUTO_INCREMENT,
+	username VARCHAR(255) UNIQUE NOT NULL,
+	password VARCHAR(255) NOT NULL,
+	tipo ENUM('deportista','entrenador','administrador') NOT NULL,
+	subtipo ENUM('tdu', 'pef'),
+	
+	PRIMARY KEY (id)
+) ENGINE=INNODB DEFAULT CHARACTER SET = UTF8;
 
-create table sessions (
-		sessionid varchar(255),
-		username varchar(255),
-		tableid varchar(255),
-		fechaInicio datetime,
-		fechaFin datetime,
-		
-		primary key (sessionid),
-		foreign key (username) references users(username),
-		foreign key (tableid) references tables(tableid)
-		
-) ENGINE=INNODB DEFAULT CHARACTER SET = utf8;
+CREATE TABLE exercises (
+	id INT(11) NOT NULL AUTO_INCREMENT,
+	nombre VARCHAR(255) NOT NULL,
+	tipo ENUM('muscular','cardio','estiramiento') NOT NULL,
+	descripcion VARCHAR(20000),
+	url VARCHAR(255),
+	
+	PRIMARY KEY (id)
+) ENGINE=INNODB DEFAULT CHARACTER SET = UTF8;
 
-create table comments (
-	commentid varchar(255),	 
-	content varchar(255),
-	username varchar(255),
-	sessionid varchar(255),
-	tableid varchar(255),
+CREATE TABLE tables (
+	id INT(11) NOT NULL AUTO_INCREMENT,
+	nombre VARCHAR(255) NOT NULL,
+	tipo ENUM('estandar','personalizada') NOT NULL,
+	descripcion VARCHAR(20000),
+	
+	PRIMARY KEY (id)
+) ENGINE=INNODB DEFAULT CHARACTER SET = UTF8;
 
-	primary key (commentid),
-	foreign key (username) references users(username),
-	foreign key (sessionid) references sessions(sessionid),
-	foreign key (tableid) references tables(tableid)
-) ENGINE=INNODB DEFAULT CHARACTER SET = utf8;
+CREATE TABLE activities (
+	id INT(11) NOT NULL AUTO_INCREMENT,
+	nombre VARCHAR(255) NOT NULL,
+	descripcion VARCHAR(20000),
+	dia SET ('lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'),
+	hora_inicio TIME,
+	hora_fin TIME,
+	plazas INT(11),
+	entrenador INT(11) NOT NULL,
+	
+	PRIMARY KEY (id),
+	FOREIGN KEY (entrenador) REFERENCES users(id)
+) ENGINE=INNODB DEFAULT CHARACTER SET = UTF8;
 
-create table exercises (
-		exerciseid varchar(255),
-		exer_name varchar(255),
-		exer_tipo ENUM('cardio','musculacion','estiramiento'),
-		
-		primary key (exerciseid)
-) ENGINE=INNODB DEFAULT CHARACTER SET = utf8;
+CREATE TABLE resources (
+	id INT(11) NOT NULL AUTO_INCREMENT,
+	nombre VARCHAR(255) NOT NULL,
+	aforo INT(11),
+	descripcion VARCHAR(20000),
 
-create table activities (
-		activityid varchar(255),
-		plazas int(10),
-		
-		primary key (activityid)
-) ENGINE=INNODB DEFAULT CHARACTER SET = utf8;
+	PRIMARY KEY (id)
+) ENGINE=INNODB DEFAULT CHARACTER SET = UTF8;
 
-create table resources (
-		id varchar(255),
-		tipo ENUM('instalacion','material'),
-		location varchar(255),
-		canafo int(10),
-		
-		primary key (id)
-) ENGINE=INNODB DEFAULT CHARACTER SET = utf8;
+CREATE TABLE sessions (
+	id INT(11) NOT NULL AUTO_INCREMENT,
+	comentarios VARCHAR(20000),
+	fecha_inicio DATETIME,
+	fecha_fin DATETIME,
+	usuario INT(11) NOT NULL,
+	tabla INT(11) NOT NULL,
 
-create table act_use_res (
-		activityid varchar(255),
-		resourceid varchar(255),
-		
-		foreign key (activityid) references activities(activityid),
-		foreign key (resourceid) references resources(id)
-) ENGINE=INNODB DEFAULT CHARACTER SET = utf8;
+	PRIMARY KEY (id),
+	FOREIGN KEY (usuario) REFERENCES users(id),
+	FOREIGN KEY (tabla) REFERENCES tables(id)
+) ENGINE=INNODB DEFAULT CHARACTER SET = UTF8;
 
-create table use_participates_act (
-		username varchar(255),
-		activityid varchar(255),
-		fecha datetime,
-		
-		foreign key (username) references users(username),
-		foreign key (activityid) references activities(activityid)
-) ENGINE=INNODB DEFAULT CHARACTER SET = utf8;
+-- TABLAS DE RELACIONES --
 
-create table tab_has_exe (
-		tableid varchar(255),
-		exerciseid varchar(255),
-		series int(10),
-		repe int(10),
-		tiempo int(7),
-		
-		foreign key (tableid) references tables(tableid),
-		foreign key (exerciseid) references exercises(exerciseid)
-) ENGINE=INNODB DEFAULT CHARACTER SET = utf8;
+CREATE TABLE tables_user (
+	usuario INT(11) NOT NULL,
+	tabla INT(11) NOT NULL,
+
+	PRIMARY KEY (usuario, tabla),
+	FOREIGN KEY (usuario) REFERENCES users(id),
+	FOREIGN KEY (tabla) REFERENCES tables(id)
+)ENGINE=INNODB DEFAULT CHARACTER SET = UTF8;
+
+CREATE TABLE activities_user (
+	usuario INT(11) NOT NULL,
+	actividad INT(11) NOT NULL,
+
+	PRIMARY KEY (usuario, actividad),
+	FOREIGN KEY (usuario) REFERENCES users(id),
+	FOREIGN KEY (actividad) REFERENCES activities(id)
+)ENGINE=INNODB DEFAULT CHARACTER SET = UTF8;
+
+CREATE TABLE exercises_table (
+	tabla INT(11) NOT NULL,
+	ejercicio INT(11) NOT NULL,
+
+	PRIMARY KEY (tabla, ejercicio),
+	FOREIGN KEY (tabla) REFERENCES tables(id),
+	FOREIGN KEY (ejercicio) REFERENCES exercises(id)
+)ENGINE=INNODB DEFAULT CHARACTER SET = UTF8;
+
+CREATE TABLE resources_activity (
+	actividad INT(11) NOT NULL,
+	recurso INT(11) NOT NULL,
+
+	PRIMARY KEY (actividad, recurso),
+	FOREIGN KEY (actividad) REFERENCES activities(id),
+	FOREIGN KEY (recurso) REFERENCES resources(id)
+)ENGINE=INNODB DEFAULT CHARACTER SET = UTF8;
+
+-- PERMISOS E INSERCIONES --
 
 grant all privileges on gesgym.* to gguser@localhost identified by "ggpass";
 
-INSERT INTO users values ('12345','12345',666225577,'administrador','Avenida Nula N0','Nulilandia','30000');
+INSERT INTO users (username, password, tipo, subtipo) VALUES ('admin','12345','administrador',null);
+INSERT INTO users (username, password, tipo, subtipo) VALUES ('entrenador','12345','entrenador',null);
+INSERT INTO users (username, password, tipo, subtipo) VALUES ('deportista','12345','deportista',null);
 
-INSERT INTO users values ('ejemplo1','ejemplo1',666224466,'cliente','ejemplo1','ejemplo1','ejemplo1');
-INSERT INTO users values ('ejemplo2','ejemplo2',666224466,'entrenador','ejemplo2','ejemplo2','ejemplo2');
-INSERT INTO users values ('ejemplo3','ejemplo3',666224466,'cliente','ejemplo3','ejemplo3','ejemplo3');
-INSERT INTO users values ('ejemplo4','ejemplo4',666224466,'entrenador','ejemplo4','ejemplo4','ejemplo4');
-INSERT INTO users values ('ejemplo5','ejemplo5',666224466,'cliente','ejemplo5','ejemplo5','ejemplo5');
+INSERT INTO users (username, password, tipo, subtipo) VALUES ('juan','admin','administrador',null);
+INSERT INTO users (username, password, tipo, subtipo) VALUES ('marcos','admin','administrador',null);
+INSERT INTO users (username, password, tipo, subtipo) VALUES ('maria','admin','administrador',null);
+INSERT INTO users (username, password, tipo, subtipo) VALUES ('jorge','admin','administrador',null);
+INSERT INTO users (username, password, tipo, subtipo) VALUES ('pedro','admin','administrador',null);
+INSERT INTO users (username, password, tipo, subtipo) VALUES ('miguel','admin','administrador',null);
+INSERT INTO users (username, password, tipo, subtipo) VALUES ('martin','admin','administrador',null);
+INSERT INTO users (username, password, tipo, subtipo) VALUES ('borja','admin','administrador',null);
+INSERT INTO users (username, password, tipo, subtipo) VALUES ('laura','admin','administrador',null);
+INSERT INTO users (username, password, tipo, subtipo) VALUES ('manolo','admin','administrador',null);
 
-INSERT INTO tables values ('ejemplo1', 'person');
-INSERT INTO tables values ('ejemplo2', 'noPerson');
-INSERT INTO tables values ('ejemplo3', 'person');
-INSERT INTO tables values ('ejemplo4', 'noPerson');
-INSERT INTO tables values ('ejemplo5', 'person');
+INSERT INTO exercises (nombre, tipo, descripcion, url) values ('Abdominal','muscular', '', '');
+INSERT INTO exercises (nombre, tipo, descripcion, url) values ('Abdominal','muscular', '', '');
+INSERT INTO exercises (nombre, tipo, descripcion, url) values ('Abdominal','muscular', '', '');
+INSERT INTO exercises (nombre, tipo, descripcion, url) values ('Abdominal','muscular', '', '');
+INSERT INTO exercises (nombre, tipo, descripcion, url) values ('Abdominal','muscular', '', '');
+INSERT INTO exercises (nombre, tipo, descripcion, url) values ('Abdominal','muscular', '', '');
+INSERT INTO exercises (nombre, tipo, descripcion, url) values ('Abdominal','muscular', '', '');
+INSERT INTO exercises (nombre, tipo, descripcion, url) values ('Abdominal','muscular', '', '');
+INSERT INTO exercises (nombre, tipo, descripcion, url) values ('Abdominal','muscular', '', '');
+INSERT INTO exercises (nombre, tipo, descripcion, url) values ('Abdominal','muscular', '', '');
 
-INSERT INTO sessions values ('ejemplo1', 'ejemplo1', 'ejemplo1', '2017-11-01 00:00:00', '2017-11-30 00:00:00');
-INSERT INTO sessions values ('ejemplo2', 'ejemplo2', 'ejemplo2', '2017-11-01 00:00:00', '2017-11-30 00:00:00');
-INSERT INTO sessions values ('ejemplo3', 'ejemplo3', 'ejemplo3', '2017-11-01 00:00:00', '2017-11-30 00:00:00');
-INSERT INTO sessions values ('ejemplo4', 'ejemplo4', 'ejemplo4', '2017-11-01 00:00:00', '2017-11-30 00:00:00');
-INSERT INTO sessions values ('ejemplo5', 'ejemplo5', 'ejemplo5', '2017-11-01 00:00:00', '2017-11-30 00:00:00');
+INSERT INTO tables (nombre, tipo, descripcion) values ('Aumento de volumen', 'estandar', '');
+INSERT INTO tables (nombre, tipo, descripcion) values ('Aumento de volumen', 'estandar', '');
+INSERT INTO tables (nombre, tipo, descripcion) values ('Aumento de volumen', 'estandar', '');
+INSERT INTO tables (nombre, tipo, descripcion) values ('Aumento de volumen', 'estandar', '');
+INSERT INTO tables (nombre, tipo, descripcion) values ('Aumento de volumen', 'estandar', '');
+INSERT INTO tables (nombre, tipo, descripcion) values ('Aumento de volumen', 'estandar', '');
+INSERT INTO tables (nombre, tipo, descripcion) values ('Aumento de volumen', 'estandar', '');
+INSERT INTO tables (nombre, tipo, descripcion) values ('Aumento de volumen', 'estandar', '');
+INSERT INTO tables (nombre, tipo, descripcion) values ('Aumento de volumen', 'estandar', '');
+INSERT INTO tables (nombre, tipo, descripcion) values ('Aumento de volumen', 'estandar', '');
 
-INSERT INTO comments values ('ejemplo1', 'ejemplo1', 'ejemplo1', 'ejemplo1', 'ejemplo1');
-INSERT INTO comments values ('ejemplo2', 'ejemplo2', 'ejemplo2', 'ejemplo2', 'ejemplo2');
-INSERT INTO comments values ('ejemplo3', 'ejemplo3', 'ejemplo3', 'ejemplo3', 'ejemplo3');
-INSERT INTO comments values ('ejemplo4', 'ejemplo4', 'ejemplo4', 'ejemplo4', 'ejemplo4');
-INSERT INTO comments values ('ejemplo5', 'ejemplo5', 'ejemplo5', 'ejemplo5', 'ejemplo5');
+INSERT INTO activities (nombre, descripcion, dia, hora_inicio, hora_fin, plazas, entrenador) values ('Yoga', '', 'martes,jueves', '16:00:00', '18:00:00', 20, 1);
+INSERT INTO activities (nombre, descripcion, dia, hora_inicio, hora_fin, plazas, entrenador) values ('Yoga', '', 'martes,jueves', '16:00:00', '18:00:00', 20, 1);
+INSERT INTO activities (nombre, descripcion, dia, hora_inicio, hora_fin, plazas, entrenador) values ('Yoga', '', 'martes,jueves', '16:00:00', '18:00:00', 20, 1);
+INSERT INTO activities (nombre, descripcion, dia, hora_inicio, hora_fin, plazas, entrenador) values ('Yoga', '', 'martes,jueves', '16:00:00', '18:00:00', 20, 1);
+INSERT INTO activities (nombre, descripcion, dia, hora_inicio, hora_fin, plazas, entrenador) values ('Yoga', '', 'martes,jueves', '16:00:00', '18:00:00', 20, 1);
+INSERT INTO activities (nombre, descripcion, dia, hora_inicio, hora_fin, plazas, entrenador) values ('Yoga', '', 'martes,jueves', '16:00:00', '18:00:00', 20, 1);
+INSERT INTO activities (nombre, descripcion, dia, hora_inicio, hora_fin, plazas, entrenador) values ('Yoga', '', 'martes,jueves', '16:00:00', '18:00:00', 20, 1);
+INSERT INTO activities (nombre, descripcion, dia, hora_inicio, hora_fin, plazas, entrenador) values ('Yoga', '', 'martes,jueves', '16:00:00', '18:00:00', 20, 1);
+INSERT INTO activities (nombre, descripcion, dia, hora_inicio, hora_fin, plazas, entrenador) values ('Yoga', '', 'martes,jueves', '16:00:00', '18:00:00', 20, 1);
+INSERT INTO activities (nombre, descripcion, dia, hora_inicio, hora_fin, plazas, entrenador) values ('Yoga', '', 'martes,jueves', '16:00:00', '18:00:00', 20, 1);
 
-INSERT INTO exercises values ('ejemplo1','ejemplo1', 'cardio');
-INSERT INTO exercises values ('ejemplo2','ejemplo2', 'musculacion');
-INSERT INTO exercises values ('ejemplo3','ejemplo3', 'estiramiento');
-INSERT INTO exercises values ('ejemplo4','ejemplo4', 'cardio');
-INSERT INTO exercises values ('ejemplo5','ejemplo5', 'musculacion');
+INSERT INTO resources (nombre, aforo, descripcion) values ('Pista de tenis', 200, '');
+INSERT INTO resources (nombre, aforo, descripcion) values ('Pista de tenis', 200, '');
+INSERT INTO resources (nombre, aforo, descripcion) values ('Pista de tenis', 200, '');
+INSERT INTO resources (nombre, aforo, descripcion) values ('Pista de tenis', 200, '');
+INSERT INTO resources (nombre, aforo, descripcion) values ('Pista de tenis', 200, '');
+INSERT INTO resources (nombre, aforo, descripcion) values ('Pista de tenis', 200, '');
+INSERT INTO resources (nombre, aforo, descripcion) values ('Pista de tenis', 200, '');
+INSERT INTO resources (nombre, aforo, descripcion) values ('Pista de tenis', 200, '');
+INSERT INTO resources (nombre, aforo, descripcion) values ('Pista de tenis', 200, '');
+INSERT INTO resources (nombre, aforo, descripcion) values ('Pista de tenis', 200, '');
 
-INSERT INTO activities values ('ejemplo1', 100);
-INSERT INTO activities values ('ejemplo2', 100);
-INSERT INTO activities values ('ejemplo3', 100);
-INSERT INTO activities values ('ejemplo4', 100);
-INSERT INTO activities values ('ejemplo5', 100);
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
 
-INSERT INTO resources values ('ejemplo1','material', 'ejemplo1', 100);
-INSERT INTO resources values ('ejemplo2','instalacion', 'ejemplo2', 100);
-INSERT INTO resources values ('ejemplo3','material', 'ejemplo3', 100);
-INSERT INTO resources values ('ejemplo4','instalacion', 'ejemplo4', 100);
-INSERT INTO resources values ('ejemplo5','material', 'ejemplo5', 100);
+INSERT INTO tables_user VALUES (1, 1);
+INSERT INTO tables_user VALUES (1, 2);
+INSERT INTO tables_user VALUES (1, 3);
+INSERT INTO tables_user VALUES (1, 4);
+INSERT INTO tables_user VALUES (1, 5);
+INSERT INTO tables_user VALUES (1, 6);
+INSERT INTO tables_user VALUES (1, 7);
+INSERT INTO tables_user VALUES (1, 8);
+INSERT INTO tables_user VALUES (1, 9);
+INSERT INTO tables_user VALUES (1, 10);
 
-INSERT INTO act_use_res values ('ejemplo1', 'ejemplo1');
-INSERT INTO act_use_res values ('ejemplo2', 'ejemplo2');
-INSERT INTO act_use_res values ('ejemplo3', 'ejemplo3');
-INSERT INTO act_use_res values ('ejemplo4', 'ejemplo4');
-INSERT INTO act_use_res values ('ejemplo5', 'ejemplo5');
+INSERT INTO activities_user VALUES (1, 1);
+INSERT INTO activities_user VALUES (1, 2);
+INSERT INTO activities_user VALUES (1, 3);
+INSERT INTO activities_user VALUES (1, 4);
+INSERT INTO activities_user VALUES (1, 5);
+INSERT INTO activities_user VALUES (1, 6);
+INSERT INTO activities_user VALUES (1, 7);
+INSERT INTO activities_user VALUES (1, 8);
+INSERT INTO activities_user VALUES (1, 9);
+INSERT INTO activities_user VALUES (1, 10);
 
-INSERT INTO use_participates_act values ('ejemplo1', 'ejemplo1', '2017-11-15 00:00:00');
-INSERT INTO use_participates_act values ('ejemplo2', 'ejemplo2', '2017-11-15 00:00:00');
-INSERT INTO use_participates_act values ('ejemplo3', 'ejemplo3', '2017-11-15 00:00:00');
-INSERT INTO use_participates_act values ('ejemplo4', 'ejemplo4', '2017-11-15 00:00:00');
-INSERT INTO use_participates_act values ('ejemplo5', 'ejemplo5', '2017-11-15 00:00:00');
+INSERT INTO exercises_table VALUES (1, 1);
+INSERT INTO exercises_table VALUES (1, 2);
+INSERT INTO exercises_table VALUES (1, 3);
+INSERT INTO exercises_table VALUES (1, 4);
+INSERT INTO exercises_table VALUES (1, 5);
+INSERT INTO exercises_table VALUES (1, 6);
+INSERT INTO exercises_table VALUES (1, 7);
+INSERT INTO exercises_table VALUES (1, 8);
+INSERT INTO exercises_table VALUES (1, 9);
+INSERT INTO exercises_table VALUES (1, 10);
 
-INSERT INTO tab_has_exe values ('ejemplo1', 'ejemplo1', 5, 20, 150);
-INSERT INTO tab_has_exe values ('ejemplo2', 'ejemplo2', 5, 20, 150);
-INSERT INTO tab_has_exe values ('ejemplo3', 'ejemplo3', 5, 20, 150);
-INSERT INTO tab_has_exe values ('ejemplo4', 'ejemplo4', 5, 20, 150);
-INSERT INTO tab_has_exe values ('ejemplo5', 'ejemplo5', 5, 20, 150);
+INSERT INTO resources_activity VALUES (1, 1);
+INSERT INTO resources_activity VALUES (1, 2);
+INSERT INTO resources_activity VALUES (1, 3);
+INSERT INTO resources_activity VALUES (1, 4);
+INSERT INTO resources_activity VALUES (1, 5);
+INSERT INTO resources_activity VALUES (1, 6);
+INSERT INTO resources_activity VALUES (1, 7);
+INSERT INTO resources_activity VALUES (1, 8);
+INSERT INTO resources_activity VALUES (1, 9);
+INSERT INTO resources_activity VALUES (1, 10);
