@@ -13,6 +13,11 @@ main {
 	color: red;
 }
 
+#info {
+	margin-top: 20px;
+	text-align: center;
+}
+
 .form-signin .form-control {
 	height: auto;
 	padding: 10px;
@@ -29,7 +34,7 @@ input[name="username"] {
 	border-bottom-left-radius: 0;
 }
 
-input[name="passwd"] {
+input[name="password"] {
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 }

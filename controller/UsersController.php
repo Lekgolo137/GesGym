@@ -40,7 +40,7 @@ class UsersController extends BaseController {
 		$this->view->render("users", "login");
 	}
 
-	// No tiene una vista asociada, simplemente cierra sesión y redirige al usuario.
+	// No tiene una vista asociada.
 	public function logout() {
 		// Se comprueba que el usuario esté logeado.
 		if (!isset($this->currentUser)) {
@@ -73,9 +73,9 @@ class UsersController extends BaseController {
 	}
 	
 	public function usersMenu(){
-		// Se comprueba que el usuario esté logeado como administrador.
+		// Se comprueba que el usuario esté logeado como administrador o entrenador.
 		$type = $this->view->getVariable("currentusertype");
-		if ($type != "administrador") {
+		if ($type == "deportista") {
 			throw new Exception(i18n("You must be an administrator to access this feature."));
 		}
 		// Se elige la plantilla y renderiza la vista.
@@ -84,9 +84,9 @@ class UsersController extends BaseController {
 	}
 	
 	public function add() {
-		// Se comprueba que el usuario esté logeado como administrador.
+		// Se comprueba que el usuario esté logeado como administrador o entrenador.
 		$type = $this->view->getVariable("currentusertype");
-		if ($type != "administrador") {
+		if ($type == "deportista") {
 			throw new Exception(i18n("You must be an administrator to access this feature."));
 		}
 		// Se crea una variable usuario donde guardar los datos de un nuevo usuario.
@@ -96,7 +96,11 @@ class UsersController extends BaseController {
 			// Se guardan los datos introducidos por el usuario en la variable creada
 			$user->setUsername($_POST["username"]);
 			$user->setPassword($_POST["password"]);
-			$user->setTipo($_POST["tipo"]);
+			if ($type == "administrador") {
+				$user->setTipo($_POST["tipo"]);
+			}else{
+				$user->setTipo("deportista");
+			}
 			if ($_POST["subtipo"] == "-"){
 				$user->setSubtipo(null);
 			}else{
@@ -133,12 +137,11 @@ class UsersController extends BaseController {
 		$this->view->render("users", "add");
 
 	}
-	
-	// DE AQUI EN ADELANTE AUN NO HA SIDO ADAPTADO EL CODIGO A LA NUEVA BASE DE DATOS
-	
+		
 	public function usersList(){
+		// Se comprueba que el usuario esté logeado como administrador o entrenador.
 		$type = $this->view->getVariable("currentusertype");
-		if ($type != "administrador") {
+		if ($type == "deportista") {
 			throw new Exception(i18n("You must be an administrator to access this feature."));
 		}
 		// Guarda todos los usuarios de la base de datos en una variable.
@@ -148,44 +151,64 @@ class UsersController extends BaseController {
 		$this->view->setLayout("default");
 		$this->view->render("users", "usersList");
 	}
-	
+		
 	public function view(){
-		$type = $this->view->getVariable("currentusertype");
-		if ($type != "administrador") {
-			throw new Exception(i18n("You must be an administrator to access this feature."));
-		}
 		// Se guarda el nombre de usuario seleccionado en una variable.
 		$username = $_REQUEST["username"];
 		// Se coge de la BD el usuario seleccionado.
 		$user = $this->userMapper->findByUsername($username);
+		// Se comprueba que el usuario esté logeado como administrador (si se consulta un entrenador/admin)
+		// o entrenador/admin (si se consulta un deportista).
+		if ($user->getTipo() == "deportista"){
+			$type = $this->view->getVariable("currentusertype");
+			if ($type == "deportista") {
+				throw new Exception(i18n("You must be an administrator to access this feature."));
+			}
+		}else{
+			$type = $this->view->getVariable("currentusertype");
+			if ($type != "administrador") {
+				throw new Exception(i18n("You must be an administrator to access this feature."));
+			}
+		}
 		// Se envia la variable a la vista.
 		$this->view->setVariable("user", $user);
 		// Se elige la plantilla y renderiza la vista.
 		$this->view->setLayout("welcome");
 		$this->view->render("users", "view");
 	}
-	
+		
 	public function edit(){
-		$type = $this->view->getVariable("currentusertype");
-		if ($type != "administrador") {
-			throw new Exception(i18n("You must be an administrator to access this feature."));
-		}
 		// Se guarda el nombre de usuario seleccionado en una variable.
 		$username = $_REQUEST["username"];
 		// Se coge de la BD el usuario seleccionado.
 		$user = $this->userMapper->findByUsername($username);
+		// Se comprueba que el usuario esté logeado como administrador (si se consulta un entrenador/admin)
+		// o entrenador/admin (si se consulta un deportista).
+		if ($user->getTipo() == "deportista"){
+			$type = $this->view->getVariable("currentusertype");
+			if ($type == "deportista") {
+				throw new Exception(i18n("You must be an administrator to access this feature."));
+			}
+		}else{
+			$type = $this->view->getVariable("currentusertype");
+			if ($type != "administrador") {
+				throw new Exception(i18n("You must be an administrator to access this feature."));
+			}
+		}
 		// Cuando el usuario le da al botón de crear nuevo usuario...
-		if (isset($_POST["passwd"])){
+		if (isset($_POST["password"])){
 			// Se guardan los datos introducidos por el usuario en la variable creada
-			$user->setPassword($_POST["passwd"]);
+			$user->setUsername($_POST["username"]);
+			$user->setPassword($_POST["password"]);
 			$user->setTipo($_POST["tipo"]);
-			$user->setTlf($_POST["tlf"]);
-			$user->setCalle($_POST["calle"]);
-			$user->setCiudad($_POST["ciudad"]);
-			$user->setCodPostal($_POST["codPostal"]);
+			if ($_POST["subtipo"] == "-"){
+				$user->setSubtipo(null);
+			}else{
+				$user->setSubtipo($_POST["subtipo"]);
+			}
 			try{
 				// Se comprueba que los datos introducidos sean válidos.
-				$user->checkIsValidForRegister();
+				$user->isValid();
 				// See guardan los cambios en la base de datos.
 				$this->userMapper->update($user);
 				// Se genera un mensaje de confirmación de la operación para el usuario.
@@ -205,7 +228,7 @@ class UsersController extends BaseController {
 		$this->view->setLayout("welcome");
 		$this->view->render("users", "edit");
 	}
-	
+		
 	public function editProfile(){
 		// Se comprueba que el usuario esté logeado.
 		if (!isset($this->currentUser)) {
@@ -216,16 +239,12 @@ class UsersController extends BaseController {
 		// Se coge de la BD el usuario seleccionado.
 		$user = $this->userMapper->findByUsername($username);
 		// Cuando el usuario le da al botón de crear nuevo usuario...
-		if (isset($_POST["passwd"])){
+		if (isset($_POST["password"])){
 			// Se guardan los datos introducidos por el usuario en la variable creada
-			$user->setPassword($_POST["passwd"]);
-			$user->setTlf($_POST["tlf"]);
-			$user->setCalle($_POST["calle"]);
-			$user->setCiudad($_POST["ciudad"]);
-			$user->setCodPostal($_POST["codPostal"]);
+			$user->setPassword($_POST["password"]);
 			try{
 				// Se comprueba que los datos introducidos sean válidos.
-				$user->checkIsValidForRegister();
+				$user->isValid();
 				// See guardan los cambios en la base de datos.
 				$this->userMapper->update($user);
 				// Se genera un mensaje de confirmación de la operación para el usuario.
@@ -246,15 +265,25 @@ class UsersController extends BaseController {
 		$this->view->render("users", "editProfile");
 	}
 	
+	// No tiene una vista asociada.
 	public function delete(){
-		$type = $this->view->getVariable("currentusertype");
-		if ($type != "administrador") {
-			throw new Exception(i18n("You must be an administrator to access this feature."));
-		}
-		// Se guarda el nombre del usuario seleccionado
+		// Se guarda el nombre de usuario seleccionado en una variable.
 		$username = $_REQUEST["username"];
 		// Se coge de la BD el usuario seleccionado.
 		$user = $this->userMapper->findByUsername($username);
+		// Se comprueba que el usuario esté logeado como administrador (si se consulta un entrenador/admin)
+		// o entrenador/admin (si se consulta un deportista).
+		if ($user->getTipo() == "deportista"){
+			$type = $this->view->getVariable("currentusertype");
+			if ($type == "deportista") {
+				throw new Exception(i18n("You must be an administrator to access this feature."));
+			}
+		}else{
+			$type = $this->view->getVariable("currentusertype");
+			if ($type != "administrador") {
+				throw new Exception(i18n("You must be an administrator to access this feature."));
+			}
+		}
 		// Se borra al usuario seleccionado.
 		$this->userMapper->delete($user);
 		// Se muestra un mensaje de confirmación.
