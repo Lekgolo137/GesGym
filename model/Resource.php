@@ -5,24 +5,24 @@ require_once(__DIR__."/../core/ValidationException.php");
 
 class Resource {
 
-	// String
+	// Integer
 	private $id;
 
-	// ENUM String (instalación, material)
-	private $tipo;
-	
 	// String
-	private $location;
+	private $nombre;
+	
+	// Integer
+	private $aforo;
 
-	// Integer (Cantidad, si es un material, o Aforo, si es una instalación)
-	private $canafo;
+	// String
+	private $descripcion;
 
 	// Constructor
-	public function __construct($id=NULL, $tipo=NULL, $location=NULL, $canafo=NULL) {
+	public function __construct($id=NULL, $nombre=NULL, $aforo=NULL, $descripcion=NULL) {
 		$this->id = $id;
-		$this->tipo = $tipo;
-		$this->location = $location;
-		$this->canafo = $canafo;
+		$this->nombre = $nombre;
+		$this->aforo = $aforo;
+		$this->descripcion = $descripcion;
 	}
 
 	// GETTERS
@@ -31,16 +31,16 @@ class Resource {
 		return $this->id;
 	}
 	
-	public function getTipo() {
-		return $this->tipo;
+	public function getNombre() {
+		return $this->nombre;
 	}
 	
-	public function getLocation() {
-		return $this->location;
+	public function getAforo() {
+		return $this->aforo;
 	}
 	
-	public function getCanafo() {
-		return $this->canafo;
+	public function getDescripcion() {
+		return $this->descripcion;
 	}
 	
 	// SETTERS
@@ -49,16 +49,16 @@ class Resource {
 		$this->id = $id;
 	}
 
-	public function setTipo($tipo) {
-		$this->tipo = $tipo;
+	public function setNombre($nombre) {
+		$this->nombre = $nombre;
 	}
 
-	public function setLocation($location) {
-		$this->location = $location;
+	public function setAforo($aforo) {
+		$this->aforo = $aforo;
 	}
 
-	public function setCanafo($canafo) {
-		$this->canafo = $canafo;
+	public function setDescripcion($descripcion) {
+		$this->descripcion = $descripcion;
 	}
 
 }

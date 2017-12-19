@@ -30,7 +30,6 @@ class ResourcesController extends BaseController {
 		$this->view->render("resources", "resourcesMenu");
 	}
 	
-	
 	public function add() {
 		// Se comprueba que el usuario sea un administrador.
 		$type = $this->view->getVariable("currentusertype");
@@ -40,24 +39,25 @@ class ResourcesController extends BaseController {
 		// Se crea una variable recurso donde guardar los datos de un nuevo recurso.
 		$resource = new Resource();
 		// Cuando el usuario le da al botón de crear nuevo recurso...
-		if (isset($_POST["id"])){
+		if (isset($_POST["nombre"])){
 			// Se guardan los datos introducidos por el usuario en la variable creada
-			$resource->setId($_POST["id"]);
-			$resource->setTipo($_POST["tipo"]);
-			$resource->setLocation($_POST["location"]);
-			$resource->setCanafo($_POST["canafo"]);
-			// Se comprueba si ya existe otro recurso con ese ID.
-			if (!$this->resourceMapper->idExists($_POST["id"])){
-				// Si no existe se guarda el nuevo recurso en la base de datos.
-				$this->resourceMapper->save($resource);
+			$resource->setNombre($_POST["nombre"]);
+			$resource->setAforo($_POST["aforo"]);
+			$resource->setDescripcion($_POST["descripcion"]);
+			// Se comprueba que el nombre no esté vacío.
+			if ($resource->getNombre() != ""){
+				// En caso de que el campo aforo no se haya rellenado se pone a 0.
+				if ($resource->getAforo() == null) $resource->setAforo(0);
+				// Se guarda el nuevo recurso en la base de datos.
+				$this->resourceMapper->add($resource);
 				// Se genera un mensaje de confirmación de la operación para el usuario.
 				$this->view->setFlash(i18n("Resource successfully created."));
 				// Se redirige al usuario de vuelta al menú.
 				$this->view->redirect("resources", "resourcesMenu");
-			} else {
-				// En caso de que el ID ya exista se muestra un mensaje de error al usuario.
+			}else{
+				// En caso de que el nombre esté vacío se muestra un mensaje de error al usuario.
 				$errors = array();
-				$errors["id"] = i18n("That ID already exists");
+				$errors["nombre"] = i18n("The name can't be empty.");
 				$this->view->setVariable("errors", $errors);
 			}
 		}
@@ -82,7 +82,7 @@ class ResourcesController extends BaseController {
 		$this->view->setLayout("default");
 		$this->view->render("resources", "resourcesList");
 	}
-	
+		
 	public function view(){
 		// Se comprueba que el usuario sea un administrador.
 		$type = $this->view->getVariable("currentusertype");
@@ -93,8 +93,11 @@ class ResourcesController extends BaseController {
 		$id = $_REQUEST["id"];
 		// Se coge de la BD el usuario seleccionado.
 		$resource = $this->resourceMapper->findById($id);
-		// Se envia la variable a la vista.
+		// Se coge de la BD las actividades que usan ese recurso.
+		$activities = $this->resourceMapper->findActivities($id);
+		// Se envian las variables a la vista.
 		$this->view->setVariable("resource", $resource);
+		$this->view->setVariable("activities", $activities);
 		// Se elige la plantilla y renderiza la vista.
 		$this->view->setLayout("welcome");
 		$this->view->render("resources", "view");
@@ -110,18 +113,28 @@ class ResourcesController extends BaseController {
 		$id = $_REQUEST["id"];
 		// Se coge de la BD el recurso seleccionado.
 		$resource = $this->resourceMapper->findById($id);
-		// Cuando el usuario le da al botón de crear nuevo recurso...
-		if (isset($_POST["canafo"])){
+		// Cuando el usuario le da al botón de guardar cambios...
+		if (isset($_POST["nombre"])){
 			// Se guardan los datos introducidos por el usuario en la variable creada
-			$resource->setTipo($_POST["tipo"]);
-			$resource->setLocation($_POST["location"]);
-			$resource->setCanafo($_POST["canafo"]);
-			// See guardan los cambios en la base de datos.
-			$this->resourceMapper->update($resource);
-			// Se genera un mensaje de confirmación de la operación para el usuario.
-			$this->view->setFlash(sprintf(i18n("Resource \"%s\" successfully modified."),$resource->getId()));
-			// Se redirige al usuario de vuelta al menú.
-			$this->view->redirect("resources", "resourcesList");
+			$resource->setNombre($_POST["nombre"]);
+			$resource->setAforo($_POST["aforo"]);
+			$resource->setDescripcion($_POST["descripcion"]);
+			// Se comprueba que el nombre no esté vacío.
+			if ($resource->getNombre() != ""){
+				// En caso de que el campo aforo no se haya rellenado se pone a 0.
+				if ($resource->getAforo() == null) $resource->setAforo(0);
+				// Se guarda el nuevo recurso en la base de datos.
+				$this->resourceMapper->update($resource);
+				// Se genera un mensaje de confirmación de la operación para el usuario.
+				$this->view->setFlash(sprintf(i18n("Resource \"%s\" successfully modified."),$resource->getNombre()));
+				// Se redirige al usuario de vuelta al menú.
+				$this->view->redirect("resources", "resourcesList");
+			}else{
+				// En caso de que el nombre esté vacío se muestra un mensaje de error al usuario.
+				$errors = array();
+				$errors["nombre"] = i18n("The name can't be empty.");
+				$this->view->setVariable("errors", $errors);
+			}
 		}
 		// Se envía la variable a la vista, de esta forma en caso de que haya ocurrido un error
 		// los campos que el usuario ya había rellenado aparecerán rellenos.
@@ -144,8 +157,9 @@ class ResourcesController extends BaseController {
 		// Se borra al usuario seleccionado.
 		$this->resourceMapper->delete($resource);
 		// Se muestra un mensaje de confirmación.
-		$this->view->setFlash(sprintf(i18n("Resource \"%s\" successfully deleted."),$resource->getId()));
+		$this->view->setFlash(sprintf(i18n("Resource \"%s\" successfully deleted."),$resource->getNombre()));
 		// Se recarga la lista de usuarios mostrada.
 		$this->view->redirect("resources", "resourcesList");
 	}
+
 }

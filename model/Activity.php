@@ -4,35 +4,61 @@
 
 class Activity{
 	
+	//Integer
+	private $id;
+	
 	//String
-	private $activityid;
+	private $nombre;
+	
+	//String
+	private $descripcion;
+	
+	//String SET ('lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo')
+	private $dia;
+	
+	//String (TIME)
+	private $hora_inicio;
+	
+	//String (TIME)
+	private $hora_fin;
 	
 	//Integer
 	private $plazas;
 	
+	//Integer (ID)
+	private $entrenador;
+	
 	//Constructor
-	public function __construct($activityid=NULL, $plazas=NULL) {
-		$this->activityid=$activityid;
+	public function __construct($id=NULL, $nombre=NULL, $descripcion=NULL, $dia=NULL, $hora_inicio=NULL, $hora_fin=NULL, $plazas=NULL, $entrenador=NULL) {
+		$this->id=$id;
+		$this->nombre=$nombre;
+		$this->descripcion=$descripcion;
+		$this->dia=$dia;
+		$this->hora_inicio=$hora_inicio;
+		$this->hora_fin=$hora_fin;
 		$this->plazas=$plazas;
+		$this->entrenador=$entrenador;
 	}
+	
+	// FALTAN GETTERS Y SETTERS DE TODOS LOS ATRIBUTOS MENOS ID Y NOMBRE
 	
 	//GETTERS
 	
-	public function getActivityID(){
-		return $this->activityid;
+	public function getId(){
+		return $this->id;
 	}
 	
-	public function getPlazas(){
-		return $this->plazas;
+	public function getNombre(){
+		return $this->nombre;
 	}
 	
 	//SETTERS
 	
-	public function setActivityID($activityid){
-		$this-> activityid = $activityid;
+	public function setId($id){
+		$this->id = $id;
 	}
 	
-	public function setPlazas($plazas){
-		$this-> plazas = $plazas;
+	public function setNombre($nombre){
+		$this->nombre = $nombre;
 	}
 }

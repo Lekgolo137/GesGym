@@ -20,6 +20,10 @@ input {
 	margin-bottom: 10px;
 }
 
+textarea {
+	margin-bottom: 10px;
+}
+
 .form-signin .form-control {
 	height: auto;
 	padding: 10px;

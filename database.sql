@@ -12,8 +12,10 @@ CREATE TABLE users (
 	password VARCHAR(255) NOT NULL,
 	tipo ENUM('deportista','entrenador','administrador') NOT NULL,
 	subtipo ENUM('tdu', 'pef'),
+	entrenador INT(11),
 	
-	PRIMARY KEY (id)
+	PRIMARY KEY (id),
+	FOREIGN KEY (entrenador) REFERENCES users(id)
 ) ENGINE=INNODB DEFAULT CHARACTER SET = UTF8;
 
 CREATE TABLE exercises (
@@ -43,7 +45,7 @@ CREATE TABLE activities (
 	hora_inicio TIME,
 	hora_fin TIME,
 	plazas INT(11),
-	entrenador INT(11) NOT NULL,
+	entrenador INT(11),
 	
 	PRIMARY KEY (id),
 	FOREIGN KEY (entrenador) REFERENCES users(id)
@@ -113,20 +115,20 @@ CREATE TABLE resources_activity (
 
 grant all privileges on gesgym.* to gguser@localhost identified by "ggpass";
 
-INSERT INTO users (username, password, tipo, subtipo) VALUES ('admin','12345','administrador',null);
-INSERT INTO users (username, password, tipo, subtipo) VALUES ('entrenador','12345','entrenador',null);
-INSERT INTO users (username, password, tipo, subtipo) VALUES ('deportista','12345','deportista',null);
+INSERT INTO users (username, password, tipo, subtipo, entrenador) VALUES ('admin','12345','administrador',null,null);
+INSERT INTO users (username, password, tipo, subtipo, entrenador) VALUES ('entrenador','12345','entrenador',null,null);
+INSERT INTO users (username, password, tipo, subtipo, entrenador) VALUES ('deportista','12345','deportista','tdu',null);
 
-INSERT INTO users (username, password, tipo, subtipo) VALUES ('juan','admin','administrador',null);
-INSERT INTO users (username, password, tipo, subtipo) VALUES ('marcos','admin','administrador',null);
-INSERT INTO users (username, password, tipo, subtipo) VALUES ('maria','admin','administrador',null);
-INSERT INTO users (username, password, tipo, subtipo) VALUES ('jorge','admin','administrador',null);
-INSERT INTO users (username, password, tipo, subtipo) VALUES ('pedro','admin','administrador',null);
-INSERT INTO users (username, password, tipo, subtipo) VALUES ('miguel','admin','administrador',null);
-INSERT INTO users (username, password, tipo, subtipo) VALUES ('martin','admin','administrador',null);
-INSERT INTO users (username, password, tipo, subtipo) VALUES ('borja','admin','administrador',null);
-INSERT INTO users (username, password, tipo, subtipo) VALUES ('laura','admin','administrador',null);
-INSERT INTO users (username, password, tipo, subtipo) VALUES ('manolo','admin','administrador',null);
+INSERT INTO users (username, password, tipo, subtipo, entrenador) VALUES ('juan','12345','administrador',null,null);
+INSERT INTO users (username, password, tipo, subtipo, entrenador) VALUES ('marcos','12345','entrenador',null,null);
+INSERT INTO users (username, password, tipo, subtipo, entrenador) VALUES ('maria','12345','deportista','tdu',2);
+INSERT INTO users (username, password, tipo, subtipo, entrenador) VALUES ('jorge','12345','administrador',null,null);
+INSERT INTO users (username, password, tipo, subtipo, entrenador) VALUES ('pedro','12345','entrenador',null,null);
+INSERT INTO users (username, password, tipo, subtipo, entrenador) VALUES ('miguel','12345','deportista','pef',2);
+INSERT INTO users (username, password, tipo, subtipo, entrenador) VALUES ('martin','12345','administrador',null,null);
+INSERT INTO users (username, password, tipo, subtipo, entrenador) VALUES ('borja','12345','entrenador',null,null);
+INSERT INTO users (username, password, tipo, subtipo, entrenador) VALUES ('laura','12345','deportista','tdu',2);
+INSERT INTO users (username, password, tipo, subtipo, entrenador) VALUES ('manolo','12345','administrador',null,null);
 
 INSERT INTO exercises (nombre, tipo, descripcion, url) values ('Abdominal','muscular', '', '');
 INSERT INTO exercises (nombre, tipo, descripcion, url) values ('Abdominal','muscular', '', '');

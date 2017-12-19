@@ -157,6 +157,8 @@ class UsersController extends BaseController {
 		$username = $_REQUEST["username"];
 		// Se coge de la BD el usuario seleccionado.
 		$user = $this->userMapper->findByUsername($username);
+		// Se coge de la BD el entrenador del usuario seleccionado.
+		$trainer = $this->userMapper->findById($user->getEntrenador());
 		// Se comprueba que el usuario esté logeado como administrador (si se consulta un entrenador/admin)
 		// o entrenador/admin (si se consulta un deportista).
 		if ($user->getTipo() == "deportista"){
@@ -172,6 +174,7 @@ class UsersController extends BaseController {
 		}
 		// Se envia la variable a la vista.
 		$this->view->setVariable("user", $user);
+		$this->view->setVariable("trainer", $trainer);
 		// Se elige la plantilla y renderiza la vista.
 		$this->view->setLayout("welcome");
 		$this->view->render("users", "view");
