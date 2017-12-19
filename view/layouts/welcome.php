@@ -8,8 +8,8 @@ $view = ViewManager::getInstance();
 	<head>
 		<meta charset="utf-8">
 		<title><?=$view->getVariable("title","no title")?></title>
-		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
-		<link rel="stylesheet" type="text/css" href="css/layoutStyle.css">
+		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="css/layoutStyle.css"/>
 <?=$view->getFragment("css")?>
 <?=$view->getFragment("javascript")?>
 	</head>

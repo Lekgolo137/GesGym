@@ -25,7 +25,7 @@ array(
 	"Username" => "Nombre de usuario",
 	"Password" => "Contraseña",
 	"Card" => "Tarjeta",
-	"None" => "Ninguna",
+	"None" => "Ninguno/a",
 	"College Sports" => "Deportiva Universitaria",
 	"Get Fit" => "Ponte En Forma",
 	"Type" => "Tipo",
@@ -34,6 +34,8 @@ array(
 	"Administrator" => "Administrador",
 	"Cancel" => "Cancelar",
 	"Tables" => "Tablas",
+	"Description" => "Descripción",
+	"The name can't be empty." => "El nombre no puede estar vacío.",
 	// Login
 	"GesGym - Login" => "GesGym - Inicio de sesión",
 	"GesGym" => "GesGym",
@@ -89,7 +91,7 @@ array(
 	"Equipment" => "Material",
 	"Installation" => "Instalación",
 	"Location" => "Localización",
-	"Amount or Capacity" => "Cantidad o Aforo",
+	"Capacity" => "Aforo",
 	// Resources List
 	"GesGym - Resources List" => "GesGym - Listado de recursos",
 	"Resource \"%s\" successfully deleted." => "Recurso \"%s\" eliminado con éxito.",
@@ -100,6 +102,7 @@ array(
 	// View Resource
 	"GesGym - View Resource" => "GesGym - Consultar recurso",
 	"View Resource" => "Consultar recurso",
+	"Activities that use this resource" => "Actividades que usan este recurso",
 	// Manage Exercises
 	"GesGym - Manage Exercises" => "GesGym - Gestionar ejercicios",
 	// Add Exercise
