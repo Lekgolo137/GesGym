@@ -2,6 +2,7 @@
 // file: model/ResourceMapper.php
 
 require_once(__DIR__."/../core/PDOConnection.php");
+require_once(__DIR__."/../model/Activity.php");
 
 class ResourceMapper {
 
@@ -12,21 +13,11 @@ class ResourceMapper {
 	public function __construct() {
 		$this->db = PDOConnection::getInstance();
 	}
-
-	// Comprueba si un ID ya existe.
-	public function idExists($id) {
-		$stmt = $this->db->prepare("SELECT count(id) FROM resources where id=?");
-		$stmt->execute(array($id));
-
-		if ($stmt->fetchColumn() > 0) {
-			return true;
-		}
-	}
 	
-	// Guarda un recurso.
-	public function save($resource) {
-		$stmt = $this->db->prepare("INSERT INTO resources values (?,?,?,?)");
-		$stmt->execute(array($resource->getId(), $resource->getTipo(), $resource->getLocation(), $resource->getCanafo()));
+	// Añade un nuevo recurso.
+	public function add($resource) {
+		$stmt = $this->db->prepare("INSERT INTO resources (nombre, aforo, descripcion) VALUES (?, ?, ?)");
+		$stmt->execute(array($resource->getNombre(), $resource->getAforo(), $resource->getDescripcion()));
 	}
 	
 	// Devuelve todos los recursos.
@@ -38,9 +29,9 @@ class ResourceMapper {
 
 		foreach ($resources_db as $resource) {
 			array_push($resources, new Resource($resource["id"],
-										$resource["tipo"],
-										$resource["location"],
-										$resource["canafo"]));
+												$resource["nombre"],
+												$resource["aforo"],
+												$resource["descripcion"]));
 		}
 
 		return $resources;
@@ -54,24 +45,48 @@ class ResourceMapper {
 
 		if($resource != null) {
 			return new Resource($resource["id"],
-							$resource["tipo"],
-							$resource["location"],
-							$resource["canafo"]);
+								$resource["nombre"],
+								$resource["aforo"],
+								$resource["descripcion"]);
 		} else {
 			return NULL;
 		}
 	}
 	
-	// Elimina un recurso
+	// Elimina un recurso.
 	public function delete($resource) {
-		$stmt = $this->db->prepare("DELETE from resources WHERE id=?");
+		// Primero eliminamos cualquier relación que tenga el recurso con actividades.
+		$stmt = $this->db->prepare("DELETE FROM resources_activity WHERE recurso=?");
+		$stmt->execute(array($resource->getId()));
+		// Luego eliminamos el recurso en si.
+		$stmt = $this->db->prepare("DELETE FROM resources WHERE id=?");
 		$stmt->execute(array($resource->getId()));
 	}
 	
 	// Actualiza un recurso.
 	public function update($resource){
-		$stmt = $this->db->prepare("UPDATE resources set tipo=?, location=?, canafo=? where id=?");
-		$stmt->execute(array($resource->getTipo(), $resource->getLocation(), $resource->getCanafo(), $resource->getId()));
+		$stmt = $this->db->prepare("UPDATE resources SET nombre=?, aforo=?, descripcion=? WHERE id=?");
+		$stmt->execute(array($resource->getNombre(), $resource->getAforo(), $resource->getDescripcion(), $resource->getId()));
+	}
+	
+	// Devuelve las actividades que usan un recurso a partir de su ID.
+	public function findActivities($id) {
+		$stmt = $this->db->prepare("SELECT actividad FROM resources_activity WHERE recurso=?");
+		$stmt->execute(array($id));
+		$activity_ids = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		
+		$activities = array();
+		
+		foreach ($activity_ids as $activity_id) {
+			$stmt = $this->db->prepare("SELECT nombre FROM activities WHERE id=?");
+			$stmt->execute(array($activity_id["actividad"]));
+			$activity_name = $stmt->fetch(PDO::FETCH_ASSOC);
+			
+			array_push($activities, new Activity($activity_id["actividad"],
+												 $activity_name["nombre"]));
+		}
+
+		return $activities;
 	}
 
 }

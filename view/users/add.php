@@ -16,7 +16,7 @@ $currentusertype = $view->getVariable("currentusertype");
 				<input type="password" name="password" class="form-control" placeholder="<?=i18n("Password")?>" value="<?=$user->getPassword()?>" id="password" required>
 				<input type="password" class="form-control" placeholder="<?=i18n("Repeat password")?>" value="<?=$user->getPassword()?>" oninput="check(this)" required>
 				<div class="form-control"><?=i18n("Type")?>:
-					<select name="tipo" disabled>
+					<select name="tipo" <?php if ($currentusertype != "administrador") print "disabled"?>>
 						<option value="deportista" <?php if ($user->getTipo() == "deportista") print "selected"?>><?=i18n("Sportsman")?></option>
 						<option value="entrenador" <?php if ($user->getTipo() == "entrenador") print "selected"?>><?=i18n("Trainer")?></option>
 						<option value="administrador" <?php if ($user->getTipo() == "administrador") print "selected"?>><?=i18n("Administrator")?></option>

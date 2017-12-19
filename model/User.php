@@ -19,14 +19,18 @@ class User {
 
 	// ENUM String (tdu, pef) [null para entrenadores y administradores]
 	private $subtipo;
+	
+	//Integer (ID)
+	private $entrenador;
 
 	// Constructor
-	public function __construct($id=NULL, $username=NULL, $password=NULL, $tipo=NULL, $subtipo=NULL) {
+	public function __construct($id=NULL, $username=NULL, $password=NULL, $tipo=NULL, $subtipo=NULL, $entrenador=NULL) {
 		$this->id = $id;
 		$this->username = $username;
 		$this->password = $password;
 		$this->tipo = $tipo;
 		$this->subtipo = $subtipo;
+		$this->entrenador = $entrenador;
 	}
 
 	// GETTERS
@@ -51,6 +55,10 @@ class User {
 		return $this->subtipo;
 	}
 	
+	public function getEntrenador() {
+		return $this->entrenador;
+	}
+	
 
 	// SETTERS
 	
@@ -73,7 +81,11 @@ class User {
 	public function setSubtipo($subtipo) {
 		$this->subtipo = $subtipo;
 	}
-
+	
+	public function setEntrenador($entrenador) {
+		$this->entrenador = $entrenador;
+	}
+	
 	// Comprueba si el nombre de usuario y contraseña tienen por lo menos 5 caracteres.
 	public function isValid() {
 		$errors = array();

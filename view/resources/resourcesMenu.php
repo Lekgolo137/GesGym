@@ -21,5 +21,5 @@ $view->setVariable("title", i18n("GesGym - Manage Resources"));
 						</a>
 					</div>
 				</div>
-			</div>		
-<?=$view->moveToFragment("css")?>		<link rel="stylesheet" type="text/css" href="css/resourcesMenuStyle.css">
+			</div>
+<?=$view->moveToFragment("css")?>		<link rel="stylesheet" type="text/css" href="css/resourcesMenuStyle.css"/>
