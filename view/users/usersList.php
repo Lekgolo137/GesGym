@@ -14,7 +14,6 @@ $currentusertype = $view->getVariable("currentusertype");
 						<thead>
 							<tr>
 								<th><?=i18n("Username")?></th>
-								<th><?=i18n("Password")?></th>
 								<th><?=i18n("Type")?></th>
 								<th><?=i18n("Card")?></th>
 								<th><?=i18n("Actions")?></th>
@@ -25,7 +24,6 @@ $currentusertype = $view->getVariable("currentusertype");
 <?php if ($currentusertype == "administrador" || ($currentusertype == "entrenador" && $user->getTipo() == "deportista")) { ?>
 							<tr>
 								<td><?=$user->getUsername()?></td>
-								<td><?=$user->getPassword()?></td>
 								<td><?php if($user->getTipo() == "deportista"){print i18n("Sportsman");}
 										  if($user->getTipo() == "entrenador"){print i18n("Trainer");}
 										  if($user->getTipo() == "administrador"){print i18n("Administrator");} ?></td>
@@ -33,10 +31,10 @@ $currentusertype = $view->getVariable("currentusertype");
 										  if($user->getSubtipo() == "tdu"){print i18n("College Sports");}
 										  if($user->getSubtipo() == "pef"){print i18n("Get Fit");} ?></td>
 								<td>
-									<a class="btn btn-sm btn-success" href="index.php?controller=users&amp;action=view&amp;username=<?=$user->getUsername()?>"><?=i18n("View")?></a>
-									<a class="btn btn-sm btn-primary" href="index.php?controller=users&amp;action=edit&amp;username=<?=$user->getUsername()?>"><?=i18n("Modify")?></a>
-									<form id="<?=$user->getUsername()?>"  method="POST" action="index.php?controller=users&amp;action=delete&amp;username=<?=$user->getUsername()?>">
-										<a class="btn btn-sm btn-danger" onclick="eliminar('<?=i18n("Are you sure?")?>','<?=$user->getUsername()?>')"><?=i18n("Delete")?></a>
+									<a class="btn btn-sm btn-success" href="index.php?controller=users&amp;action=view&amp;id=<?=$user->getId()?>"><?=i18n("View")?></a>
+									<a class="btn btn-sm btn-primary" href="index.php?controller=users&amp;action=edit&amp;id=<?=$user->getId()?>"><?=i18n("Modify")?></a>
+									<form id="<?=$user->getId()?>"  method="POST" action="index.php?controller=users&amp;action=delete&amp;id=<?=$user->getId()?>">
+										<a class="btn btn-sm btn-danger" onclick="eliminar('<?=i18n("Are you sure?")?>','<?=$user->getId()?>')"><?=i18n("Delete")?></a>
 									</form>
 								</td>
 							</tr>
@@ -46,5 +44,5 @@ $currentusertype = $view->getVariable("currentusertype");
 					</table>
 				</div>
 			</div>
-<?=$view->moveToFragment("css")?>		<link rel="stylesheet" type="text/css" href="css/usersList.css">
+<?=$view->moveToFragment("css")?>		<link rel="stylesheet" type="text/css" href="css/usersList.css"/>
 <?=$view->moveToFragment("javascript")?>		<script type="text/javascript" src="js/eliminar.js"></script>

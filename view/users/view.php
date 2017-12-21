@@ -6,6 +6,9 @@ $view = ViewManager::getInstance();
 $errors = $view->getVariable("errors");
 $user = $view->getVariable("user");
 $trainer = $view->getVariable("trainer");
+$sessions = $view->getVariable("sessions");
+$tables = $view->getVariable("tables");
+$activities = $view->getVariable("activities");
 $view->setVariable("title", i18n("GesGym - View User"));
 $view->setVariable("header", i18n("View User"));
 ?>
@@ -28,15 +31,58 @@ $view->setVariable("header", i18n("View User"));
 				</div>
 <?php if($user->getTipo() != "administrador") { ?>
 				<div class="col-sm-6">
-					<div><?=i18n("Other User Information")?></div>
+					<p><?=i18n("Other User Information")?></p>
 <?php if($user->getTipo() == "deportista") { ?>
-					<ul>
-						<li><?=i18n("Trainer")?>: <?php if($trainer == null) { print i18n("None"); } else { ?><a href="index.php?controller=users&amp;action=view&amp;username=<?=$trainer->getUsername()?>"><?=$trainer->getUsername()?></a></li>
+					<p><b><?=i18n("Trainer")?>:</b> <?php if($trainer == null) { print i18n("None"); } else { ?><a href="index.php?controller=users&amp;action=view&amp;id=<?=$trainer->getId()?>"><?=$trainer->getUsername()?></a></p>
 <?php } ?>
-						<li><a><?=i18n("Sessions")?></a></li>
-						<li><a><?=i18n("Tables")?></a></li>
-						<li><a><?=i18n("Activities")?></a></li>
-					</ul>
+					<div class="table-responsive">
+						<table class="table table-striped table-hover">
+							<thead>
+								<tr>
+									<th><?=i18n("Sessions")?></th>
+								</tr>
+							</thead>
+							<tbody>
+<?php foreach ($sessions as $session): ?>
+								<tr>
+									<td><a href="index.php?controller=sessions&amp;action=view&amp;id=<?=$session->getId()?>"><?=$session->getId()?></a></td>
+								</tr>
+<?php endforeach; ?>
+							</tbody>
+						</table>
+					</div>
+					<div class="table-responsive">
+						<table class="table table-striped table-hover">
+							<thead>
+								<tr>
+									<th><?=i18n("Tables")?></th>
+								</tr>
+							</thead>
+							<tbody>
+<?php foreach ($tables as $table): ?>
+								<tr>
+									<td><a href="index.php?controller=tables&amp;action=view&amp;id=<?=$table->getId()?>"><?=$table->getNombre()?></a></td>
+								</tr>
+<?php endforeach; ?>
+							</tbody>
+						</table>
+					</div>
+					<div class="table-responsive">
+						<table class="table table-striped table-hover">
+							<thead>
+								<tr>
+									<th><?=i18n("Activities")?></th>
+								</tr>
+							</thead>
+							<tbody>
+<?php foreach ($activities as $activity): ?>
+								<tr>
+									<td><a href="index.php?controller=activities&amp;action=view&amp;id=<?=$activity->getId()?>"><?=$activity->getNombre()?></a></td>
+								</tr>
+<?php endforeach; ?>
+							</tbody>
+						</table>
+					</div>
 <?php } ?>
 <?php if($user->getTipo() == "entrenador") { ?>
 					<ul>
