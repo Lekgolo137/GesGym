@@ -60,16 +60,20 @@ class ActivityMapper {
 	
 	
 	// Devuelve una actividad
-	public function findByActivityid($activityid) {
-		$stmt = $this->db->prepare("SELECT * FROM activities WHERE  activityid=?");
-		$stmt->execute(array($activityid));
+	public function findById($id) {
+		$stmt = $this->db->prepare("SELECT * FROM activities WHERE id=?");
+		$stmt->execute(array($id));
 		$activity = $stmt->fetch(PDO::FETCH_ASSOC);
 		
-		if($activity != null) {
-			
-			return new Activity($activity["activityid"],
-								$activity["plazas"]);
-			
+		if($activity != null) {	
+			return new Activity($activity["id"],
+								$activity["nombre"],
+								$activity["descripcion"],
+								$activity["dia"],
+								$activity["hora_inicio"],
+								$activity["hora_fin"],
+								$activity["plazas"],
+								$activity["entrenador"]);
 		} else {
 			return NULL;
 		}
@@ -88,11 +92,27 @@ class ActivityMapper {
 	}
 	
 	// Devuelve los usuarios de la actividad
-	public function findUsers($activityid) {
-		$stmt = $this->db->prepare("SELECT username FROM use_participates_act WHERE activityid=?");
-		$stmt->execute(array($activityid));
-		$usernames = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		return $usernames;
+	public function findUsers($id) {
+		$stmt = $this->db->prepare("SELECT usuario FROM activities_user WHERE actividad=?");
+		$stmt->execute(array($id));
+		$user_ids = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		
+		$users = array();
+		
+		foreach($user_ids as $user_id){
+			$stmt = $this->db->prepare("SELECT * FROM users WHERE id=?");
+			$stmt->execute(array($user_id["usuario"]));
+			$user_db = $stmt->fetch(PDO::FETCH_ASSOC);
+			
+			array_push($users, new User($user_db["id"],
+										$user_db["username"],
+										$user_db["password"],
+										$user_db["tipo"],
+										$user_db["subtipo"],
+										$user_db["entrenador"]));
+		}
+		
+		return $users;
 	}
 	
 	// Comprueba que un usuario no esta previamente registrado en una actividad

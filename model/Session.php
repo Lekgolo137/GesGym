@@ -3,29 +3,24 @@ require_once(__DIR__."/../core/ValidationException.php");
 
 class Session {
 
-  // String
-  private $sesionid;
-
-  // String
-  private $username;
-
-  // String
-  private $tableid;
-
-  // Date
-  private $fechaInicio;
-
-  // Date
-  private $fechaFin;
+  private $id;
+  private $comentarios;
+  private $fecha_inicio;
+  private $fecha_fin;
+  private $usuario;
+  private $tabla;
 
   // Constructor
-  public function __construct($sessionid=NULL, $username=NULL, $tableid=NULL, $fechaInicio=NULL, $fechaFin=NULL) {
-    $this->sessionid = $sessionid;
-    $this->username = $username;
-    $this->tableid = $tableid;
-    $this->fechaInicio = $fechaInicio;
-    $this->fechaFin = $fechaFin;
+  public function __construct($id=NULL, $comentarios=NULL, $fecha_inicio=NULL, $fecha_fin=NULL, $usuario=NULL, $tabla=NULL) {
+    $this->id = $id;
+    $this->comentarios = $comentarios;
+    $this->fecha_inicio = $fecha_inicio;
+    $this->fecha_fin = $fecha_fin;
+    $this->usuario = $usuario;
+    $this->tabla = $tabla;
   }
+  
+  // GETTERS Y SETTERS TODAVIA NO CAMBIADOS
 
   // GETTERS
   public function getSessionid() {

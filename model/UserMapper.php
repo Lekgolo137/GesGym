@@ -2,6 +2,9 @@
 // file: model/UserMapper.php
 
 require_once(__DIR__."/../core/PDOConnection.php");
+require_once(__DIR__."/../model/Session.php");
+require_once(__DIR__."/../model/Table.php");
+require_once(__DIR__."/../model/Activity.php");
 
 class UserMapper {
 
@@ -108,7 +111,71 @@ class UserMapper {
 
 		return $users;
 	}
+	
+	public function findSessions($id){
+		$stmt = $this->db->prepare("SELECT * FROM sessions WHERE usuario=?");
+		$stmt->execute(array($id));
+		$sessions_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		
+		$sessions = array();
+		
+		foreach ($sessions_db as $session) {
+			array_push($sessions, new Session($session["id"],
+											  $session["comentarios"],
+											  $session["fecha_inicio"],
+											  $session["fecha_fin"],
+											  $session["usuario"],
+											  $session["tabla"]));
+		}
+		
+		return $sessions;
+	}
 
+	public function findTables($id){
+		$stmt = $this->db->prepare("SELECT tabla FROM tables_user WHERE usuario=?");
+		$stmt->execute(array($id));
+		$table_ids = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		
+		$tables = array();
+		
+		foreach ($table_ids as $table_id) {
+			$stmt = $this->db->prepare("SELECT * FROM tables WHERE id=?");
+			$stmt->execute(array($table_id["tabla"]));
+			$table = $stmt->fetch(PDO::FETCH_ASSOC);
+			
+			array_push($tables, new Table($table["id"],
+										  $table["nombre"],
+										  $table["tipo"],
+										  $table["descripcion"]));
+		}
+		
+		return $tables;
+	}
+	
+	public function findActivities($id){
+		$stmt = $this->db->prepare("SELECT actividad FROM activities_user WHERE usuario=?");
+		$stmt->execute(array($id));
+		$activity_ids = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		
+		$activities = array();
+		
+		foreach ($activity_ids as $activity_id) {
+			$stmt = $this->db->prepare("SELECT * FROM activities WHERE id=?");
+			$stmt->execute(array($activity_id["actividad"]));
+			$activity = $stmt->fetch(PDO::FETCH_ASSOC);
+			array_push($activities, new Activity($activity["id"],
+											     $activity["nombre"],
+											     $activity["descripcion"],
+											     $activity["dia"],
+											     $activity["hora_inicio"],
+											     $activity["hora_fin"],
+											     $activity["plazas"],
+											     $activity["entrenador"]));
+		}
+		
+		return $activities;
+	}
+	
 	// Elimina un usuario
 	public function delete($user) {
 		// Primero eliminamos las relaciones del usuario con otras entidades.

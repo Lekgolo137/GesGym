@@ -82,11 +82,13 @@ require_once(__DIR__."/../controller/BaseController.php");
 	
 	// Muestra la actividad
 	public function view(){
-		$activityid = $_REQUEST["activityid"];
-		//Se coge de la base de datos la actividad seleccionada
-		$activity = $this->activityMapper->findByActivityid($activityid);
-		$users = $this->activityMapper->findUsers($activityid);
-		//Se envia la variable a la vista
+		// Se guarda el id de la actividad seleccionada en una variable.
+		$id = $_REQUEST["id"];
+		//Se coge de la BD la actividad seleccionada
+		$activity = $this->activityMapper->findById($id);
+		// Se coge de la BD los usuarios que están inscritos en esa actividad.
+		$users = $this->activityMapper->findUsers($id);
+		//Se envian las variables a la vista
 		$this->view->setVariable("activity", $activity);
 		$this->view->setVariable("users", $users);
 		//Se elige la plantilla y se renderiza la vista

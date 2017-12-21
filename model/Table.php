@@ -3,17 +3,20 @@ require_once(__DIR__."/../core/ValidationException.php");
 
 class Table {
 
-	// String
-	private $tableid;
-
-	// String
-	private $tabletipo;
+	private $id;
+	private $nombre;
+	private $tipo;
+	private $descripcion;
 
 	// Constructor
-	public function __construct($tableid=NULL, $tabletipo=NULL) {
-		$this->tableid = $tableid;
-		$this->tabletipo = $tabletipo;
+	public function __construct($id=NULL, $nombre=NULL, $tipo=NULL, $descripcion=NULL) {
+		$this->id = $id;
+		$this->nombre = $nombre;
+		$this->tipo = $tipo;
+		$this->descripcion = $descripcion;
 	}
+	
+	// GETTERS Y SETTERS TODAVIA NO CAMBIADOS
 
 	// GETTERS
 	public function getTableid() {
