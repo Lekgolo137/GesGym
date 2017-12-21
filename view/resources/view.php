@@ -12,7 +12,7 @@ $view->setVariable("header", i18n("View Resource"));
 				<div class="col-sm-6">
 					<?=i18n("Name")?>:
 					<input disabled type="text" class="form-control" placeholder="<?=i18n("Name")?>" value="<?=$resource->getNombre()?>">
-					<?=i18n("Aforo")?>:
+					<?=i18n("Capacity")?>:
 					<input disabled type="number" class="form-control" placeholder="<?=i18n("Capacity")?>" value="<?=$resource->getAforo()?>">
 					<?=i18n("Description")?>:
 					<textarea disabled class="form-control" placeholder="<?=i18n("Description")?>" value="<?=$resource->getDescripcion()?>"><?=$resource->getDescripcion()?></textarea>

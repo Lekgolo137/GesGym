@@ -10,10 +10,8 @@ $view->setVariable("header", i18n("View Activity"));
 ?>
 			<div class="row">
 				<div class="col-sm-6">
-					<?=i18n("ID")?>:
-					<input disabled type="text" class="form-control" placeholder="<?=i18n("Activity")?>" value="<?=$activity->getActivityID()?>">
-					<?=i18n("Places")?>:
-					<input disabled type="text" class="form-control" placeholder="<?=i18n("Places")?>" value="<?=$activity->getPlazas()?>">
+					<?=i18n("Name")?>:
+					<input disabled type="text" class="form-control" placeholder="<?=i18n("Name")?>" value="<?=$activity->getNombre()?>">
 				</div>
 				<div class="col-sm-6">
 					<table class="table table-striped table-hover">
@@ -23,14 +21,14 @@ $view->setVariable("header", i18n("View Activity"));
 							</tr>
 						</thead>
 						<tbody>
-						<?php foreach ($users as &$user):?>
+<?php foreach ($users as &$user):?>
 							<tr>
-								<td><?=$user["username"]?></td>
+								<td><?=$user->getUsername()?></td>
 							</tr>
-						<?php endforeach; ?>
+<?php endforeach; ?>
 						</tbody>
 					</table>
 				</div>
 			</div>
 			<a class="btn btn-lg btn-primary btn-block" href="index.php?controller=activities&amp;action=activitiesList"><?=i18n("Return")?></a>
-<?=$view->moveToFragment("css")?>		<link rel="stylesheet" type="text/css" href="css/viewActivityStyle.css">
+<?=$view->moveToFragment("css")?>		<link rel="stylesheet" type="text/css" href="css/viewActivityStyle.css"/>
