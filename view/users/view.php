@@ -5,10 +5,17 @@ require_once(__DIR__."/../../core/ViewManager.php");
 $view = ViewManager::getInstance();
 $errors = $view->getVariable("errors");
 $user = $view->getVariable("user");
+$currentusertype = $view->getVariable("currentusertype");
+if($user->getTipo() == "deportista"){
 $trainer = $view->getVariable("trainer");
 $sessions = $view->getVariable("sessions");
 $tables = $view->getVariable("tables");
 $activities = $view->getVariable("activities");
+}
+if($user->getTipo() == "entrenador"){
+$sportsmans = $view->getVariable("sportsmans");
+$trainer_activities = $view->getVariable("trainer_activities");
+}
 $view->setVariable("title", i18n("GesGym - View User"));
 $view->setVariable("header", i18n("View User"));
 ?>
@@ -33,7 +40,10 @@ $view->setVariable("header", i18n("View User"));
 				<div class="col-sm-6">
 					<p><?=i18n("Other User Information")?></p>
 <?php if($user->getTipo() == "deportista") { ?>
-					<p><b><?=i18n("Trainer")?>:</b> <?php if($trainer == null) { print i18n("None"); } else { ?><a href="index.php?controller=users&amp;action=view&amp;id=<?=$trainer->getId()?>"><?=$trainer->getUsername()?></a></p>
+<?php if($currentusertype == "administrador") { ?>
+					<p><b><?=i18n("Trainer")?>:</b> <?php if($trainer == null) { print i18n("None"); } else { ?><a href="index.php?controller=users&amp;action=view&amp;id=<?=$trainer->getId()?>"><?=$trainer->getUsername()?></a><?php } ?></p>
+<?php } else { ?>
+					<p><b><?=i18n("Trainer")?>:</b> <?php if($trainer == null) { print i18n("None"); } else { print $trainer->getUsername(); } ?></p>
 <?php } ?>
 					<div class="table-responsive">
 						<table class="table table-striped table-hover">
@@ -85,10 +95,38 @@ $view->setVariable("header", i18n("View User"));
 					</div>
 <?php } ?>
 <?php if($user->getTipo() == "entrenador") { ?>
-					<ul>
-						<li><a><?=i18n("Sportsman")?>s</a></li>
-						<li><a><?=i18n("Activities")?></a></li>
-					</ul>
+					<div class="table-responsive">
+						<table class="table table-striped table-hover">
+							<thead>
+								<tr>
+									<th><?=i18n("Sportsman")?>s</th>
+								</tr>
+							</thead>
+							<tbody>
+<?php foreach ($sportsmans as $sportsman): ?>
+								<tr>
+									<td><a href="index.php?controller=users&amp;action=view&amp;id=<?=$sportsman->getId()?>"><?=$sportsman->getUsername()?></a></td>
+								</tr>
+<?php endforeach; ?>
+							</tbody>
+						</table>
+					</div>
+					<div class="table-responsive">
+						<table class="table table-striped table-hover">
+							<thead>
+								<tr>
+									<th><?=i18n("Activities")?></th>
+								</tr>
+							</thead>
+							<tbody>
+<?php foreach ($trainer_activities as $activity): ?>
+								<tr>
+									<td><a href="index.php?controller=activities&amp;action=view&amp;id=<?=$activity->getId()?>"><?=$activity->getNombre()?></a></td>
+								</tr>
+<?php endforeach; ?>
+							</tbody>
+						</table>
+					</div>
 <?php } ?>
 				</div>
 <?php } ?>
