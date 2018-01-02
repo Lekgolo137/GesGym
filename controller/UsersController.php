@@ -157,14 +157,6 @@ class UsersController extends BaseController {
 		$id = $_REQUEST["id"];
 		// Se coge de la BD el usuario seleccionado.
 		$user = $this->userMapper->findById($id);
-		// Se coge de la BD el entrenador del usuario seleccionado.
-		$trainer = $this->userMapper->findById($user->getEntrenador());
-		// Se coge de la BD las sesiones del usuario seleccionado.
-		$sessions = $this->userMapper->findSessions($id);
-		// Se coge de la BD las tablas del usuario seleccionado.
-		$tables = $this->userMapper->findTables($id);
-		// Se coge de la BD las actividades del usuario seleccionado.
-		$activities = $this->userMapper->findActivities($id);
 		// Se comprueba que el usuario esté logeado como administrador (si se consulta un entrenador/admin)
 		// o entrenador/admin (si se consulta un deportista).
 		if ($user->getTipo() == "deportista"){
@@ -178,12 +170,33 @@ class UsersController extends BaseController {
 				throw new Exception(i18n("You must be an administrator to access this feature."));
 			}
 		}
-		// Se envia la variable a la vista.
+		// Se envia los datos del usuario seleccionado a la vista.
 		$this->view->setVariable("user", $user);
-		$this->view->setVariable("trainer", $trainer);
-		$this->view->setVariable("sessions", $sessions);
-		$this->view->setVariable("tables", $tables);
-		$this->view->setVariable("activities", $activities);
+		// Se cogen de la BD los datos adicionales necesarios en función del tipo de usuario y se envían a la vista.
+		if ($user->getTipo() == "deportista"){
+			// Se coge de la BD el entrenador del usuario seleccionado.
+			$trainer = $this->userMapper->findById($user->getEntrenador());
+			// Se coge de la BD las sesiones del usuario seleccionado.
+			$sessions = $this->userMapper->findSessions($id);
+			// Se coge de la BD las tablas del usuario seleccionado.
+			$tables = $this->userMapper->findTables($id);
+			// Se coge de la BD las actividades del usuario seleccionado.
+			$activities = $this->userMapper->findActivities($id);
+			// Se envían los datos adicionales a la vista.
+			$this->view->setVariable("trainer", $trainer);
+			$this->view->setVariable("sessions", $sessions);
+			$this->view->setVariable("tables", $tables);
+			$this->view->setVariable("activities", $activities);
+		}
+		if ($user->getTipo() == "entrenador"){
+			// Se coge de la BD los deportistas del entrenador seleccionado.
+			$sportsmans = $this->userMapper->findSportsmans($id);
+			// Se coge de la BD las actividades del entrenador seleccionado.
+			$trainer_activities = $this->userMapper->findTrainerActivities($id);
+			// Se envían los datos adicionales a la vista.
+			$this->view->setVariable("sportsmans", $sportsmans);
+			$this->view->setVariable("trainer_activities", $trainer_activities);
+		}
 		// Se elige la plantilla y renderiza la vista.
 		$this->view->setLayout("welcome");
 		$this->view->render("users", "view");

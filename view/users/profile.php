@@ -15,34 +15,39 @@ $currentusertype = $view->getVariable("currentusertype");
 							<br><?=i18n("Modify Profile")?>
 						</a>
 					</div>
-					<?php if($currentusertype == "deportista") { ?>
+<?php if($currentusertype == "deportista") { ?>
 					<div class="col-sm-3">
-						<a href="index.php?controller=sessions&amp;action=sessionsList">
+						<a href="index.php?controller=sessions&amp;action=X">
 							<span class="glyphicon glyphicon-hourglass"></span>
 							<br><?=i18n("Your Sessions")?>
 						</a>
 					</div>
 					<div class="col-sm-3">
-						<a href="index.php?controller=sessions&amp;action=sessionsList">
+						<a href="index.php?controller=tables&amp;action=X">
 							<span class="glyphicon glyphicon-list-alt"></span>
 							<br><?=i18n("Your Tables")?>
 						</a>
 					</div>
 					<div class="col-sm-3">
-						<a href="index.php?controller=sessions&amp;action=sessionsList">
+						<a href="index.php?controller=activities&amp;action=X">
 							<span class="glyphicon glyphicon-flag"></span>
 							<br><?=i18n("Your Activities")?>
 						</a>
 					</div>
-					<?php } ?>
-					<?php if($currentusertype == "entrenador") { ?>
+<?php } if($currentusertype == "entrenador") { ?>
 					<div class="col-sm-3">
-						<a href="index.php?controller=sessions&amp;action=sessionsList">
+						<a href="index.php?controller=users&amp;action=X">
 							<span class="glyphicon glyphicon-user"></span>
 							<br><?=i18n("Your Sportsmans")?>
 						</a>
 					</div>
-					<?php } ?>
+					<div class="col-sm-3">
+						<a href="index.php?controller=activities&amp;action=X">
+							<span class="glyphicon glyphicon-flag"></span>
+							<br><?=i18n("Your Activities")?>
+						</a>
+					</div>
+<?php } ?>
 				</div>
 			</div>
-<?=$view->moveToFragment("css")?>		<link rel="stylesheet" type="text/css" href="css/mainMenuStyle.css">
+<?=$view->moveToFragment("css")?>		<link rel="stylesheet" type="text/css" href="css/mainMenuStyle.css"/>
