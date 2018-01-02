@@ -128,6 +128,10 @@ array(
 	"Manage Sessions" => "Gestionar sesiones",
 	"Profile successfully modified." => "Perfil modificado con éxito.",
 	"New Session" => "Nueva sesión",
+	"Your Sessions" => "Tus sesiones",
+	"Your Tables" => "Tus tablas",
+	"Your Activities" => "Tus actividades",
+	"Your Sportsmans" => "Tus deportistas",
 	// Activities Menu
 	"New Activity" => "Nueva actividad",
 	"Activities List" => "Listado de actividades",
