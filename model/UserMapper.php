@@ -176,6 +176,46 @@ class UserMapper {
 		return $activities;
 	}
 	
+	public function findSportsmans($id){
+		$stmt = $this->db->prepare("SELECT * FROM users WHERE entrenador=?");
+		$stmt->execute(array($id));
+		$sportsmans_bd = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		
+		$sportsmans = array();
+
+		foreach($sportsmans_bd as $sportsman){
+			array_push($sportsmans, new User($sportsman["id"],
+											 $sportsman["username"],
+											 $sportsman["password"],
+										  	 $sportsman["tipo"],
+											 $sportsman["subtipo"],
+											 $sportsman["entrenador"]));
+		}
+		
+		return $sportsmans;
+	}
+	
+	public function findTrainerActivities($id){
+		$stmt = $this->db->prepare("SELECT * FROM activities WHERE entrenador=?");
+		$stmt->execute(array($id));
+		$activities_bd = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		
+		$activities = array();
+		
+		foreach ($activities_bd as $activity) {
+			array_push($activities, new Activity($activity["id"],
+											     $activity["nombre"],
+											     $activity["descripcion"],
+											     $activity["dia"],
+											     $activity["hora_inicio"],
+											     $activity["hora_fin"],
+											     $activity["plazas"],
+											     $activity["entrenador"]));
+		}
+		
+		return $activities;
+	}
+	
 	// Elimina un usuario
 	public function delete($user) {
 		// Primero eliminamos las relaciones del usuario con otras entidades.
