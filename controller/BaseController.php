@@ -28,10 +28,12 @@ class BaseController {
 			$this->currentUser = new User();
 			$this->currentUser->setUsername($_SESSION["currentuser"]);
 			$this->currentUser->setTipo($_SESSION["currentusertype"]);
+			$this->currentUser->setId($_SESSION["currentuserid"]);
 			
 			// Se ponen los datos del usuario en $view, ya que algunas vistas los utilizan.
 			$this->view->setVariable("currentusername", $this->currentUser->getUsername());
 			$this->view->setVariable("currentusertype", $this->currentUser->getTipo());
+			$this->view->setVariable("currentuserid", $this->currentUser->getId());
 		}
 	}
 }

@@ -16,15 +16,15 @@ class Table {
 		$this->descripcion = $descripcion;
 	}
 	
-	// GETTERS Y SETTERS TODAVIA NO CAMBIADOS
+	// GETTERS Y SETTERS TODAVIA ACTUALIZADOS A NUEVA BD
 
 	// GETTERS
-	public function getTableid() {
-		return $this->tableid;
+	public function getId() {
+		return $this->id;
 	}
 
-	public function getTabletipo() {
-		return $this->tabletipo;
+	public function getNombre() {
+		return $this->nombre;
 	}
 
 	// SETTERS

@@ -131,6 +131,6 @@ $view->setVariable("header", i18n("View User"));
 				</div>
 <?php } ?>
 			</div>
-			<a class="btn btn-lg btn-primary btn-block" href="index.php?controller=users&amp;action=usersList"><?=i18n("Return")?></a>
+			<a class="btn btn-lg btn-primary btn-block" href="javascript:history.back()"><?=i18n("Return")?></a>
 <?=$view->moveToFragment("css")?>		<link rel="stylesheet" type="text/css" href="css/viewUserStyle.css"/>
 <?=$view->moveToFragment("javascript")?>		<script type="text/javascript" src="js/password.js"></script>

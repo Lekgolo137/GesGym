@@ -4,13 +4,13 @@
 require_once(__DIR__."/../../core/ViewManager.php");
 $view = ViewManager::getInstance();
 $view->setVariable("title", i18n("GesGym - Profile"));
-$currentusername = $view->getVariable("currentusername");
+$currentuserid = $view->getVariable("currentuserid");
 $currentusertype = $view->getVariable("currentusertype");
 ?>
 			<div id="menu" class="container">
 				<div class="row">
 					<div class="col-sm-3">
-						<a href="index.php?controller=users&amp;action=editProfile">
+						<a href="index.php?controller=users&amp;action=edit&amp;id=<?=$currentuserid?>">
 							<span class="glyphicon glyphicon-cog"></span>
 							<br><?=i18n("Modify Profile")?>
 						</a>
@@ -36,7 +36,7 @@ $currentusertype = $view->getVariable("currentusertype");
 					</div>
 <?php } if($currentusertype == "entrenador") { ?>
 					<div class="col-sm-3">
-						<a href="index.php?controller=users&amp;action=X">
+						<a href="index.php?controller=users&amp;action=sportsmansList">
 							<span class="glyphicon glyphicon-user"></span>
 							<br><?=i18n("Your Sportsmans")?>
 						</a>
