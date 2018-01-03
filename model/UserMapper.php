@@ -48,13 +48,22 @@ class UserMapper {
 		}
 	}
 	
-	// Devuelve el tipo de un usuario a partir de su nombre,
+	// Devuelve el tipo de un usuario a partir de su nombre.
 	public function findType($username) {
 		$stmt = $this->db->prepare("SELECT * FROM users WHERE username=?");
 		$stmt->execute(array($username));
 		$user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 		return $user["tipo"];
+	}
+	
+	// Devuelve el id de un usuario a partir de su nombre.
+	public function findId($username) {
+		$stmt = $this->db->prepare("SELECT * FROM users WHERE username=?");
+		$stmt->execute(array($username));
+		$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+		return $user["id"];
 	}
 	
 	// Devuelve un usuario a partir de su nombre.
@@ -112,6 +121,43 @@ class UserMapper {
 		return $users;
 	}
 	
+	// Devuelve todos los entrenadores.
+	public function findAllTrainers() {
+		$stmt = $this->db->query("SELECT * FROM users WHERE tipo='entrenador'");
+		$users_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		$users = array();
+
+		foreach ($users_db as $user) {
+			array_push($users, new User($user["id"],
+										$user["username"],
+										$user["password"],
+										$user["tipo"],
+										$user["subtipo"],
+										$user["entrenador"]));
+		}
+
+		return $users;
+	}
+	
+	// Devuelve todos las tablas.
+	public function findAllTables() {
+		$stmt = $this->db->query("SELECT * FROM tables");
+		$tables_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		$tables = array();
+
+		foreach ($tables_db as $table) {
+			array_push($tables, new Table($table["id"],
+										  $table["nombre"],
+										  $table["tipo"],
+										  $table["descripcion"]));
+		}
+
+		return $tables;
+	}
+	
+	// Devuelve todas las sesiones de un deportista.
 	public function findSessions($id){
 		$stmt = $this->db->prepare("SELECT * FROM sessions WHERE usuario=?");
 		$stmt->execute(array($id));
@@ -131,6 +177,7 @@ class UserMapper {
 		return $sessions;
 	}
 
+	// Devuelve todas las tablas de un deportista.
 	public function findTables($id){
 		$stmt = $this->db->prepare("SELECT tabla FROM tables_user WHERE usuario=?");
 		$stmt->execute(array($id));
@@ -152,6 +199,7 @@ class UserMapper {
 		return $tables;
 	}
 	
+	// Devuelve todas las actividades de un deportista.
 	public function findActivities($id){
 		$stmt = $this->db->prepare("SELECT actividad FROM activities_user WHERE usuario=?");
 		$stmt->execute(array($id));
@@ -176,6 +224,7 @@ class UserMapper {
 		return $activities;
 	}
 	
+	// Devuelve todos los deportistas de un entrenador.
 	public function findSportsmans($id){
 		$stmt = $this->db->prepare("SELECT * FROM users WHERE entrenador=?");
 		$stmt->execute(array($id));
@@ -195,6 +244,7 @@ class UserMapper {
 		return $sportsmans;
 	}
 	
+	// Devuelve todas las actividades de un entrenador.
 	public function findTrainerActivities($id){
 		$stmt = $this->db->prepare("SELECT * FROM activities WHERE entrenador=?");
 		$stmt->execute(array($id));
@@ -233,4 +283,17 @@ class UserMapper {
 		$stmt = $this->db->prepare("DELETE FROM users WHERE id=?");
 		$stmt->execute(array($user->getId()));
 	}
+	
+	// Elimina todas las relaciones de tablas de un usuario.
+	public function deleteTables($id) {
+		$stmt = $this->db->prepare("DELETE FROM tables_user WHERE usuario=?");
+		$stmt->execute(array($id));
+	}
+	
+	// Añade una relación de tabla con un usuario.
+	public function addTable($user_id, $table_id) {
+		$stmt = $this->db->prepare("INSERT INTO tables_user VALUES (?, ?)");
+		$stmt->execute(array($user_id, $table_id));
+	}
+
 }

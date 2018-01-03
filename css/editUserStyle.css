@@ -31,11 +31,17 @@ a {
 }
 
 button {
+	margin: auto;
 	margin-top: 10px;
+	max-width: 600px;
 }
 
 select {
 	margin-top: 0px;
+}
+
+.col-sm-6, .col-sm-12  {
+	margin-bottom: 30px;
 }
 
 .form-signin .form-control {

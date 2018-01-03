@@ -26,6 +26,7 @@ class UsersController extends BaseController {
 				// Si es válido se inicia" la sesión guardando el nombre de usuario en la variable de sesión currentuser.
 				$_SESSION["currentuser"]=$_POST["username"];
 				$_SESSION["currentusertype"]=$this->userMapper->findType($_POST["username"]);
+				$_SESSION["currentuserid"]=$this->userMapper->findId($_POST["username"]);
 				// Se redirige al usuario al menú principal.
 				$this->view->redirect("users", "mainMenu");
 			}else{
@@ -151,7 +152,26 @@ class UsersController extends BaseController {
 		$this->view->setLayout("default");
 		$this->view->render("users", "usersList");
 	}
-		
+	
+	public function sportsmansList(){
+		// Se comprueba que el usuario esté logeado como entrenador.
+		$type = $this->view->getVariable("currentusertype");
+		if ($type != "entrenador") {
+			throw new Exception(i18n("You must be an administrator to access this feature."));
+		}
+		// Coge de la base de datos el id del usuario actual.
+		$username = $this->view->getVariable("currentusername");
+		$user = $this->userMapper->findByUsername($username);
+		$id = $user->getId();
+		// Coge de la base de datos a todos los usuarios cuyo entrenador sea el usuario actual.
+		$users = $this->userMapper->findSportsmans($id);
+		// Guarda los datos en una variable visible para la vista.
+		$this->view->setVariable("users", $users);
+		// Se elige la plantilla y renderiza la vista.
+		$this->view->setLayout("default");
+		$this->view->render("users", "sportsmansList");
+	}
+	
 	public function view(){
 		// Se guarda el nombre de usuario seleccionado en una variable.
 		$id = $_REQUEST["id"];
@@ -207,29 +227,33 @@ class UsersController extends BaseController {
 		$id = $_REQUEST["id"];
 		// Se coge de la BD el usuario seleccionado.
 		$user = $this->userMapper->findById($id);
-		// Se comprueba que el usuario esté logeado como administrador (si se consulta un entrenador/admin)
-		// o entrenador/admin (si se consulta un deportista).
-		if ($user->getTipo() == "deportista"){
-			$type = $this->view->getVariable("currentusertype");
-			if ($type == "deportista") {
-				throw new Exception(i18n("You must be an administrator to access this feature."));
-			}
-		}else{
-			$type = $this->view->getVariable("currentusertype");
-			if ($type != "administrador") {
-				throw new Exception(i18n("You must be an administrator to access this feature."));
-			}
+		// Se comprueba que el usuario esté logeado.
+		if (!isset($this->currentUser)) {
+			throw new Exception(i18n("You must log in to access this feature."));
 		}
 		// Cuando el usuario le da al botón de crear nuevo usuario...
-		if (isset($_POST["password"])){
+		if (isset($_POST["username"])){
 			// Se guardan los datos introducidos por el usuario en la variable creada
 			$user->setUsername($_POST["username"]);
-			$user->setPassword($_POST["password"]);
-			$user->setTipo($_POST["tipo"]);
+			if ($_POST["password"] != ""){
+				$user->setPassword($_POST["password"]);
+			}
+			if (isset($_POST["tipo"])){
+				$user->setTipo($_POST["tipo"]);
+			}
 			if ($_POST["subtipo"] == "-"){
 				$user->setSubtipo(null);
 			}else{
 				$user->setSubtipo($_POST["subtipo"]);
+			}
+			if ($_POST["entrenador"] == "-"){
+				$user->setEntrenador(null);
+			}else{
+				$user->setEntrenador($_POST["entrenador"]);
+			}
+			$this->userMapper->deleteTables($id);
+			foreach ($_POST["tablas"] as $tabla_id) {
+				$this->userMapper->addTable($id, $tabla_id);
 			}
 			try{
 				// Se comprueba que los datos introducidos sean válidos.
@@ -238,8 +262,13 @@ class UsersController extends BaseController {
 				$this->userMapper->update($user);
 				// Se genera un mensaje de confirmación de la operación para el usuario.
 				$this->view->setFlash(sprintf(i18n("User \"%s\" successfully modified."),$user->getUsername()));
-				// Se redirige al usuario de vuelta al menú.
-				$this->view->redirect("users", "usersList");
+				// En caso de que el usuario haya sido editado por su entrenador se redirige a este a Tus Deportistas.
+				if($user->getEntrenador() == $this->view->getVariable("currentuserid")){
+					$this->view->redirect("users", "sportsmansList");
+				}else{
+					// Sino se redirige al usuario de vuelta a la lista de usuarios.
+					$this->view->redirect("users", "usersList");
+				}
 			}catch(ValidationException $ex) {
 				// En caso de que los datos introducidos no sean válidos se captura el error y se muestra al usuario.
 				$errors = $ex->getErrors();
@@ -249,6 +278,22 @@ class UsersController extends BaseController {
 		// Se envía la variable a la vista, de esta forma en caso de que haya ocurrido un error
 		// los campos que el usuario ya había rellenado aparecerán rellenos.
 		$this->view->setVariable("user", $user);
+		// Se cogen de la BD los datos adicionales necesarios en función del tipo de usuario y se envían a la vista.
+		if ($user->getTipo() == "deportista"){
+			// Se coge de la BD el entrenador del usuario seleccionado.
+			$entrenador = $this->userMapper->findById($user->getEntrenador());
+			// Se coge de la BD todos los entrenadores.
+			$trainers = $this->userMapper->findAllTrainers();
+			// Se coge de la BD las tablas del usuario seleccionado.
+			$tablas = $this->userMapper->findTables($id);
+			// Se coge de la BD las tablas del usuario seleccionado.
+			$tables = $this->userMapper->findAllTables();
+			// Se envían los datos adicionales a la vista.
+			$this->view->setVariable("entrenador", $entrenador);
+			$this->view->setVariable("trainers", $trainers);
+			$this->view->setVariable("tablas", $tablas);
+			$this->view->setVariable("tables", $tables);
+		}
 		// Se elige la plantilla y renderiza la vista.
 		$this->view->setLayout("welcome");
 		$this->view->render("users", "edit");
