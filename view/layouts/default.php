@@ -37,6 +37,9 @@ $currentusertype = $view->getVariable("currentusertype");
 <?php if( ($view->getVariable("title")) == i18n("GesGym - Tables List")){?>
 					<li><a id="list" href="index.php?controller=tables&amp;action=tablesMenu"><?=i18n("Manage Tables")?></a></li>
 <?php } ?>
+<?php if( ($view->getVariable("title")) == "GesGym - ".i18n("Your Sportsmans")){?>
+					<li><a id="list" href="index.php?controller=users&amp;action=profile"><?=i18n("Profile")?></a></li>
+<?php } ?>
 					<li><a id="user"><?=i18n("User")?>: <?=sprintf($currentuser)?> (<?php if($currentusertype == "deportista"){print i18n("Sportsman");}
 																						  if($currentusertype == "entrenador"){print i18n("Trainer");}
 																					      if($currentusertype == "administrador"){print i18n("Administrator");} ?>)</a></li>

@@ -184,6 +184,8 @@ array(
 	"Standard" => "Estándar",
 	// Edit Table
 	"Modify Table" => "Modificar tabla",
-	"GesGym - Modify Table" => "GesGym - Modificar tabla"
+	"GesGym - Modify Table" => "GesGym - Modificar tabla",
+	// Your Sportsmans
+	"Add Sportsman" => "Añadir deportista"
 )
 ?>
