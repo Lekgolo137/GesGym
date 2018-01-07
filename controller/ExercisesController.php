@@ -20,8 +20,8 @@ class ExercisesController extends BaseController {
 
 	public function exercisesMenu(){
 		$type = $this->view->getVariable("currentusertype");
-		if ($type == "cliente") {
-			throw new Exception(i18n("You must be an administrator or manager to access this feature."));
+		if ($type != "entrenador") {
+			throw new Exception(i18n("You must be an manager to access this feature."));
 		}
 		// Se elige la plantilla y renderiza la vista.
 		$this->view->setLayout("default");
@@ -30,39 +30,25 @@ class ExercisesController extends BaseController {
 	
 	public function add() {
 		$type = $this->view->getVariable("currentusertype");
-		if ($type == "cliente") {
-			throw new Exception(i18n("You must be an administrator or manager to access this feature."));
+		if ($type != "entrenador") {
+			throw new Exception(i18n("You must be an manager to access this feature."));
 		}
+
 		// Se crea una variable ejercicio donde guardar los datos de un nuevo ejercicio
 		$exer = new Exercise();
 		// Cuando el usuario le da al botón de crear nuevo ejercicio...
-		if (isset($_POST["exerciseId"])){
+		if (isset($_POST["nombre"])){
 			// Se guardan los datos introducidos por el usuario en la variable creada
-			$exer->setExerciseId($_POST["exerciseId"]);
-			$exer->setExerName($_POST["exerName"]);
-			$exer->setExerTipo($_POST["exerTipo"]);
-			try{
-				// Se comprueba que los datos introducidos sean válidos.
-				$exer->checkIsValidForRegister();
-				// Se comprueba si ya existe otro usuario con ese nombre.
-				if (!$this->exerciseMapper->exerciseIdExists($_POST["exerciseId"])){
-					// Si no existe se guarda el nuevo usuario en la base de datos.
-					$this->exerciseMapper->save($exer);
-					// Se genera un mensaje de confirmación de la operación para el usuario.
-					$this->view->setFlash(i18n("Exercise successfully created."));
-					// Se redirige al usuario de vuelta al menú.
-					$this->view->redirect("exercises", "exercisesMenu");
-				} else {
-					// En caso de que el nombre de usuario ya exista se muestra un mensaje de error al usuario.
-					$errors = array();
-					$errors["exerciseId"] = i18n("That ID already exists");
-					$this->view->setVariable("errors", $errors);
-				}
-			}catch(ValidationException $ex) {
-				// En caso de que los datos introducidos no sean válidos se captura el error y se muestra al usuario.
-				$errors = $ex->getErrors();
-				$this->view->setVariable("errors", $errors);
-			}
+			$exer->setExerName($_POST["nombre"]);
+			$exer->setExerTipo($_POST["tipo"]);
+			$exer->setDescripcion($_POST["descripcion"]);
+			$exer->setUrl($_POST["url"]);
+
+			$this->exerciseMapper->save($exer);
+			// Se genera un mensaje de confirmación de la operación para el usuario.
+			$this->view->setFlash(i18n("Exercise successfully created."));
+			// Se redirige al usuario de vuelta al menú.
+			$this->view->redirect("exercises", "exercisesMenu");
 		}
 		// Se envía la variable a la vista, de esta forma en caso de que haya ocurrido un error
 		// los campos que el usuario ya había rellenado aparecerán rellenos.
@@ -74,8 +60,8 @@ class ExercisesController extends BaseController {
 	
 	public function exercisesList(){
 		$type = $this->view->getVariable("currentusertype");
-		if ($type == "cliente") {
-			throw new Exception(i18n("You must be an administrator or manager to access this feature."));
+		if ($type != "entrenador") {
+			throw new Exception(i18n("You must be an manager to access this feature."));
 		}
 		// Guarda todos los usuarios de la base de datos en una variable.
 		$exercises = $this->exerciseMapper->findAll();
@@ -87,11 +73,11 @@ class ExercisesController extends BaseController {
 	
 	public function view(){
 		$type = $this->view->getVariable("currentusertype");
-		if ($type == "cliente") {
-			throw new Exception(i18n("You must be an administrator or manager to access this feature."));
+		if ($type != "entrenador") {
+			throw new Exception(i18n("You must be an manager to access this feature."));
 		}
 		// Se guarda el identificador del ejercicio seleccionado en una variable.
-		$exerciseId = $_REQUEST["exerciseId"];
+		$exerciseId = $_REQUEST["id"];
 		// Se coge de la BD el usuario seleccionado.
 		$exercise = $this->exerciseMapper->findByExerId($exerciseId);
 		// Se envia la variable a la vista.
@@ -103,17 +89,19 @@ class ExercisesController extends BaseController {
 	
 	public function edit(){
 		$type = $this->view->getVariable("currentusertype");
-		if ($type == "cliente") {
-			throw new Exception(i18n("You must be an administrator or manager to access this feature."));
+		if ($type != "entrenador") {
+			throw new Exception(i18n("You must be an manager to access this feature."));
 		}
 		// Se guarda el nombre del ejercicio seleccionado en una variable.
-		$exerciseId = $_REQUEST["exerciseId"];
+		$exerciseId = $_REQUEST["id"];
 		// Se coge de la BD el usuario seleccionado.
 		$exercise = $this->exerciseMapper->findByExerId($exerciseId);
-		if (isset($_POST["exerName"])){
+		if (isset($_POST["nombre"])){
 			// Se guardan los datos introducidos por el usuario en la variable creada
-			$exercise->setExerName($_POST["exerName"]);
-			$exercise->setExerTipo($_POST["exerTipo"]);
+			$exercise->setExerName($_POST["nombre"]);
+			$exercise->setExerTipo($_POST["tipo"]);
+			$exercise->setDescripcion($_POST["descripcion"]);
+			$exercise->setUrl($_POST["url"]);
 			// Se guardan los cambios en la base de datos.
 			$this->exerciseMapper->update($exercise);
 			// Se genera un mensaje de confirmación de la operación para el usuario.
@@ -131,11 +119,11 @@ class ExercisesController extends BaseController {
 	
 	public function delete(){
 		$type = $this->view->getVariable("currentusertype");
-		if ($type == "cliente") {
-			throw new Exception(i18n("You must be an administrator or manager to access this feature."));
+		if ($type != "entrenador") {
+			throw new Exception(i18n("You must be an manager to access this feature."));
 		}
 		// Se guarda el identificador del ejercicio seleccionado
-		$exerciseId = $_REQUEST["exerciseId"];
+		$exerciseId = $_REQUEST["id"];
 		// Se coge de la BD el ejercicio seleccionado.
 		$exer = $this->exerciseMapper->findByExerId($exerciseId);
 		// Se borra el ejercicio seleccionado.

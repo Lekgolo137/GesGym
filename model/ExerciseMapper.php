@@ -28,35 +28,28 @@ class ExerciseMapper {
 	* @return void
 	*/
 	public function save($exercise) {
-		$stmt = $this->db->prepare("INSERT INTO exercises values (?,?,?)");
-		$stmt->execute(array($exercise->getExerciseId(), $exercise->getExerName(), $exercise->getExerTipo()));
+		$stmt = $this->db->prepare("INSERT INTO exercises (nombre, tipo, descripcion, url) values (?,?,?,?)");
+		$stmt->execute(array($exercise->getExerName(), $exercise->getExerTipo(), $exercise->getDescripcion(), $exercise->getUrl()));
 	}
-
-	/**
-	* Checks if a given exercise is already in the database
-	*
-	* @param string $exerciseId the exerciseId to check
-	* @return boolean true if the exerciseId exists, false otherwise
-	*/
 
 	// Actualiza un ejercicio
 	public function update($exercise){
-		$stmt = $this->db->prepare("UPDATE exercises set exer_name=?, exer_tipo=? where exerciseid=?");
-		$stmt->execute(array($exercise->getExerName(), $exercise->getExerTipo(), $exercise->getExerciseId()));
+		$stmt = $this->db->prepare("UPDATE exercises set nombre=?, tipo=?, descripcion=?, url=? where id=?");
+		$stmt->execute(array($exercise->getExerName(), $exercise->getExerTipo(), $exercise->getDescripcion(), $exercise->getUrl(), $exercise->getExerciseId()));
 	}
 
 	// Devuelve el tipo de un ejercicio a partir de su identificador
 	public function findType($exerciseId) {
-		$stmt = $this->db->prepare("SELECT * FROM exercises where exerciseid=?");
+		$stmt = $this->db->prepare("SELECT * FROM exercises where id=?");
 		$stmt->execute(array($exerciseId));
 		$exer = $stmt->fetch(PDO::FETCH_ASSOC);
 
-		return $exer["exer_tipo"];
+		return $exer["tipo"];
 	}
 
 	// Comprueba si un id de ejercicio ya existe
 	public function exerciseIdExists($exerciseId) {
-		$stmt = $this->db->prepare("SELECT count(exerciseid) FROM exercises where exerciseid=?");
+		$stmt = $this->db->prepare("SELECT count(id) FROM exercises where id=?");
 		$stmt->execute(array($exerciseId));
 
 		if ($stmt->fetchColumn() > 0) {
@@ -65,12 +58,12 @@ class ExerciseMapper {
 	}
 	// Devuelve un ejercicio a partir de un identificador
 	public function findByExerId($exerciseId){
-		$stmt = $this->db->prepare("SELECT * FROM exercises WHERE exerciseId=?");
+		$stmt = $this->db->prepare("SELECT * FROM exercises WHERE Id=?");
 		$stmt->execute(array($exerciseId));
 		$exer = $stmt->fetch(PDO::FETCH_ASSOC);
 
 		if($exer != null) {
-			return new Exercise($exer["exerciseid"], $exer["exer_name"], $exer["exer_tipo"]);
+			return new Exercise($exer["id"], $exer["nombre"], $exer["tipo"], $exer["descripcion"], $exer["url"]);
 		} else {
 			return NULL;
 		}
@@ -86,14 +79,14 @@ class ExerciseMapper {
 		$exers = array();
 
 		foreach ($exers_db as $exer) {
-			array_push($exers, new Exercise($exer["exerciseid"], $exer["exer_name"], $exer["exer_tipo"]));
+			array_push($exers, new Exercise($exer["id"], $exer["nombre"], $exer["tipo"], $exer["descripcion"], $exer["url"]));
 		}
 
 		return $exers;
 	}
 	// Elimina un ejercicio
 	public function delete(Exercise $exer) {
-		$stmt = $this->db->prepare("DELETE from exercises WHERE exerciseId=?");
+		$stmt = $this->db->prepare("DELETE from exercises WHERE Id=?");
 		$stmt->execute(array($exer->getExerciseId()));
 	}
 }
