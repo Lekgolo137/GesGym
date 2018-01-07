@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // file: model/exercise.php
 
 require_once(__DIR__."/../core/ValidationException.php");
@@ -6,7 +6,7 @@ require_once(__DIR__."/../core/ValidationException.php");
 class Exercise {
 
 	// String
-	private $exerciseId;
+	private $exerId;
 
 	// String
 	private $exerName;
@@ -14,19 +14,26 @@ class Exercise {
 	// String
 	private $exerTipo;
 
+	// String
+	private $descripcion;
+
+	// String
+	private $url;
+
 	// Constructor
-	public function __construct($exerciseId=NULL, $exerName=NULL, $exerTipo=NULL) {
-		$this->exerciseId = $exerciseId;
-		$this->exerName = $exerName;
+	public function __construct($exerId=NULL, $exerName=NULL, $exerTipo=NULL, $descripcion=NULL, $url=NULL) {
+		$this->exerId = $exerId;
+	    $this->exerName = $exerName;
 		$this->exerTipo = $exerTipo;
+		$this->descripcion = $descripcion;
+		$this->url = $url;
 	}
 
 	// GETTERS
-	
 	public function getExerciseId() {
-		return $this->exerciseId;
+		return $this->exerId;
 	}
-	
+
 	public function getExerName() {
 		return $this->exerName;
 	}
@@ -34,13 +41,15 @@ class Exercise {
 	public function getExerTipo() {
 		return $this->exerTipo;
 	}
-	
-	// SETTERS
-
-	public function setExerciseId($exerciseId) {
-		$this->exerciseId = $exerciseId;
+	public function getDescripcion() {
+		return $this->descripcion;
 	}
 
+	public function getUrl() {
+		return $this->url;
+	}
+	
+	// SETTERS
 	public function setExerName($exerName) {
 		$this->exerName = $exerName;
 	}
@@ -48,7 +57,15 @@ class Exercise {
 	public function setExerTipo($exerTipo) {
 		$this->exerTipo = $exerTipo;
 	}
+	
+	public function setDescripcion($descripcion) {
+		$this->descripcion = $descripcion;
+	}
+	public function setUrl($url) {
+		$this->url = $url;
+	}
 
+	/*
 	// Función para comprobar si el ejercicio es válido para ser creado
 	public function checkIsValidForRegister() {
 		$errors = array();
@@ -58,6 +75,5 @@ class Exercise {
 		if (sizeof($errors)>0){
 			throw new ValidationException($errors, i18n("exercise is not valid"));
 		}
-	}
+	}*/
 }
- 

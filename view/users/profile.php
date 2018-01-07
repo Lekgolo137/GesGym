@@ -29,7 +29,7 @@ $currentusertype = $view->getVariable("currentusertype");
 						</a>
 					</div>
 					<div class="col-sm-3">
-						<a href="index.php?controller=activities&amp;action=X">
+						<a href="index.php?controller=activities&amp;action=myActivities">
 							<span class="glyphicon glyphicon-flag"></span>
 							<br><?=i18n("Your Activities")?>
 						</a>
@@ -42,7 +42,7 @@ $currentusertype = $view->getVariable("currentusertype");
 						</a>
 					</div>
 					<div class="col-sm-3">
-						<a href="index.php?controller=activities&amp;action=X">
+						<a href="index.php?controller=activities&amp;action=myActivities">
 							<span class="glyphicon glyphicon-flag"></span>
 							<br><?=i18n("Your Activities")?>
 						</a>
