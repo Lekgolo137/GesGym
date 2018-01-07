@@ -5,6 +5,7 @@ require_once(__DIR__."/../../core/ViewManager.php");
 $view = ViewManager::getInstance();
 $activities= $view->getVariable("activities");
 $view->setVariable("title", i18n("GesGym - Activities List"));
+$currentusertype = $view->getVariable("currentusertype");
 ?>
 			<h1><?=i18n("Activities List")?></h1>
 			<div class="container">
@@ -13,21 +14,34 @@ $view->setVariable("title", i18n("GesGym - Activities List"));
 						<thead>
 							<tr>
 								<th><?=i18n("ID")?></th>
+								<th><?=i18n("Name")?></th>
+								<th><?=i18n("Days")?></th>
+								<th><?=i18n("Beginning")?></th>
+								<th><?=i18n("Ending")?></th>
 								<th><?=i18n("Places")?></th>
+								<th><?=i18n("Trainer")?></th>
 								<th><?=i18n("Actions")?></th>
 							</tr>
 						</thead>
 						<tbody>
 <?php foreach ($activities as $activity): ?>
 							<tr>
-								<td><?=$activity->getActivityID()?></td>
+								<td><?=$activity->getId()?></td>
+								<td><?=$activity->getNombre()?></td>
+								<td><?=$activity->getDia()?></td>
+								<td><?=$activity->getHoraInicio()?></td>
+								<td><?=$activity->getHoraFin()?></td>
 								<td><?=$activity->getPlazas()?></td>
+								<td><?=$activity->getEntrenador()?></td>
 								<td>
-									<a class="btn btn-sm btn-success" href="index.php?controller=activities&amp;action=view&amp;activityid=<?=$activity->getActivityID()?>"><?=i18n("View")?></a>
-									<a class="btn btn-sm btn-primary" href="index.php?controller=activities&amp;action=edit&amp;activityid=<?=$activity->getActivityID()?>"><?=i18n("Modify")?></a>
-									<form id="<?=$activity->getActivityID()?>"  method="POST" action="index.php?controller=activities&amp;action=delete&amp;activityid=<?=$activity->getActivityID()?>">
-										<a class="btn btn-sm btn-danger" onclick="eliminar('<?=i18n("Are you sure?")?>','<?=$activity->getActivityID()?>')"><?=i18n("Delete")?></a>
-									</form>
+									<a class="btn btn-sm btn-success" href="index.php?controller=activities&amp;action=view&amp;id=<?=$activity->getId()?>"><?=i18n("View")?></a>
+					<?php if($currentusertype == "administrador"){ ?>
+						<a class="btn btn-sm btn-primary" href="index.php?controller=activities&amp;action=edit&amp;id=<?=$activity->getId()?>"><?=i18n("Modify")?>
+						<a class="btn btn-sm btn-link" href="index.php?controller=activities&amp;action=listResources&amp;id=<?=$activity->getId()?>"><?=i18n("List Resources")?>
+						<form id="<?=$activity->getId()?>"  method="POST" action="index.php?controller=activities&amp;action=delete&amp;id=<?=$activity->getId()?>">
+							<a class="btn btn-sm btn-danger" onclick="eliminar('<?=i18n("Are you sure?")?>','<?=$activity->getId()?>')"><?=i18n("Delete")?></a>
+						</form>
+					<?php } ?>
 								</td>
 							</tr>
 <?php endforeach; ?>
