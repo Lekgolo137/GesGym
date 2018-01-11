@@ -15,7 +15,7 @@ $view->setVariable("header", i18n("View Resource"));
 					<?=i18n("Capacity")?>:
 					<input disabled type="number" class="form-control" placeholder="<?=i18n("Capacity")?>" value="<?=$resource->getAforo()?>">
 					<?=i18n("Description")?>:
-					<textarea disabled class="form-control" placeholder="<?=i18n("Description")?>" value="<?=$resource->getDescripcion()?>"><?=$resource->getDescripcion()?></textarea>
+					<textarea rows="5" disabled class="form-control" placeholder="<?=i18n("Description")?>" value="<?=$resource->getDescripcion()?>"><?=$resource->getDescripcion()?></textarea>
 				</div>
 				<div class="col-sm-6">
 					<div class="table-responsive">
@@ -36,5 +36,5 @@ $view->setVariable("header", i18n("View Resource"));
 					</div>
 				</div>
 			</div>
-			<a class="btn btn-lg btn-primary btn-block" href="index.php?controller=resources&amp;action=resourcesList"><?=i18n("Return")?></a>
+			<a class="btn btn-lg btn-primary btn-block" href="javascript:history.back()"><?=i18n("Return")?></a>
 <?=$view->moveToFragment("css")?>		<link rel="stylesheet" type="text/css" href="css/viewResourceStyle.css">
