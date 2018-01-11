@@ -155,7 +155,7 @@ array(
 	"Add Resource" => "Añadir Recurso",
 	"Add" => "Añadir",
 	"My Activities" => "Mis Actividades",
-	"Check in" => "Registrarse",					 
+	"Check in" => "Registrarse",
 	// Modify Activity
 	"GesGym - Modify Activity" => "GesGym - Modificar actividad",
 	"Modify Activity" => "Modificar actividad",
@@ -190,6 +190,8 @@ array(
 	// Tables List
 	"Custom" => "Personalizada",
 	"Standard" => "Estándar",
+	// View Table
+	"View Table" => "Consultar Tabla",
 	// Edit Table
 	"Modify Table" => "Modificar tabla",
 	"GesGym - Modify Table" => "GesGym - Modificar tabla",

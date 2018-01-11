@@ -15,15 +15,15 @@ class TableMapper {
 
 	//Saves a Table into the database
 	public function save($table) {
-		$stmt = $this->db->prepare("INSERT INTO tables values (?,?)");
-		$stmt->execute(array($table->getTableid(), $table->getTabletipo()));
+		$stmt = $this->db->prepare("INSERT INTO tables (nombre, tipo, descripcion) VALUES (?,?,?)");
+		$stmt->execute(array($table->getTableNombre(), $table->getTableTipo(), $table->getTableDescripcion()));
 	}
 
 
 	//Checks if a given tableid is already in the database
-	public function tableidExists($tableid) {
-		$stmt = $this->db->prepare("SELECT count(tableid) FROM tables where tableid=?");
-		$stmt->execute(array($tableid));
+	public function tableIdExists($tableId) {
+		$stmt = $this->db->prepare("SELECT count(id) FROM tables WHERE id=?");
+		$stmt->execute(array($tableId));
 
 		if ($stmt->fetchColumn() > 0) {
 			return true;
@@ -39,38 +39,40 @@ class TableMapper {
 		$tables = array();
 
 		foreach ($tables_db as $table) {
-			array_push($tables, new Table($table["tableid"], $table["tabletipo"]));
+			array_push($tables, new Table($table["id"],$table["nombre"],$table["tipo"], $table["descripcion"]));
 		}
 
 		return $tables;
 	}
 
 	//Retrieves a Table from the database given its id
-	public function findById($tableid){
-		$stmt = $this->db->prepare("SELECT * FROM tables WHERE tableid=?");
-		$stmt->execute(array($tableid));
+	public function findById($tableId){
+		$stmt = $this->db->prepare("SELECT * FROM tables WHERE id=?");
+		$stmt->execute(array($tableId));
 		$table = $stmt->fetch(PDO::FETCH_ASSOC);
 
 		if($table != null) {
 			return new Table(
-				$table["tableid"],
-				$table["tabletipo"]);
+				$table["id"],
+				$table["nombre"],
+				$table["tipo"],
+				$table["descripcion"]);
 			} else {
 				return NULL;
 			}
 		}
 
 		//Updates a Table in the database
-		public function update(Table $table, $tablesid) {
-			$stmt = $this->db->prepare("UPDATE tables set tableid=?, tabletipo=? where tableid=?");
-			$stmt->execute(array($table->getTableid(), $table->getTabletipo(), $tablesid));
+		public function update(Table $table, $tableId) {
+			$stmt = $this->db->prepare("UPDATE tables SET nombre=?, tipo=?, descripcion=? WHERE id=?");
+			$stmt->execute(array($table->getTableNombre(), $table->getTableTipo(), $table->getTableDescripcion(), $tableId));
 		}
 
 
 		//Deletes a Table into the database
 		public function delete(Table $table) {
-			$stmt = $this->db->prepare("DELETE from tables WHERE tableid=?");
-			$stmt->execute(array($table->getTableid()));
+			$stmt = $this->db->prepare("DELETE FROM tables WHERE id=?");
+			$stmt->execute(array($table->getTableId()));
 		}
 
 	}
