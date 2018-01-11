@@ -1,5 +1,5 @@
 <?php
-// file: index.php prueba estupida
+// file: index.php
 
 // Controlador por defecto si ninguno es pasado por la URL
 define("DEFAULT_CONTROLLER", "users");
