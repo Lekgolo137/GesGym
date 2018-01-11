@@ -199,7 +199,9 @@ class TablesController extends BaseController {
     if (isset($_POST["submit"])) { // reaching via HTTP Table...
 
       // populate the Table object with data form the form
-      $tables->setTabletipo($_POST["tabletipo"]);
+      $tables->setTableNombre($_POST["tableNombre"]);
+      $tables->setTableTipo($_POST["tableTipo"]);
+      $tables->setTableDescripcion($_POST["tableDescripcion"]);
 
       try {
         // validate Table object
@@ -230,6 +232,10 @@ class TablesController extends BaseController {
 
     // Put the Table object visible to the view
     $this->view->setVariable("tables", $tables);
+
+    $this->exerciseMapper = new ExerciseMapper();
+    $exercises = $this->exerciseMapper->findAll();
+    $this->view->setVariable("exercises", $exercises);
 
     // render the view (/view/tables/add.php)
 	$this->view->setLayout("welcome");
@@ -266,7 +272,7 @@ class TablesController extends BaseController {
     // We want to see a message after redirection, so we establish
     // a "flash" message (which is simply a Session variable) to be
     // get in the view after redirection.
-    $this->view->setFlash(sprintf(i18n("Table \"%s\" successfully deleted."),$tables ->getTableid()));
+    $this->view->setFlash(sprintf(i18n("Table \"%s\" successfully deleted."),$tables ->getTableNombre()));
 
     // perform the redirection. More or less:
     // header("Location: index.php?controller=tables&action=index")

@@ -10,7 +10,7 @@ $view->setVariable("title", i18n("GesGym - Tables List"));
 	<div class="table-responsive">
 		<table class="table table-striped table-hover">
 			<tr>
-				<th><?= i18n("ID")?></th>
+				<!--<th><?= i18n("ID")?></th>-->
 				<th><?= i18n("Name")?></th>
 				<th><?= i18n("Type")?></th>
 				<th><?= i18n("Description")?></th>
@@ -18,7 +18,7 @@ $view->setVariable("title", i18n("GesGym - Tables List"));
 			</tr>
 			<?php foreach ($tables as $table): ?>
 			<tr>
-				<td><?= htmlentities($table->getTableid()) ?></td>
+				<!--<td><?= htmlentities($table->getTableid()) ?></td>-->
 				<td><?= htmlentities($table->getTableNombre()) ?></td>
 				<td>
 					<?php if($table->getTabletipo() == "personalizada"){print i18n("Custom");}

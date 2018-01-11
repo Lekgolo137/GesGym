@@ -9,6 +9,7 @@ $view->setVariable("title", i18n("GesGym - View Table"));
 $view->setVariable("header", i18n("View Table"));
 ?>
 
+<form class="form-signin">
 
 <?= i18n("Name") ?>:
 <input disabled class="form-control" type="text" name="tableNombre" value="<?= $tables->getTableNombre() ?>">
@@ -20,9 +21,9 @@ $view->setVariable("header", i18n("View Table"));
 </select>
 
 <?= i18n("Description") ?>:
-<input disabled class="form-control" type="text" name="tableDescripcion" value="<?= $tables->getTableDescripcion() ?>"><br/>
+<textarea disabled rows="5" class="form-control" type="text" name="tableDescripcion"> <?= $tables->getTableDescripcion() ?> </textarea><br/>
 
-<div class="form-control">
+<div disabled class="form-control">
 	<table class="table table-bordered">
 		<?php $cont=1 ?>
 		<?php foreach ($exercises as $exercise): ?>
@@ -33,6 +34,6 @@ $view->setVariable("header", i18n("View Table"));
 			<?php endforeach; ?>
 		</table>
 	</div>
-	
+</form>
 	<a class="btn btn-lg btn-primary btn-block" href="index.php?controller=tables&amp;action=tablesList"><?=i18n("Cancel")?></a>
 	<?=$view->moveToFragment("css")?>		<link rel="stylesheet" type="text/css" href="css/viewTableStyle.css">

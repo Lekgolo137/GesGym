@@ -22,7 +22,7 @@ $view->setVariable("header", i18n("New Table"));
 	<br/>
 
 	<?= isset($errors["tableDescripcion"])?i18n($errors["tableDescripcion"]):"" ?>
-	<textarea class="form-control" name="tableDescripcion" placeholder="<?=i18n("Description")?>" value="<?= $post->getTableDescripcion() ?>"></textarea>
+	<textarea rows="5" class="form-control" name="tableDescripcion" placeholder="<?=i18n("Description")?>" value="<?= $post->getTableDescripcion() ?>"></textarea>
 	<br/>
 
 
@@ -38,11 +38,6 @@ $view->setVariable("header", i18n("New Table"));
 				<?php endforeach; ?>
 
 			</table></div>
-
-
-
-
-
 
 			<input class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="<?=i18n("Create new table")?>">
 		</form>
