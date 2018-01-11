@@ -71,7 +71,7 @@ $view->setVariable("header", i18n("View User"));
 							<tbody>
 <?php foreach ($tables as $table): ?>
 								<tr>
-									<td><a href="index.php?controller=tables&amp;action=view&amp;id=<?=$table->getId()?>"><?=$table->getNombre()?></a></td>
+									<td><a href="index.php?controller=tables&amp;action=view&amp;id=<?=$table->getTableId()?>"><?=$table->getTableNombre()?></a></td>
 								</tr>
 <?php endforeach; ?>
 							</tbody>
