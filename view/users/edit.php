@@ -54,7 +54,7 @@ $tables = $view->getVariable("tables");
 						<?=i18n("Tables")?>:<br>
 						<select name="tablas[]" multiple size="15">
 <?php foreach ($tables as $table): ?>
-							<option value="<?=$table->getId()?>" <?php if (in_array($table, $tablas)) print "selected"?>><?=$table->getNombre()?></option>
+							<option value="<?=$table->getTableId()?>" <?php if (in_array($table, $tablas)) print "selected"?>><?=$table->getTableNombre()?></option>
 <?php endforeach; ?>
 						</select>
 					</div>
