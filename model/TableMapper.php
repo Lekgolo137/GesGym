@@ -59,6 +59,22 @@ class TableMapper {
 		return $tables;
 	}
 
+	//Retrieves all tables link to user
+	public function findProp($user) {
+		$stmt = $this->db->prepare("SELECT * FROM tables INNER JOIN tables_user ON tables.id=tables_user.tabla AND tables_user.usuario = ?");
+		$stmt->execute(array($user->getId()));
+		$tables_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		$tables = array();
+
+		foreach ($tables_db as $table) {
+			array_push($tables, new Table($table["id"],$table["nombre"],$table["tipo"], $table["descripcion"]));
+		}
+
+		return $tables;
+	}
+
+
 	//Retrieves a Table from the database given its id
 	public function findById($tableId){
 		$stmt = $this->db->prepare("SELECT * FROM tables WHERE id=?");
@@ -87,6 +103,12 @@ class TableMapper {
 		public function delete(Table $table) {
 			$stmt = $this->db->prepare("DELETE FROM tables WHERE id=?");
 			$stmt->execute(array($table->getTableId()));
+		}
+
+		//Link a table to user
+		public function linkTableUser($user, $table) {
+			$stmt = $this->db->prepare("INSERT INTO tables_user (usuario, tabla) VALUES (?,?)");
+			$stmt->execute(array($user->getId(), $table->getTableId()));
 		}
 
 	}

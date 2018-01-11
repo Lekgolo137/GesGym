@@ -10,7 +10,7 @@ $view->setVariable("header", i18n("View Table"));
 $currentusertype = $view->getVariable("currentusertype");
 ?>
 
-<form class="form-signin">
+<form class="form-signin" action="index.php?controller=tables&amp;action=linkUser" method="POST"">
 
 	<?= i18n("Name") ?>:
 	<input disabled class="form-control" type="text" name="tableNombre" value="<?= $tables->getTableNombre() ?>">
@@ -36,10 +36,14 @@ $currentusertype = $view->getVariable("currentusertype");
 				<?php endforeach; ?>
 			</table>
 		</div>
-	</form>
+
+		<input class="form-control" type="hidden" name="id" value="<?= $tables->getTableid() ?>">
+
 	<?php if($currentusertype == "entrenador"){ ?>
 		<a class="btn btn-lg btn-primary btn-block" href="index.php?controller=tables&amp;action=tablesList"><?=i18n("Cancel")?></a>
 	<?php } if($currentusertype == "deportista"){ ?>
-		<a class="btn btn-lg btn-primary btn-block" href="index.php?controller=tables&amp;action=tablesListPublic"><?=i18n("Cancel")?></a>
+		<input class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="<?=i18n("Choose table")?>">
+		<a class="btn btn-lg btn-primary btn-block" href="javascript:history.back()"><?=i18n("Cancel")?></a>
 	<?php } ?>
+	</form>
 	<?=$view->moveToFragment("css")?>		<link rel="stylesheet" type="text/css" href="css/viewTableStyle.css">

@@ -21,8 +21,8 @@ $view->setVariable("header", i18n("Modify Table"));
 
 	<?= i18n("Type") ?>: <?= isset($errors["tableTipo"])?i18n($errors["tableTipo"]):"" ?>
 	<select class="form-control" name="tableTipo">
-		<option value="personalizada" <?php if ($tables->getTableTipo() == "personalizada") print "selected"?> > <?=i18n("Custom")?> </option>
 		<option value="estandar" <?php if ($tables->getTableTipo() == "estandar") print "selected"?> > <?=i18n("Standard")?> </option>
+		<option value="personalizada" <?php if ($tables->getTableTipo() == "personalizada") print "selected"?> > <?=i18n("Custom")?> </option>
 	</select>
 
 	<?= i18n("Description") ?>: <?= isset($errors["tableDescripcion"])?i18n($errors["tableDescripcion"]):"" ?>

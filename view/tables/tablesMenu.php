@@ -37,7 +37,12 @@ $currentusertype = $view->getVariable("currentusertype");
 						<br><?=i18n("Tables List")?>
 					</a>
 				</div>
-
+				<div class="col-sm-6">
+					<a href="index.php?controller=tables&amp;action=tablesListProp">
+						<span class="glyphicon glyphicon-list-alt"></span>
+						<br><?=i18n("Your Tables")?>
+					</a>
+				</div>
 			<?php } ?>
 
 		</div>

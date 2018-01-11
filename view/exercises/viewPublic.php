@@ -16,8 +16,7 @@ $view->setVariable("header", i18n("View Exercise"));
 			<?=i18n("Description")?>:
 			<textarea disabled rows="5" class="form-control" type="text" name="tableDescripcion"> <?=$exercise->getDescripcion()?> </textarea><br/>
 
-			<iframe width="600" height="315" src="https://www.youtube.com/embed/<?=$exercise->getUrl()?>" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
+			<iframe width="600" height="315" src="https://www.youtube.com/embed/<?=$exercise->getUrl()?>?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 
 

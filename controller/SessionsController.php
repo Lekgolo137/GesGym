@@ -1,5 +1,4 @@
 <?php
-require_once(__DIR__."/../model/Comment.php");
 require_once(__DIR__."/../model/Session.php");
 require_once(__DIR__."/../model/SessionMapper.php");
 require_once(__DIR__."/../model/User.php");
@@ -16,6 +15,18 @@ class SessionsController extends BaseController {
 
 		$this->sessionMapper = new SessionMapper();
 	}
+
+	// Gestionar tablas
+  public function sessionsMenu(){
+    // Se comprueba que el usuario sea un entrenador.
+    $type = $this->view->getVariable("currentusertype");
+    if ($type == "administrador") {
+      throw new Exception(i18n("You can't access this feature."));
+    }
+    // Se elige la plantilla y renderiza la vista.
+    $this->view->setLayout("default");
+    $this->view->render("sessions", "sessionsMenu");
+  }
 
 	public function sessionslist() {
 		if (!isset($this->currentUser)) {

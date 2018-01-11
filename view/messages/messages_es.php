@@ -191,7 +191,12 @@ array(
 	"Custom" => "Personalizada",
 	"Standard" => "Estándar",
 	// View Table
-	"View Table" => "Consultar Tabla",
+	"Choose table" => "Elegir tabla",
+ 	"View Table" => "Consultar Tabla",
+	"Table \"%s\" successfully added." => "Tabla \"%s\" creada con exito",
+	"Table \"%s\" successfully updated." => "Tabla \"%s\" actualizada con exito",
+	"Table \"%s\" successfully deleted." => "Tabla \"%s\" eliminada con exito",
+	"Table \"%s\" successfully choosen." => "Tabla \"%s\" elejida con exito",
 	// Edit Table
 	"Modify Table" => "Modificar tabla",
 	"GesGym - Modify Table" => "GesGym - Modificar tabla",
