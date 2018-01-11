@@ -266,8 +266,13 @@ class UsersController extends BaseController {
 				if($user->getEntrenador() == $this->view->getVariable("currentuserid")){
 					$this->view->redirect("users", "sportsmansList");
 				}else{
-					// Sino se redirige al usuario de vuelta a la lista de usuarios.
-					$this->view->redirect("users", "usersList");
+					// Sino se redirige al usuario de vuelta al perfil si se estaba editando a sí mismo.
+					if($user->getUsername() == $this->view->getVariable("currentusername")){
+						$this->view->redirect("users", "profile");
+					}else{
+						// O a la lista de usuarios si estaba editando a otro..
+						$this->view->redirect("users", "usersList");
+					}
 				}
 			}catch(ValidationException $ex) {
 				// En caso de que los datos introducidos no sean válidos se captura el error y se muestra al usuario.
