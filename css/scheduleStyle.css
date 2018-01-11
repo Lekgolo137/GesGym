@@ -1,0 +1,12 @@
+.container {
+	text-align: center;
+}
+
+th {
+	text-align: center;
+}
+
+#agenda {
+	max-width: 800px;
+	margin: auto;
+}

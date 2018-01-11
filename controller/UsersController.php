@@ -367,4 +367,25 @@ class UsersController extends BaseController {
 		$this->view->redirect("users", "usersList");
 	}
 	
+	public function schedule(){
+		// Se comprueba que el usuario esté logeado.
+		if (!isset($this->currentUser)) {
+			throw new Exception(i18n("You must log in to access this feature."));
+		}
+		if (isset($_POST["day"])){
+			$day = $_POST["day"];
+		}else{
+			$day = "lunes";
+		}
+		$activities = $this->userMapper->findActivitiesDay($day);
+		$resources = $this->userMapper->findResources($activities);
+		// Se envían las variables a la vista.
+		$this->view->setVariable("day", $day);
+		$this->view->setVariable("activities", $activities);
+		$this->view->setVariable("resources", $resources);
+		// Se elige la plantilla y renderiza la vista.
+		$this->view->setLayout("default");
+		$this->view->render("users", "schedule");
+	}
+	
 }

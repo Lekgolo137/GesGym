@@ -64,5 +64,13 @@ $currentusertype = $view->getVariable("currentusertype");
 					</div>
 <?php } ?>
 				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<a href="index.php?controller=users&amp;action=schedule">
+							<span class="glyphicon glyphicon-time"></span>
+							<br><?=i18n("Schedule")?>
+						</a>
+					</div>
+				</div>
 			</div>
 <?=$view->moveToFragment("css")?>		<link rel="stylesheet" type="text/css" href="css/mainMenuStyle.css"/>

@@ -50,6 +50,7 @@ array(
 	"Manage Exercises" => "Gestionar ejercicios",
 	"Manage Users" => "Gestionar usuarios",
 	"Manage Resources" => "Gestionar recursos",
+	"Schedule" => "Agenda",
 	// Manage Users
 	"GesGym - Manage Users" => "GesGym - Gestionar usuarios",
 	// New User
@@ -203,6 +204,11 @@ array(
 	// Edit Table
 	"Modify Table" => "Modificar tabla",
 	"GesGym - Modify Table" => "GesGym - Modificar tabla",
+	// Schedule
+	"Select the day" => "Selecciona el día",
+	"Activity" => "Actividad",
+	"Time" => "Hora",
+	"Place" => "Lugar",
 	// Your Sportsmans
 	"Add Sportsman" => "Añadir deportista"
 )
