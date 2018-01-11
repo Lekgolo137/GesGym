@@ -23,8 +23,7 @@ class TablesController extends BaseController {
   // Gestionar tablas
   public function tablesMenu(){
     // Se comprueba que el usuario sea un entrenador.
-    $type = $this->view->getVariable("currentusertype");
-    if ($type == "administrador") {
+    if ($this->view->getVariable("currentusertype") == "administrador") {
       throw new Exception(i18n("You can't access this feature."));
     }
     // Se elige la plantilla y renderiza la vista.

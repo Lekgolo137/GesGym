@@ -1,6 +1,8 @@
 <?php
 require_once(__DIR__."/../model/Session.php");
 require_once(__DIR__."/../model/SessionMapper.php");
+require_once(__DIR__."/../model/Table.php");
+require_once(__DIR__."/../model/TableMapper.php");
 require_once(__DIR__."/../model/User.php");
 
 require_once(__DIR__."/../core/ViewManager.php");
@@ -34,7 +36,7 @@ class SessionsController extends BaseController {
 		}
 
 		// obtain the data from the database
-		$sessions = $this->sessionMapper->findAll();
+		$sessions = $this->sessionMapper->findAll($this->currentUser);
 
 		// put the array containing Session object to the view
 		$this->view->setVariable("sessions", $sessions);
@@ -75,6 +77,10 @@ class SessionsController extends BaseController {
 		}
 		// Put the Table object visible to the view
 		$this->view->setVariable("sessions", $sessions);
+
+		$this->tableMapper = new TableMapper();
+    $tables = $this->tableMapper->findAll();
+    $this->view->setVariable("tables", $tables);
 		// render the view (/view/tables/add.php)
 		$this->view->setLayout("welcome");
 		$this->view->render("sessions", "add");

@@ -16,16 +16,22 @@ $currentusertype = $view->getVariable("currentusertype");
 			<?php } ?>
 
 			<?php if($currentusertype == "deportista"){ ?>
-				<div class="col-sm-6">
+				<div class="col-sm-3">
 					<a href="index.php?controller=sessions&amp;action=sessionsList">
 						<span class="glyphicon glyphicon-list"></span>
 						<br><?=i18n("Sessions List")?>
 					</a>
 				</div>
         <div class="col-sm-3">
-          <a href="index.php?controller=sessions&amp;action=sessionsListProp">
+          <a href="index.php?controller=sessions&amp;action=add">
             <span class="glyphicon glyphicon-hourglass"></span>
-            <br><?=i18n("Your Sessions")?>
+            <br><?=i18n("Create new session")?>
+          </a>
+        </div>
+				<div class="col-sm-3">
+          <a href="index.php?controller=sessions&amp;action=edit">
+            <span class="glyphicon glyphicon-hourglass"></span>
+            <br><?=i18n("Close current session")?>
           </a>
         </div>
 			<?php } ?>
