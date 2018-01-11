@@ -69,8 +69,8 @@ CREATE TABLE sessions (
 	tabla INT(11) NOT NULL,
 
 	PRIMARY KEY (id),
-	FOREIGN KEY (usuario) REFERENCES users(id),
-	FOREIGN KEY (tabla) REFERENCES tables(id)
+	FOREIGN KEY (usuario) REFERENCES users(id) ON DELETE CASCADE,
+	FOREIGN KEY (tabla) REFERENCES tables(id) ON DELETE CASCADE
 ) ENGINE=INNODB DEFAULT CHARACTER SET = UTF8;
 
 -- TABLAS DE RELACIONES --
@@ -80,8 +80,8 @@ CREATE TABLE tables_user (
 	tabla INT(11) NOT NULL,
 
 	PRIMARY KEY (usuario, tabla),
-	FOREIGN KEY (usuario) REFERENCES users(id),
-	FOREIGN KEY (tabla) REFERENCES tables(id)
+	FOREIGN KEY (usuario) REFERENCES users(id) ON DELETE CASCADE,
+	FOREIGN KEY (tabla) REFERENCES tables(id) ON DELETE CASCADE
 )ENGINE=INNODB DEFAULT CHARACTER SET = UTF8;
 
 CREATE TABLE activities_user (
@@ -99,8 +99,8 @@ CREATE TABLE exercises_table (
 	ejercicio INT(11) NOT NULL,
 
 	PRIMARY KEY (tabla, ejercicio),
-	FOREIGN KEY (tabla) REFERENCES tables(id),
-	FOREIGN KEY (ejercicio) REFERENCES exercises(id)
+	FOREIGN KEY (tabla) REFERENCES tables(id) ON DELETE CASCADE,
+	FOREIGN KEY (ejercicio) REFERENCES exercises(id) ON DELETE CASCADE
 )ENGINE=INNODB DEFAULT CHARACTER SET = UTF8;
 
 CREATE TABLE resources_activity (
