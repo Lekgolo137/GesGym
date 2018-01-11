@@ -11,7 +11,7 @@ class ExercisesController extends BaseController {
 
 	// Se instancia al Mapper para poder interaccionar con la base de datos.
 	private $exerciseMapper;
-	
+
 	// Se añade la instanciación del Mapper al constructor.
 	public function __construct() {
 		parent::__construct();
@@ -27,7 +27,7 @@ class ExercisesController extends BaseController {
 		$this->view->setLayout("default");
 		$this->view->render("exercises", "exercisesMenu");
 	}
-	
+
 	public function add() {
 		$type = $this->view->getVariable("currentusertype");
 		if ($type != "entrenador") {
@@ -57,7 +57,7 @@ class ExercisesController extends BaseController {
 		$this->view->setLayout("welcome");
 		$this->view->render("exercises", "add");
 	}
-	
+
 	public function exercisesList(){
 		$type = $this->view->getVariable("currentusertype");
 		if ($type != "entrenador") {
@@ -70,7 +70,7 @@ class ExercisesController extends BaseController {
 		$this->view->setLayout("default");
 		$this->view->render("exercises", "exercisesList");
 	}
-	
+
 	public function view(){
 		$type = $this->view->getVariable("currentusertype");
 		if ($type != "entrenador") {
@@ -86,7 +86,23 @@ class ExercisesController extends BaseController {
 		$this->view->setLayout("welcome");
 		$this->view->render("exercises", "view");
 	}
-	
+
+	public function viewPublic(){
+		$type = $this->view->getVariable("currentusertype");
+		if ($type != "entrenador" && $type != "deportista") {
+			throw new Exception(i18n("You must be an manager to access this feature."));
+		}
+		// Se guarda el identificador del ejercicio seleccionado en una variable.
+		$exerciseId = $_REQUEST["id"];
+		// Se coge de la BD el usuario seleccionado.
+		$exercise = $this->exerciseMapper->findByExerId($exerciseId);
+		// Se envia la variable a la vista.
+		$this->view->setVariable("exercise", $exercise);
+		// Se elige la plantilla y renderiza la vista.
+		$this->view->setLayout("welcome");
+		$this->view->render("exercises", "viewPublic");
+	}
+
 	public function edit(){
 		$type = $this->view->getVariable("currentusertype");
 		if ($type != "entrenador") {
@@ -116,7 +132,7 @@ class ExercisesController extends BaseController {
 		$this->view->setLayout("welcome");
 		$this->view->render("exercises", "edit");
 	}
-	
+
 	public function delete(){
 		$type = $this->view->getVariable("currentusertype");
 		if ($type != "entrenador") {

@@ -45,6 +45,20 @@ class TableMapper {
 		return $tables;
 	}
 
+	//Retrieves all Public Tables
+	public function findAllPublic() {
+		$stmt = $this->db->query("SELECT * FROM tables WHERE tipo='estandar'");
+		$tables_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		$tables = array();
+
+		foreach ($tables_db as $table) {
+			array_push($tables, new Table($table["id"],$table["nombre"],$table["tipo"], $table["descripcion"]));
+		}
+
+		return $tables;
+	}
+
 	//Retrieves a Table from the database given its id
 	public function findById($tableId){
 		$stmt = $this->db->prepare("SELECT * FROM tables WHERE id=?");

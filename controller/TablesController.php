@@ -20,7 +20,7 @@ class TablesController extends BaseController {
   }
 
 
-  	// Gestionar recursos
+  	// Gestionar tablas
 	public function tablesMenu(){
 		// Se comprueba que el usuario sea un entrenador.
 		$type = $this->view->getVariable("currentusertype");
@@ -51,6 +51,25 @@ class TablesController extends BaseController {
 
     // render the view (/view/tables/index.php)
 	$this->view->setLayout("default");
+    $this->view->render("tables", "tablesList");
+  }
+
+  /***********************************************************************************/
+  /***********************************************************************************/
+  //Action to list public tables
+  public function tablesListPublic() {
+    if (!isset($this->currentUser)) {
+      throw new Exception("Not in session. This action requires login");
+    }
+
+    // obtain the data from the database
+    $tables = $this->tableMapper->findAllPublic();
+  
+    // put the array containing Table object to the view
+    $this->view->setVariable("tables", $tables);
+
+    // render the view (/view/tables/index.php)
+  $this->view->setLayout("default");
     $this->view->render("tables", "tablesList");
   }
 
