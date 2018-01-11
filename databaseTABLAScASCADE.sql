@@ -191,16 +191,16 @@ INSERT INTO resources (nombre, aforo, descripcion) values ('Pista de tenis', 200
 INSERT INTO resources (nombre, aforo, descripcion) values ('Pista de tenis', 200, '');
 INSERT INTO resources (nombre, aforo, descripcion) values ('Pista de tenis', 200, '');
 
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('Todo bien, todo correcto', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('Todo bien, todo correcto', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('Todo bien, todo correcto', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('Todo bien, todo correcto', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('Todo bien, todo correcto', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('Todo bien, todo correcto', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('Todo bien, todo correcto', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('Todo bien, todo correcto', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('Todo bien, todo correcto', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('Todo bien, todo correcto', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 1, 1);
 
 INSERT INTO tables_user VALUES (1, 1);
 INSERT INTO tables_user VALUES (1, 2);

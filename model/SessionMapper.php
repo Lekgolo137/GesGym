@@ -13,6 +13,25 @@ class SessionMapper {
     $this->db = PDOConnection::getInstance();
   }
 
+  //Retrieves all Sessions
+  public function findAll() {
+    $stmt = $this->db->query("SELECT * FROM sessions");
+    $sessions_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $sessions = array();
+
+    foreach ($sessions_db as $session) {
+      array_push($sessions, new Session($session["id"],
+                    $session["comentarios"],
+                    $session["fecha_inicio"],
+                    $session["fecha_fin"],
+                    $session["usuario"],
+                    $session["tabla"]));
+    }
+
+    return $sessions;
+  }
+
   //Saves a Table into the database
   public function save($session) {
     $stmt = $this->db->prepare("INSERT INTO sessions values (?,?,?,?,?)");
@@ -31,23 +50,7 @@ class SessionMapper {
   }
 
 
-  //Retrieves all Sessions
-  public function findAll() {
-    $stmt = $this->db->query("SELECT * FROM sessions");
-    $sessions_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $sessions = array();
-
-    foreach ($sessions_db as $session) {
-      array_push($sessions, new Session($session["sessionid"],
-										$session["username"],
-										$session["tableid"],
-										$session["fechaInicio"],
-										$session["fechaFin"]));
-    }
-
-    return $sessions;
-  }
 
   //Retrieves a session from the database given its id
   public function findById($sessionid){
