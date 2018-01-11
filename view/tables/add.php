@@ -31,16 +31,17 @@ $view->setVariable("header", i18n("New Table"));
 		<?php $cont=1 ?>
 		<?php foreach ($exercises as $exercise): ?>
 			<?php $cont++ ?>
-					<?php echo ($cont%2==0 ? '<tr><td>' : '<td>') ?>
-						<input type="checkbox" value="<?=$exercise->getExerciseId()?>">
-						<a href="index.php?controller=exercises&amp;action=viewPublic&amp;id=<?=$exercise->getExerciseId()?>"><?=$exercise->getExerName()?></a>
-						<?php echo ($cont%2==0 ? '</td>' : '</tr></td>') ?>
+			<?php echo ($cont%2==0 ? '<tr><td>' : '<td>') ?>
+				<input type="checkbox" value="<?=$exercise->getExerciseId()?>">
+				<a href="index.php?controller=exercises&amp;action=viewPublic&amp;id=<?=$exercise->getExerciseId()?>"><?=$exercise->getExerName()?></a>
+				<?php echo ($cont%2==0 ? '</td>' : '</tr></td>') ?>
 
-				<?php endforeach; ?>
+			<?php endforeach; ?>
 
-			</table></div>
+		</table>
+	</div>
 
-			<input class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="<?=i18n("Create new table")?>">
-		</form>
-		<a class="btn btn-lg btn-primary btn-block" href="index.php?controller=tables&amp;action=tablesMenu"><?=i18n("Cancel")?></a>
-		<?=$view->moveToFragment("css")?>		<link rel="stylesheet" type="text/css" href="css/addTableStyle.css">
+	<input class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="<?=i18n("Create new table")?>">
+</form>
+<a class="btn btn-lg btn-primary btn-block" href="index.php?controller=tables&amp;action=tablesMenu"><?=i18n("Cancel")?></a>
+<?=$view->moveToFragment("css")?>		<link rel="stylesheet" type="text/css" href="css/addTableStyle.css">

@@ -14,8 +14,9 @@ class SessionMapper {
   }
 
   //Retrieves all Sessions
-  public function findAll() {
-    $stmt = $this->db->query("SELECT * FROM sessions");
+  public function findAll($user) {
+    $stmt = $this->db->prepare("SELECT * FROM sessions WHERE usuario=? ORDER BY id DESC");
+    $stmt->execute(array($user->getId()));
     $sessions_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     $sessions = array();
