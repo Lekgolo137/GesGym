@@ -5,6 +5,7 @@ require_once(__DIR__."/../core/PDOConnection.php");
 require_once(__DIR__."/../model/Session.php");
 require_once(__DIR__."/../model/Table.php");
 require_once(__DIR__."/../model/Activity.php");
+require_once(__DIR__."/../model/Resource.php");
 
 class UserMapper {
 
@@ -222,6 +223,54 @@ class UserMapper {
 		}
 		
 		return $activities;
+	}
+	
+	// Devuelve todas las actividades que se realizan en un día de la semana pasado
+	public function findActivitiesDay($day){
+		$stmt = $this->db->query("SELECT * FROM activities");
+		$activities_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		
+		$activities = array();
+		
+		foreach ($activities_db as $activity) {
+			
+			$activity_day = $activity["dia"];
+			if (strpos($activity_day, $day) !== false) {
+				array_push($activities, new Activity($activity["id"],
+													 $activity["nombre"],
+													 $activity["descripcion"],
+													 $activity["dia"],
+													 $activity["hora_inicio"],
+													 $activity["hora_fin"],
+													 $activity["plazas"],
+													 $activity["entrenador"]));
+			}
+		
+		}
+		
+		return $activities;
+	}
+
+	// Devuelve los recursos donde se llevan a cabo las actividades pasadas.
+	public function findResources($activities){
+		$resources = array();
+		
+		foreach ($activities as $activity) {
+			$stmt = $this->db->prepare("SELECT recurso FROM resources_activity WHERE actividad=?");
+			$stmt->execute(array($activity->getId()));
+			$resource_id_db = $stmt->fetch(PDO::FETCH_ASSOC);
+			
+			$stmt = $this->db->prepare("SELECT * FROM resources WHERE id=?");
+			$stmt->execute(array($resource_id_db["recurso"]));
+			$resource_db = $stmt->fetch(PDO::FETCH_ASSOC);
+			
+			array_push($resources, new Resource($resource_db["id"],
+											    $resource_db["nombre"],
+											    $resource_db["aforo"],
+											    $resource_db["descripcion"]));
+		}
+		
+		return $resources;
 	}
 	
 	// Devuelve todos los deportistas de un entrenador.
