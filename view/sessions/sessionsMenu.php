@@ -28,12 +28,6 @@ $currentusertype = $view->getVariable("currentusertype");
             <br><?=i18n("Create new session")?>
           </a>
         </div>
-				<div class="col-sm-3">
-          <a href="index.php?controller=sessions&amp;action=edit">
-            <span class="glyphicon glyphicon-hourglass"></span>
-            <br><?=i18n("Close current session")?>
-          </a>
-        </div>
 			<?php } ?>
 
 		</div>

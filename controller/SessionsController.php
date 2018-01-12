@@ -52,14 +52,12 @@ class SessionsController extends BaseController {
 		}
 		$sessions = new Session();
 		if (isset($_POST["submit"])) { // reaching via HTTP Table...
-			// populate the Table object with data form the form
-			$sessions->setSessionid($_POST["sessionid"]);
-			$sessions->setUsername($_POST["username"]);
-			$sessions->setTableid($_POST["tableid"]);
-			//$sessions->setFechaInicio($fecha);
-			$sessions->setFechaFin(NULL);
+			// populate the Session object with data form the form
+			$sessions->setUserId($this->currentUser->getId());
+			$sessions->setTableId($_POST["tableid"]);
+			$sessions->setFechaInicio(date('Y-m-d H:i:s'));
 			try {
-				// save the Table object into the database
+				// save the Session object into the database
 				$this->sessionMapper->save($sessions);
 				// POST-REDIRECT-GET
 				// Everything OK, we will redirect the user to the list of tables
@@ -67,7 +65,7 @@ class SessionsController extends BaseController {
 				// a "flash" message (which is simply a Session variable) to be
 				// get in the view after redirection.
 				$this->view->setFlash(sprintf(i18n("Session \"%s\" successfully added."),$sessions ->getSessionid()));
-				$this->view->redirect("users", "profile");
+				$this->view->redirect("sessions", "sessionsList");
 			}catch(ValidationException $ex) {
 				// Get the errors array inside the exepction...
 				$errors = $ex->getErrors();
@@ -75,15 +73,25 @@ class SessionsController extends BaseController {
 				$this->view->setVariable("errors", $errors);
 			}
 		}
-		// Put the Table object visible to the view
+		// Put the Session object visible to the view
 		$this->view->setVariable("sessions", $sessions);
 
 		$this->tableMapper = new TableMapper();
     $tables = $this->tableMapper->findAll();
     $this->view->setVariable("tables", $tables);
-		// render the view (/view/tables/add.php)
+		// render the view (/view/session/add.php)
 		$this->view->setLayout("welcome");
 		$this->view->render("sessions", "add");
+	}
+
+	public function viewClose(){
+		if (!isset($this->currentUser)) {
+      throw new Exception("Not in session. This action requires login");
+    }
+
+		$this->view->setVariable("sessionid", $_REQUEST["id"]);
+
+		$this->view->redirect("sessions", "edit");
 	}
 
   public function close() {
@@ -95,7 +103,6 @@ class SessionsController extends BaseController {
       throw new Exception("id is mandatory");
     }
 
-
     // Get the Table object from the database
     $sessionsid = $_REQUEST["id"];
     $sessions = $this->sessionMapper->findById($sessionsid);
@@ -106,7 +113,7 @@ class SessionsController extends BaseController {
     }
 
     // Delete the Table object from the database
-    $this->sessionMapper->close($sessions);
+    //$this->sessionMapper->close($sessions);
 
     // POST-REDIRECT-GET
     // Everything OK, we will redirect the user to the list of tables

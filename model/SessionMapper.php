@@ -35,8 +35,8 @@ class SessionMapper {
 
   //Saves a Table into the database
   public function save($session) {
-    $stmt = $this->db->prepare("INSERT INTO sessions values (?,?,?,?,?)");
-    $stmt->execute(array($session->getSessionid(), $session->getUsername(), $session->getTableid(),date('Y-m-d H:i:s'),$session->getFechaFin()));
+    $stmt = $this->db->prepare("INSERT INTO sessions (fecha_inicio, usuario, tabla) VALUES (?,?,?)");
+    $stmt->execute(array(date('Y-m-d H:i:s'),$session->getUserId() ,$session->getTableid()));
   }
 
 
@@ -55,17 +55,18 @@ class SessionMapper {
 
   //Retrieves a session from the database given its id
   public function findById($sessionid){
-    $stmt = $this->db->prepare("SELECT * FROM sessions WHERE sessionid=?");
-    $stmt->execute(array($sessionid));
+    $stmt = $this->db->prepare("SELECT * FROM sessions WHERE id=?");
+    $stmt->execute(array("$sessionid"));
     $session = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if($session != null) {
       return new Session(
-        $session["sessionid"],
-        $session["username"],
-        $session["tableid"],
-        $session["fechaInicio"],
-        $session["fechaFin"]);
+        $session["id"],
+        $session["comentarios"],
+        $session["fecha_inicio"],
+        $session["fecha_fin"],
+        $session["usuario"],
+        $session["tabla"]);
       } else {
         return NULL;
       }

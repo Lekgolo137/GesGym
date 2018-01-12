@@ -20,18 +20,12 @@ $view->setVariable("title", i18n("GesGym - Sessions List"));
 	<tbody>
 		<?php foreach ($sessions as $session): ?>
 			<tr>
-
 				<td><?=$session->getFechaInicio()?></td>
 				<td><?=$session->getFechaFin()?></td>
 				<td><?=$session->getComents()?></td>
-				<td><?=$session->getTableId()?></td>
+				<td><a class="btn btn-sm btn-primary" href="index.php?controller=tables&action=view&id=<?= $session->getTableId() ?>"><?=i18n("View")?></a></td>
 				<td>
-					<form action="index.php?controller=sessions&amp;action=close" method="POST" id="close_session_<?= $session->getSessionId(); ?>" style="display: inline">
-						<input type="hidden" name="id" value="<?= $session->getSessionId() ?>">
-						<input type="hidden" name="tableId" value="<?= $session->getTableId() ?>">
-						<input type="hidden" name="usernameId" value="<?= $session->getUserId() ?>">
-						<a class="btn btn-sm btn-danger" href="#" onclick="if (confirm('<?= i18n("Are you sure?")?>')) {document.getElementById('close_session_<?= $session->getSessionId() ?>').submit()}"><?= i18n("Close") ?></a>
-					</form>
+					<a class="btn btn-sm btn-danger" href="index.php?controller=sessions&action=viewClose&id=<?= $session->getSessionId() ?>"><?= i18n("Close") ?></a>
 				</td>
 			</tr>
 		</tbody>

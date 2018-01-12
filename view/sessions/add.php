@@ -18,10 +18,9 @@ $view->setVariable("header", i18n("New Session"));
 					<?php foreach ($tables as $table): ?>
 						<?php $cont++ ?>
 								<?php echo ($cont%2==0 ? '<tr><td>' : '<td>') ?>
-									<input type="radio" name="table" value="<?=$table->getTableId()?>">
+									<input type="radio" name="tableid" value="<?=$table->getTableId()?>">
 									<a href="index.php?controller=tables&amp;action=view&amp;id=<?=$table->getTableId()?>"><?=$table->getTableNombre()?></a>
 									<?php echo ($cont%2==0 ? '</td>' : '</tr></td>') ?>
-
 							<?php endforeach; ?>
 
 						</table></div>
