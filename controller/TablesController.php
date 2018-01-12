@@ -71,7 +71,7 @@ class TablesController extends BaseController {
     $this->view->setVariable("tables", $tables);
 
     // render the view (/view/tables/index.php)
-	$this->view->setLayout("default");
+    $this->view->setLayout("default");
     $this->view->render("tables", "tablesList");
   }
 
@@ -144,13 +144,14 @@ class TablesController extends BaseController {
       $tables->setTableNombre($_POST["tableNombre"]);
       $tables->setTableTipo($_POST["tableTipo"]);
       $tables->setTableDescripcion($_POST["tableDescripcion"]);
+      $exers = $_POST['exers'];
 
       try {
         // validate Table object
         $tables->checkIsValidForRegister(); // if it fails, ValidationException
 
         // save the Table object into the database
-        $this->tableMapper->save($tables);
+        $this->tableMapper->save($tables, $exers);
 
         // POST-REDIRECT-GET
         // Everything OK, we will redirect the user to the list of tables
@@ -210,13 +211,14 @@ class TablesController extends BaseController {
       $tables->setTableNombre($_POST["tableNombre"]);
       $tables->setTableTipo($_POST["tableTipo"]);
       $tables->setTableDescripcion($_POST["tableDescripcion"]);
+      $exers = $_POST['exers'];
 
       try {
         // validate Table object
         $tables->checkIsValidForRegister(); // if it fails, ValidationException
 
         // update the Table object in the database
-        $this->tableMapper->update($tables, $tablesid);
+        $this->tableMapper->update($tables, $tablesid, $exers);
 
         // POST-REDIRECT-GET
         // Everything OK, we will redirect the user to the list of tables

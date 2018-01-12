@@ -32,7 +32,7 @@ $view->setVariable("header", i18n("New Table"));
 		<?php foreach ($exercises as $exercise): ?>
 			<?php $cont++ ?>
 			<?php echo ($cont%2==0 ? '<tr><td>' : '<td>') ?>
-				<input type="checkbox" value="<?=$exercise->getExerciseId()?>">
+				<input type="checkbox" name="exers[]" value="<?=$exercise->getExerciseId()?>">
 				<a href="index.php?controller=exercises&amp;action=viewPublic&amp;id=<?=$exercise->getExerciseId()?>"><?=$exercise->getExerName()?></a>
 				<?php echo ($cont%2==0 ? '</td>' : '</tr></td>') ?>
 

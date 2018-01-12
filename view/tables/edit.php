@@ -33,7 +33,7 @@ $view->setVariable("header", i18n("Modify Table"));
 		<?php foreach ($exercises as $exercise): ?>
 			<?php $cont++ ?>
 					<?php echo ($cont%2==0 ? '<tr><td>' : '<td>') ?>
-						<input type="checkbox" value="<?=$exercise->getExerciseId()?>"><?=$exercise->getExerName()?>
+						<input type="checkbox" name="exers[]" value="<?=$exercise->getExerciseId()?>"><?=$exercise->getExerName()?>
 						<?php echo ($cont%2==0 ? '</td>' : '</tr></td>') ?>
 
 				<?php endforeach; ?>

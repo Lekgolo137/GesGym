@@ -14,9 +14,27 @@ class TableMapper {
 	}
 
 	//Saves a Table into the database
-	public function save($table) {
+	public function save($table, $exers) {
 		$stmt = $this->db->prepare("INSERT INTO tables (nombre, tipo, descripcion) VALUES (?,?,?)");
 		$stmt->execute(array($table->getTableNombre(), $table->getTableTipo(), $table->getTableDescripcion()));
+
+		$stmt2 = $this->db->query("SELECT * FROM tables ORDER BY id DESC LIMIT 1");
+		$tables_db = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+
+		$tables = array();
+
+		foreach ($tables_db as $table) {
+			array_push($tables, new Table($table["id"],$table["nombre"],$table["tipo"], $table["descripcion"]));
+		}
+
+		if(!empty($exers)){
+			$N = count($exers);
+			for($i=0; $i < $N; $i++)
+			{
+				$stmt3 = $this->db->prepare("INSERT INTO exercises_table (tabla, ejercicio) VALUES (?,?)");
+				$stmt3->execute(array($tables[0]->getTableId(), $exers[$i]));
+			}
+		}
 	}
 
 
@@ -93,9 +111,21 @@ class TableMapper {
 		}
 
 		//Updates a Table in the database
-		public function update(Table $table, $tableId) {
+		public function update(Table $table, $tableId, $exers) {
 			$stmt = $this->db->prepare("UPDATE tables SET nombre=?, tipo=?, descripcion=? WHERE id=?");
 			$stmt->execute(array($table->getTableNombre(), $table->getTableTipo(), $table->getTableDescripcion(), $tableId));
+
+			if(!empty($exers)){
+				$stmt = $this->db->prepare("DELETE FROM exercises_table WHERE tabla=?");
+				$stmt->execute(array($tableId));
+				$N = count($exers);
+				for($i=0; $i < $N; $i++)
+				{
+					$stmt3 = $this->db->prepare("INSERT INTO exercises_table (tabla, ejercicio) VALUES (?,?)");
+					$stmt3->execute(array($tableId, $exers[$i]));
+				}
+			}
+
 		}
 
 
