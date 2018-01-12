@@ -128,6 +128,40 @@ class TablesController extends BaseController {
     $this->view->render("tables", "view");
   }
 
+  /*********************************************************************************/
+  /***********************************************************************************/
+  //Action to view a table
+  public function choose() {
+    if (!isset($this->currentUser)) {
+      throw new Exception("Not in session. This action requires login");
+    }
+
+    if (!isset($_REQUEST["id"])) {
+      throw new Exception("A table id is mandatory");
+    }
+
+
+    // Get the Table object from the database
+    $tablesid = $_REQUEST["id"];
+    $tables = $this->tableMapper->findById($tablesid);
+
+    // Does the table exist?
+    if ($tables == NULL) {
+      throw new Exception("no such table with id: ".$tablesid);
+    }
+
+    // Put the Table object visible to the view
+    $this->view->setVariable("tables", $tables);
+
+    $this->exerciseMapper = new ExerciseMapper();
+    $exercises = $this->exerciseMapper->findAll();
+    $this->view->setVariable("exercises", $exercises);
+
+    // render the view (/view/tables/add.php)
+    $this->view->setLayout("welcome");
+    $this->view->render("tables", "choose");
+  }
+
   /*************************************************************************************/
   /***********************************************************************************/
   //Action to add a new Table

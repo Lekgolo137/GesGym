@@ -84,47 +84,40 @@ class SessionsController extends BaseController {
 		$this->view->render("sessions", "add");
 	}
 
-	public function viewClose(){
+	public function close() {
 		if (!isset($this->currentUser)) {
-      throw new Exception("Not in session. This action requires login");
-    }
+			throw new Exception("Not in session. This action requires login");
+		}
+		$sessions = new Session();
 
-		$this->view->setVariable("sessionid", $_REQUEST["id"]);
-
-		$this->view->redirect("sessions", "edit");
+		if (isset($_POST["submit"])) { // reaching via HTTP Table...
+			// populate the Session object with data form the form
+			$sessions->setSessionId($_POST["id"]);
+			$sessions->setComents($_POST["comentarios"]);
+			$sessions->setFechaFin(date('Y-m-d H:i:s'));
+			try {
+				// save the Session object into the database
+				$this->sessionMapper->close($sessions);
+				// POST-REDIRECT-GET
+				// Everything OK, we will redirect the user to the list of tables
+				// We want to see a message after redirection, so we establish
+				// a "flash" message (which is simply a Session variable) to be
+				// get in the view after redirection.
+				$this->view->setFlash(sprintf(i18n("Session \"%s\" successfully closed."),$sessions ->getSessionId()));
+				$this->view->redirect("sessions", "sessionsList");
+			}catch(ValidationException $ex) {
+				// Get the errors array inside the exepction...
+				$errors = $ex->getErrors();
+				// And put it to the view as "errors" variable
+				$this->view->setVariable("errors", $errors);
+			}
+		}
+		// Put the Session object visible to the view
+		$sessions->setSessionId($_REQUEST["id"]);
+		$this->view->setVariable("sessions", $sessions);
+		// render the view (/view/session/add.php)
+		$this->view->setLayout("welcome");
+		$this->view->render("sessions", "edit");
 	}
 
-  public function close() {
-    if (!isset($this->currentUser)) {
-      throw new Exception("Not in session. This action requires login");
-    }
-
-    if (!isset($_POST["id"])) {
-      throw new Exception("id is mandatory");
-    }
-
-    // Get the Table object from the database
-    $sessionsid = $_REQUEST["id"];
-    $sessions = $this->sessionMapper->findById($sessionsid);
-
-    // Does the table exist?
-    if ($sessions == NULL) {
-      throw new Exception("no such table with id: ".$sessionsid);
-    }
-
-    // Delete the Table object from the database
-    //$this->sessionMapper->close($sessions);
-
-    // POST-REDIRECT-GET
-    // Everything OK, we will redirect the user to the list of tables
-    // We want to see a message after redirection, so we establish
-    // a "flash" message (which is simply a Session variable) to be
-    // get in the view after redirection.
-    $this->view->setFlash(sprintf(i18n("Session \"%s\" successfully closed."),$sessions ->getSessionid()));
-
-    // perform the redirection. More or less:
-    // header("Location: index.php?controller=tables&action=index")
-    // die();
-    $this->view->redirect("sessions", "sessionsList");
-  }
 }

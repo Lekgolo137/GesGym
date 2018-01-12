@@ -25,7 +25,10 @@ $view->setVariable("title", i18n("GesGym - Sessions List"));
 				<td><?=$session->getComents()?></td>
 				<td><a class="btn btn-sm btn-primary" href="index.php?controller=tables&action=view&id=<?= $session->getTableId() ?>"><?=i18n("View")?></a></td>
 				<td>
-					<a class="btn btn-sm btn-danger" href="index.php?controller=sessions&action=viewClose&id=<?= $session->getSessionId() ?>"><?= i18n("Close") ?></a>
+					<?php if($session->getFechaFin() == NULL){?>
+						<a class="btn btn-sm btn-danger" href="index.php?controller=sessions&action=close&id=<?= $session->getSessionId() ?>"><?= i18n("Close") ?></a>
+					<?php } ?>
+
 				</td>
 			</tr>
 		</tbody>

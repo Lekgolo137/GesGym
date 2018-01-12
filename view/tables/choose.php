@@ -39,10 +39,13 @@ $currentusertype = $view->getVariable("currentusertype");
 
 		<input class="form-control" type="hidden" name="id" value="<?= $tables->getTableid() ?>">
 
-	<?php if($currentusertype == "entrenador"){ ?>
-		<a class="btn btn-lg btn-primary btn-block" href="index.php?controller=tables&amp;action=tablesList"><?=i18n("Cancel")?></a>
-	<?php } if($currentusertype == "deportista"){ ?>
-		<a class="btn btn-lg btn-primary btn-block" href="javascript:history.back()"><?=i18n("Cancel")?></a>
-	<?php } ?>
+		<?php if($currentusertype == "entrenador"){ ?>
+			<a class="btn btn-lg btn-primary btn-block" href="index.php?controller=tables&amp;action=tablesList"><?=i18n("Cancel")?></a>
+		<?php } if($currentusertype == "deportista"){ ?>
+			<?php if(true){ ?>
+				<input class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="<?=i18n("Choose table")?>">
+				<a class="btn btn-lg btn-primary btn-block" href="javascript:history.back()"><?=i18n("Cancel")?></a>
+			<?php } ?>
+		<?php } ?>
 	</form>
 	<?=$view->moveToFragment("css")?>		<link rel="stylesheet" type="text/css" href="css/viewTableStyle.css">

@@ -39,6 +39,20 @@ class SessionMapper {
     $stmt->execute(array(date('Y-m-d H:i:s'),$session->getUserId() ,$session->getTableid()));
   }
 
+  //update a session into the database
+  public function close($session) {
+    $stmt = $this->db->prepare("UPDATE sessions set fecha_fin=?, comentarios=? where id=?");
+    $stmt->execute(array(date('Y-m-d H:i:s'), $session->getComents(), $session->getSessionid()));
+  }
+
+  //Deletes a Table into the database
+  public function delete(Session $session) {
+    $stmt = $this->db->prepare("DELETE from sessions WHERE id=?");
+    $stmt->execute(array($session->getSessionid()));
+  }
+
+
+
 
   //Checks if a given sessionid is already in the database
   public function sessionidExists($sessionid) {
@@ -49,9 +63,6 @@ class SessionMapper {
       return true;
     }
   }
-
-
-
 
   //Retrieves a session from the database given its id
   public function findById($sessionid){
@@ -71,17 +82,4 @@ class SessionMapper {
         return NULL;
       }
     }
-
-    //Deletes a Table into the database
-    public function close(Session $session) {
-      $stmt = $this->db->prepare("UPDATE sessions set fechaFin=? where sessionid=?");
-      $stmt->execute(array(date('Y-m-d H:i:s') ,$session->getSessionid()));
-    }
-
-    //Deletes a Table into the database
-		public function delete(Session $session) {
-			$stmt = $this->db->prepare("DELETE from sessions WHERE sessionid=?");
-			$stmt->execute(array($session->getSessionid()));
-		}
-
   }
