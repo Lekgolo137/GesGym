@@ -13,7 +13,7 @@ CREATE TABLE users (
 	tipo ENUM('deportista','entrenador','administrador') NOT NULL,
 	subtipo ENUM('tdu', 'pef'),
 	entrenador INT(11),
-	
+
 	PRIMARY KEY (id),
 	FOREIGN KEY (entrenador) REFERENCES users(id)
 ) ENGINE=INNODB DEFAULT CHARACTER SET = UTF8;
@@ -24,7 +24,7 @@ CREATE TABLE exercises (
 	tipo ENUM('musculacion','cardio','estiramiento') NOT NULL,
 	descripcion VARCHAR(20000),
 	url VARCHAR(255),
-	
+
 	PRIMARY KEY (id)
 ) ENGINE=INNODB DEFAULT CHARACTER SET = UTF8;
 
@@ -33,7 +33,7 @@ CREATE TABLE tables (
 	nombre VARCHAR(255) NOT NULL,
 	tipo ENUM('estandar','personalizada') NOT NULL,
 	descripcion VARCHAR(20000),
-	
+
 	PRIMARY KEY (id)
 ) ENGINE=INNODB DEFAULT CHARACTER SET = UTF8;
 
@@ -46,7 +46,7 @@ CREATE TABLE activities (
 	hora_fin TIME,
 	plazas INT(11),
 	entrenador INT(11),
-	
+
 	PRIMARY KEY (id),
 	FOREIGN KEY (entrenador) REFERENCES users(id)
 ) ENGINE=INNODB DEFAULT CHARACTER SET = UTF8;
@@ -143,7 +143,7 @@ INSERT INTO users (username, password, tipo, subtipo, entrenador) VALUES ('Alici
 INSERT INTO users (username, password, tipo, subtipo, entrenador) VALUES ('José','12345','administrador',null,null);
 INSERT INTO users (username, password, tipo, subtipo, entrenador) VALUES ('Mónica','12345','entrenador',null,null);
 
-INSERT INTO exercises (nombre, tipo, descripcion, url) values ('Abdominales estándar','musculacion', 'Son aquellos que el movimiento “aísla” los músculos abdominales, es decir, que trabaja solo esa parte. Para hacerlos, te acuestas boca arriba con los pies apoyados en el suelo y las rodillas flexionadas. También puede ser con las piernas estiradas, elevadas o descansando en un banco. Las manos van detrás de la cabeza, ligeramente. Flexionas haciendo presión con los músculos del estómago lo más alto posible, manteniendo la zona lumbar apoyada en el suelo o colchoneta. Regresa a la posición inicial.', '');
+INSERT INTO exercises (nombre, tipo, descripcion, url) values ('Abdominales estándar','musculacion', 'Son aquellos que el movimiento “aísla” los músculos abdominales, es decir, que trabaja solo esa parte. Para hacerlos, te acuestas boca arriba con los pies apoyados en el suelo y las rodillas flexionadas. También puede ser con las piernas estiradas, elevadas o descansando en un banco. Las manos van detrás de la cabeza, ligeramente. Flexionas haciendo presión con los músculos del estómago lo más alto posible, manteniendo la zona lumbar apoyada en el suelo o colchoneta. Regresa a la posición inicial.', 'rr1QGvttEn8');
 INSERT INTO exercises (nombre, tipo, descripcion, url) values ('Abdominales con balón','musculacion', 'Se trata de un ejercicio muy interesante que te permite activar la parte inferior de los abdominales, así como también tener más fuerza en el torso por la activación de ciertos grupos musculares. Para realizar estos abdominales debes sentarte en una pelota y caminar hacia adelante para que gire por tu espalda. Dobla las caderas y las rodillas, dejando que tu cabeza y los hombros cuelguen. Coloca las manos detrás de la cabeza e inclínate hacia adelante hasta la altura de la cintura. Mantén la espalda baja contra el balón.', '');
 INSERT INTO exercises (nombre, tipo, descripcion, url) values ('Abdominales reversos','musculacion', 'Sirven para aumentar la fuerza en el recto inferior del abdomen. Debes acostarte con las piernas y los brazos extendidos. Las palmas apoyadas en el piso. Eleva las piernas hasta que queden perpendiculares al techo. Baja y sube las piernas sin flexionarlas y sin que lleguen a tocar el piso. Otra opción es llevar las rodillas al pecho y estirar las piernas para que queden paralelas al suelo.', '');
 INSERT INTO exercises (nombre, tipo, descripcion, url) values ('Abdominales con torsión','musculacion', 'Estos ejercicios sirven para trabajar los abdominales oblicuos, es decir, los de los laterales del cuerpo. Acuéstate boca arriba, dobla las rodillas y apoya los pies en el piso. Las manos detrás de la cabeza. Levántate como si fueras a hacer un abdominal estándar, pero al llegar arriba gira el torso hacia la derecha. Baja y repite hacia la izquierda. Recuerda siempre dejar abiertos los codos.', '');
