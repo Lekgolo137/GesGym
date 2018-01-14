@@ -21,7 +21,7 @@ $view->setVariable("header", i18n("Modify Exercise"));
 				<textarea type="text" name="descripcion" rows="5" class="form-control" placeholder="<?=i18n("Description")?>"><?=$exercise->getDescripcion()?></textarea><br/>
 				<b><?=i18n("URL")?>:</b>
 				<input type="text" name="url" class="form-control" placeholder="<?=i18n("URL")?>" value="<?=$exercise->getUrl()?>" required>
-
+				<span><?=i18n("* The URL must be a valid youtube video identifier code.")?></span>
 				<button type="submit" class="btn btn-lg btn-primary btn-block"><?=i18n("Save changes")?></button>
 			</form>
 			<a class="btn btn-lg btn-primary btn-block" href="index.php?controller=exercises&amp;action=exercisesList"><?=i18n("Cancel")?></a>

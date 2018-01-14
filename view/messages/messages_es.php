@@ -114,6 +114,7 @@ array(
 	"Stretching" => "Estiramiento",
 	"ID must be at least 5 characters in length" => "El ID debe tener por lo menos 5 caracteres.",
 	"Exercise successfully created." => "Ejercicio creado correctamente.",
+	"* The URL must be a valid youtube video identifier code." => "* La URL debe ser un código de identificación válido de un vídeo de youtube.",
 	// Exercises List
 	"GesGym - Exercises List" => "GesGym - Listado de ejercicios",
 	// Modify Exercise
