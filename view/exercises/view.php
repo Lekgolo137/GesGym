@@ -30,5 +30,5 @@ $view->setVariable("header", i18n("View Exercise"));
 				</div>
 			<b><?=i18n("Ilustrative video")?>:</b>
 			<iframe width="600" height="315" src="https://www.youtube.com/embed/<?=$exercise->getUrl()?>?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-			<a class="btn btn-lg btn-primary btn-block" href="index.php?controller=exercises&amp;action=exercisesList"><?=i18n("Return")?></a>
+			<a class="btn btn-lg btn-primary btn-block" href="javascript:history.back()"><?=i18n("Return")?></a>
 <?=$view->moveToFragment("css")?>		<link rel="stylesheet" type="text/css" href="css/viewExerciseStyle.css">
