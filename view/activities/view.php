@@ -72,5 +72,5 @@ $currentuserid = $view->getVariable("currentuserid");
 <?php if($currentusertype == "deportista"){ ?>
 			<a class="btn btn-lg btn-primary btn-block" href="index.php?controller=activities&amp;action=preDepor&amp;id=<?=$activity->getId()?>&amp;userid=<?=$currentuserid?>"><?=i18n("Check in")?></a>
 <?php }?>
-			<a class="btn btn-lg btn-primary btn-block" href="index.php?controller=activities&amp;action=activitiesList"><?=i18n("Return")?></a>
+			<a class="btn btn-lg btn-primary btn-block" href="javascript:history.back()"><?=i18n("Return")?></a>
 <?=$view->moveToFragment("css")?>		<link rel="stylesheet" type="text/css" href="css/viewActivityStyle.css"/>

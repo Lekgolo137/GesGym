@@ -35,9 +35,9 @@ $resources = $view->getVariable("resources");
 						<tbody>
 <?php for ($i = 0; $i < sizeof($activities); $i++){ ?>
 							<tr>
-								<td><?=$activities[$i]->getNombre()?></td>
+								<td><a href="index.php?controller=activities&amp;action=view&amp;id=<?=$activities[$i]->getId()?>"><?=$activities[$i]->getNombre()?></a></td>
 								<td><?=$activities[$i]->getHoraInicio()." - ".$activities[$i]->getHoraFin()?></td>
-								<td><?=$resources[$i]->getNombre()?></td>
+								<td><a href="index.php?controller=resources&amp;action=view&amp;id=<?=$resources[$i]->getId()?>"><?=$resources[$i]->getNombre()?></td>
 							</tr>
 <?php } ?>
 						</tbody>
