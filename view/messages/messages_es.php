@@ -125,6 +125,8 @@ array(
 	"View Exercise" => "Consultar ejercicio",
 	"Tables that include this exercise" => "Tablas que incluyen este ejercicio",
 	"Ilustrative video" => "Video ilustrativo",
+	// Delete Exercise
+	"Exercise \"%s\" successfully deleted." => "Ejercicio \"%s\" eliminado con éxito.",
 	// Profile
 	"GesGym - Profile" => "GesGym - Perfil",
 	"Modify Profile" => "Modificar perfil",

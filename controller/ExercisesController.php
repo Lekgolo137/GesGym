@@ -112,7 +112,7 @@ class ExercisesController extends BaseController {
 			// Se guardan los cambios en la base de datos.
 			$this->exerciseMapper->update($exercise);
 			// Se genera un mensaje de confirmación de la operación para el usuario.
-			$this->view->setFlash(sprintf(i18n("Exercise \"%s\" successfully modified."),$exercise->getExerciseId()));
+			$this->view->setFlash(sprintf(i18n("Exercise \"%s\" successfully modified."),$exercise->getExerName()));
 			// Se redirige al usuario de vuelta al menú.
 			$this->view->redirect("exercises", "exercisesList");
 		}
@@ -136,7 +136,7 @@ class ExercisesController extends BaseController {
 		// Se borra el ejercicio seleccionado.
 		$this->exerciseMapper->delete($exer);
 		// Se muestra un mensaje de confirmación.
-		$this->view->setFlash(sprintf(i18n("Exercise \"%s\" successfully deleted."),$exer->getExerciseId()));
+		$this->view->setFlash(sprintf(i18n("Exercise \"%s\" successfully deleted."),$exer->getExerName()));
 		// Se recarga la lista de usuarios mostrada.
 		$this->view->redirect("exercises", "exercisesList");
 	}
