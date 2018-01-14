@@ -1,11 +1,11 @@
 body {
-	padding-top: 50px;
+	padding-top: 40px;
 	background-color: #eee;
 }
 
 h1 {
 	text-align: center;
-	padding-bottom: 50px;
+	padding-bottom: 5px;
 	font-size: 70px;
 	margin-top: -20px;
 }
@@ -20,7 +20,7 @@ input {
 	margin-bottom: 10px;
 }
 
-form > div > div > div {
+form > div {
 	font-size: 10px;
 	color: red;
 	text-align: center;
@@ -31,6 +31,10 @@ a {
 }
 
 button {
+	margin-top: 10px;
+}
+
+textarea {
 	margin-top: 10px;
 }
 

@@ -18,8 +18,8 @@ $view->setVariable("header", i18n("New Exercise"));
 						<option value="estiramiento" <?php if ($exer->getExerTipo() == "estiramiento") print "selected"?>><?=i18n("Stretching")?></option>
 					</select>
 				</div>
-				<input type="text" name="descripcion" class="form-control" placeholder="<?=i18n("Description")?>" value="<?=$exer->getDescripcion()?>" required>
-				<input type="text" name="url" class="form-control" placeholder="<?=i18n("URL")?>" value="<?=$exer->getUrl()?>" required>
+				<textarea type="text" name="descripcion" rows="5" class="form-control" placeholder="<?=i18n("Description")?>"><?=$exer->getDescripcion()?></textarea>
+				<input type="text" name="url" class="form-control" placeholder="<?=i18n("URL")?>" value="<?=$exer->getUrl()?>">
 				<button type="submit" class="btn btn-lg btn-primary btn-block"><?=i18n("Create new exercise")?></button>
 			</form>
 			<a class="btn btn-lg btn-primary btn-block" href="index.php?controller=exercises&amp;action=exercisesMenu"><?=i18n("Cancel")?></a>
