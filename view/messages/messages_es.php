@@ -123,6 +123,8 @@ array(
 	// View Exercise
 	"GesGym - View Exercise" => "GesGym - Consultar ejercicio",
 	"View Exercise" => "Consultar ejercicio",
+	"Tables that include this exercise" => "Tablas que incluyen este ejercicio",
+	"Ilustrative video" => "Video ilustrativo",
 	// Profile
 	"GesGym - Profile" => "GesGym - Perfil",
 	"Modify Profile" => "Modificar perfil",
