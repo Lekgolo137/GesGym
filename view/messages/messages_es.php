@@ -194,6 +194,7 @@ array(
 	// Tables List
 	"Custom" => "Personalizada",
 	"Standard" => "Estándar",
+	"Choose" => "Elegir",
 	// View Table
 	"Choose table" => "Elegir tabla",
  	"View Table" => "Consultar Tabla",
