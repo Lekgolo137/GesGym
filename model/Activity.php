@@ -29,7 +29,7 @@ class Activity{
 	private $entrenador;
 
 	//Constructor
-	public function __construct($id=NULL, $nombre=NULL, $descripcion=NULL, $dia=NULL, $hora_inicio=NULL, $hora_fin=NULL, $plazas=NULL, $entrenador=NULL) {
+	public function __construct($id=NULL, $nombre=NULL, $descripcion=NULL, $dia=NULL, $hora_inicio=NULL, $hora_fin=NULL, $plazas=0, $entrenador=NULL) {
 		$this->id=$id;
 		$this->nombre=$nombre;
 		$this->descripcion=$descripcion;

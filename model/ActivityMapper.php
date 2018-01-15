@@ -24,8 +24,8 @@ class ActivityMapper {
 
 	// Guarda una actividad V
 	public function save($activity) {
-		$stmt = $this->db->prepare("INSERT INTO activities VALUES (?,?,?,?,?,?,?,?)");
-		$stmt->execute(array(NULL, $activity->getNombre(), $activity->getDescripcion(), $activity->getDia(), $activity->getHoraInicio(), $activity->getHoraFin(), $activity->getPlazas(), $activity->getEntrenador()));
+		$stmt = $this->db->prepare("INSERT INTO activities (nombre, descripcion, dia, hora_inicio, hora_fin, plazas, entrenador) VALUES (?, ?, ?, ?, ?, ?, ?)");
+		$stmt->execute(array($activity->getNombre(), $activity->getDescripcion(), $activity->getDia(), $activity->getHoraInicio(), $activity->getHoraFin(), $activity->getPlazas(), $activity->getEntrenador()));
 		$stmt = $this->db->query("SELECT MAX(id) FROM activities");
 		$id = $stmt->fetch();
 		return $id;

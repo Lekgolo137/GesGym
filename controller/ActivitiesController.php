@@ -106,51 +106,49 @@ require_once(__DIR__."/../controller/BaseController.php");
 
 	// Guarda una actividad nueva en la base de datos.
 	public function add() {
-
-    //Enviamos un array con los entrenadores a la vista
-    $entrenadores = $this->activityMapper->findTrainers();
-    $this->view->setVariable("entrenadores", $entrenadores);
-    $recursos = $this->activityMapper->recurs();
-    $this->view->setVariable("recursos", $recursos);
+		//Enviamos un array con los entrenadores a la vista
+		$entrenadores = $this->activityMapper->findTrainers();
+		$this->view->setVariable("entrenadores", $entrenadores);
+		$recursos = $this->activityMapper->recurs();
+		$this->view->setVariable("recursos", $recursos);
 		//Se crea una variable actividad donde guardar los datos de una nueva actividad
 		$activity = new Activity();
-
 		//Cuando el usuario le da al boton de crear una actividad...
 		if (isset($_POST["nombre"])) {
-
 			//Se guardan los datos introducidos por el usuario en la variable creada
 			$activity->setNombre($_POST["nombre"]);
-      $activity->setDescripcion($_POST["descripcion"]);
-      $dias='';
-      foreach ($_POST["days"] as $day) $dias = $dias.$day.',';
-      rtrim($dias,',');
-      str_replace(' ','',$dias);
-      $activity->setDia($dias);
-      $activity->setHoraInicio($_POST["hora_inicio"]);
-      $activity->setHoraFin($_POST["hora_fin"]);
-      $activity->setPlazas($_POST["plazas"]);
-      $activity->setEntrenador($_POST["entrenador"]);
-
-  				$id = $this->activityMapper->save($activity);
-
-          foreach ($_POST["recursos"] as $recurso){
-            $this->activityMapper->addRecActi($recurso, $id);
-          }
-  				//Se genera un mensaje de confirmacion de la actividad.
-  				$this->view->setFlash(i18n("Activity successfully created."));
-
-  				//Se redirige al usuario de vuelta a la lista de actividades
-  				$this->view->redirect("activities", "activitiesMenu");
-
+			$activity->setDescripcion($_POST["descripcion"]);
+			$dias = null;
+			if (isset($_POST["days"])) {
+				$dias = "";
+				foreach ($_POST["days"] as $day){
+					$dias .= $day.",";
+				}
+				$dias = rtrim($dias,",");
+			}
+			$activity->setDia($dias);
+			$activity->setHoraInicio($_POST["hora_inicio"]);
+			$activity->setHoraFin($_POST["hora_fin"]);
+			$activity->setPlazas($_POST["plazas"]);
+			if ($_POST["entrenador"] == "-"){
+				$activity->setEntrenador(null);
+			}else{
+				$activity->setEntrenador($_POST["entrenador"]);
+			}
+			$id = $this->activityMapper->save($activity);
+			foreach ($_POST["recursos"] as $recurso){
+				$this->activityMapper->addRecActi($recurso, $id);
+			}
+			//Se genera un mensaje de confirmacion de la actividad.
+			$this->view->setFlash(i18n("Activity successfully created."));
+			//Se redirige al usuario de vuelta a la lista de actividades
+			$this->view->redirect("activities", "activitiesMenu");
 		}
-
 		// Se manda la variable a la vista de nuevo.
 		$this->view->setVariable("activity", $activity);
-
 		// Se elige la plantilla y se renderiza la vista.
 		$this->view->setLayout("welcome");
 		$this->view->render("activities", "add");
-
 	}
 
 	// Muestra la actividad V

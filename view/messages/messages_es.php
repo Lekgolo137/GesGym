@@ -151,6 +151,16 @@ array(
 	"Create New Activity" => "Crear nueva actividad",
 	"That activity ID already exists" => "Ya existe una actividad con ese ID.",
 	"Activity successfully created." => "Actividad creada con éxito",
+	"Monday" => "Lunes",
+	"Tuesday" => "Martes",
+	"Wednesday" => "Miércoles",
+	"Thursday" => "Jueves",
+	"Friday" => "Viernes",
+	"Saturday" => "Sábado",
+	"Sunday" => "Domingo",
+	"Days" => "Días",
+	"Resources" => "Recursos",
+	"Seats" => "Plazas",
 	// Activities List
 	"GesGym - Activities List" => "GesGym - Listado de actividades",
 	// View Activity
