@@ -183,6 +183,8 @@ array(
 	"User successfully added to the activity." => "Usuario añadido correctamente a la actividad.",
 	"That user is already asigned to the activity" => "Ese usuario ya está en esta actividad.",
 	"That user doesn't exist." => "Ese usuario no existe.",
+	// Delete Activity
+	"Activity \"%s\" successfully deleted." => "Actividad \"%s\" eliminada con éxito.",
 	// Sessions List
 	"GesGym - Sessions List" => "GesGym - Listado de sesiones",
 	"Sessions List" => "Listado de sesiones",

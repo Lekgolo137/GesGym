@@ -230,7 +230,7 @@ require_once(__DIR__."/../controller/BaseController.php");
 		//Se borra la actividad
 		$this->activityMapper->delete($activity);
 		//Se muestra un mensaje de confirmacion
-		$this->view->setFlash(sprintf(i18n("Activity \"%s\" successfully deleted."),$activity->getId()));
+		$this->view->setFlash(sprintf(i18n("Activity \"%s\" successfully deleted."),$activity->getNombre()));
 		//Se redirecciona al usuario a la lista de actividades
 		$this->view->redirect("activities", "activitiesList");
 	}
