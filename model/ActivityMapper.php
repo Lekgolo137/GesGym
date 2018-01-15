@@ -4,6 +4,7 @@
 require_once(__DIR__."/../core/PDOConnection.php");
 require_once(__DIR__."/../model/Resource.php");
 require_once(__DIR__."/../model/ActivityWUser.php");
+require_once(__DIR__."/../model/User.php");
 
 /**
 * Clase ActivityMapper
@@ -23,10 +24,40 @@ class ActivityMapper {
 
 	// Guarda una actividad V
 	public function save($activity) {
-		$stmt = $this->db->prepare("INSERT INTO activities VALUES (?,?,?,?,?,?,?,?)");
-		$stmt->execute(array($activity->getId(), $activity->getNombre(), $activity->getDescripcion(), $activity->getDia(), $activity->getHoraInicio(), $activity->getHoraFin(), $activity->getPlazas(), $activity->getEntrenador()));
+		$stmt = $this->db->prepare("INSERT INTO activities (nombre, descripcion, dia, hora_inicio, hora_fin, plazas, entrenador) VALUES (?, ?, ?, ?, ?, ?, ?)");
+		$stmt->execute(array($activity->getNombre(), $activity->getDescripcion(), $activity->getDia(), $activity->getHoraInicio(), $activity->getHoraFin(), $activity->getPlazas(), $activity->getEntrenador()));
+		$stmt = $this->db->query("SELECT MAX(id) FROM activities");
+		$id = $stmt->fetch();
+		return $id;
 	}
 
+	// Devuelve un array de $entrenadores
+	public function findTrainers(){
+		$stmt = $this->db->query("SELECT id, username FROM users WHERE tipo='entrenador'");
+		$trainers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		$entrenadores = array();
+
+		foreach($trainers as $trainer){
+			array_push($entrenadores, new User($trainer["id"], $trainer["username"]));
+		}
+
+		return $entrenadores;
+	}
+
+	// Devuelve todos los recursos
+	public function recurs(){
+		$stmt = $this->db->query("SELECT * FROM resources");
+		$recursos_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		$recursos = array();
+
+		foreach($recursos_db as $recurso_db){
+			array_push($recursos, new Resource($recurso_db["id"], $recurso_db["nombre"]));
+		}
+
+		return $recursos;
+	}
  	// Separa los recursos ya asignados a la actividad
 	public function recurActi($id){
 		$stmt = $this->db->prepare("SELECT recurso FROM resources_activity WHERE actividad=?");
@@ -45,7 +76,7 @@ class ActivityMapper {
 					array_push($arrayAux, new Resource($r["id"], $r["nombre"], $r["aforo"]));
 				}
 			}
-		}
+
 
 		foreach($recursos_acti as $recurso_acti){
 			if(empty($recurso_acti))
@@ -62,11 +93,21 @@ class ActivityMapper {
 						array_push($recur_NoActi, new Resource($recur["id"], $recur["nombre"], $recur["aforo"]));
 			}
 		}
+	}else{
+
+		$stmt = $this->db->query("SELECT * FROM resources");
+		$recs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		foreach ($recs as $rec) {
+			array_push($recur_NoActi, new Resource($rec["id"], $rec["nombre"], $rec["aforo"]));
+		}
+	}
 		return $recur_NoActi;
 	}
 
+
  	// Guarda una actividad con su recurso en la tabla relacion
-	public function addRecActi($id, $recur) {
+	public function addRecActi($recur, $id) {
 		$stmt = $this->db->prepare("INSERT INTO resources_activity VALUES (?,?)");
 		$stmt->execute(array($id, $recur));
 	}
@@ -181,6 +222,19 @@ class ActivityMapper {
 		return $users;
 	}
 
+	// Devuelve el nombre del entrenadores
+	public function nameUser($id){
+		$stmt = $this->db->prepare("SELECT * FROM users WHERE id=?");
+		$stmt->execute(array($id));
+		$names = $stmt->fetchALL(PDO::FETCH_ASSOC);
+
+		$users = array();
+		foreach($names as $name){
+			array_push($users, new User($name["id"],$name["username"]));
+		}
+		return $users;
+	}
+
 	// Comprueba que un usuario no esta previamente registrado en una actividad V
 	public function userExistAct($activityid, $username){
 		$stmt = $this->db->prepare("SELECT count(usuario) FROM activities_user WHERE usuario=? AND actividad=?");
@@ -225,7 +279,7 @@ class ActivityMapper {
 
 	// Confirma un usuario de la tabla "relacion" entre usuarios y la actividad en cuestion V
 	public function confUser($activityid, $username) {
-		$stmt = $this->db->prepare("UPDATE activities_user SET conf='1' WHERE usuario=? AND actividad=?");
+		$stmt = $this->db->prepare("UPDATE activities_user SET conf=1 WHERE usuario=? AND actividad=?");
 		$stmt->execute(array($username, $activityid));
 	}
 

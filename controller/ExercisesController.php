@@ -7,11 +7,12 @@ require_once(__DIR__."/../model/Exercise.php");
 require_once(__DIR__."/../model/ExerciseMapper.php");
 require_once(__DIR__."/../controller/BaseController.php");
 
+
 class ExercisesController extends BaseController {
 
 	// Se instancia al Mapper para poder interaccionar con la base de datos.
 	private $exerciseMapper;
-
+	
 	// Se añade la instanciación del Mapper al constructor.
 	public function __construct() {
 		parent::__construct();
@@ -27,7 +28,7 @@ class ExercisesController extends BaseController {
 		$this->view->setLayout("default");
 		$this->view->render("exercises", "exercisesMenu");
 	}
-
+	
 	public function add() {
 		$type = $this->view->getVariable("currentusertype");
 		if ($type != "entrenador") {
@@ -57,7 +58,7 @@ class ExercisesController extends BaseController {
 		$this->view->setLayout("welcome");
 		$this->view->render("exercises", "add");
 	}
-
+	
 	public function exercisesList(){
 		$type = $this->view->getVariable("currentusertype");
 		if ($type != "entrenador") {
@@ -70,7 +71,7 @@ class ExercisesController extends BaseController {
 		$this->view->setLayout("default");
 		$this->view->render("exercises", "exercisesList");
 	}
-
+	
 	public function view(){
 		$type = $this->view->getVariable("currentusertype");
 		if ($type != "entrenador") {
@@ -78,31 +79,21 @@ class ExercisesController extends BaseController {
 		}
 		// Se guarda el identificador del ejercicio seleccionado en una variable.
 		$exerciseId = $_REQUEST["id"];
-		// Se coge de la BD el usuario seleccionado.
+
+		// Se coge de la BD el ejercicio seleccionado.
 		$exercise = $this->exerciseMapper->findByExerId($exerciseId);
 		// Se envia la variable a la vista.
 		$this->view->setVariable("exercise", $exercise);
+		
+		// Se coge de la BD las tablas del ejercicio seleccionado.
+		$tables = $this->exerciseMapper->findTables($exerciseId);
+		$this->view->setVariable("tables", $tables);
+		
 		// Se elige la plantilla y renderiza la vista.
 		$this->view->setLayout("welcome");
 		$this->view->render("exercises", "view");
 	}
-
-	public function viewPublic(){
-		$type = $this->view->getVariable("currentusertype");
-		if ($type != "entrenador" && $type != "deportista") {
-			throw new Exception(i18n("You must be an manager to access this feature."));
-		}
-		// Se guarda el identificador del ejercicio seleccionado en una variable.
-		$exerciseId = $_REQUEST["id"];
-		// Se coge de la BD el usuario seleccionado.
-		$exercise = $this->exerciseMapper->findByExerId($exerciseId);
-		// Se envia la variable a la vista.
-		$this->view->setVariable("exercise", $exercise);
-		// Se elige la plantilla y renderiza la vista.
-		$this->view->setLayout("welcome");
-		$this->view->render("exercises", "viewPublic");
-	}
-
+	
 	public function edit(){
 		$type = $this->view->getVariable("currentusertype");
 		if ($type != "entrenador") {
@@ -121,7 +112,7 @@ class ExercisesController extends BaseController {
 			// Se guardan los cambios en la base de datos.
 			$this->exerciseMapper->update($exercise);
 			// Se genera un mensaje de confirmación de la operación para el usuario.
-			$this->view->setFlash(sprintf(i18n("Exercise \"%s\" successfully modified."),$exercise->getExerciseId()));
+			$this->view->setFlash(sprintf(i18n("Exercise \"%s\" successfully modified."),$exercise->getExerName()));
 			// Se redirige al usuario de vuelta al menú.
 			$this->view->redirect("exercises", "exercisesList");
 		}
@@ -132,7 +123,7 @@ class ExercisesController extends BaseController {
 		$this->view->setLayout("welcome");
 		$this->view->render("exercises", "edit");
 	}
-
+	
 	public function delete(){
 		$type = $this->view->getVariable("currentusertype");
 		if ($type != "entrenador") {
@@ -145,7 +136,7 @@ class ExercisesController extends BaseController {
 		// Se borra el ejercicio seleccionado.
 		$this->exerciseMapper->delete($exer);
 		// Se muestra un mensaje de confirmación.
-		$this->view->setFlash(sprintf(i18n("Exercise \"%s\" successfully deleted."),$exer->getExerciseId()));
+		$this->view->setFlash(sprintf(i18n("Exercise \"%s\" successfully deleted."),$exer->getExerName()));
 		// Se recarga la lista de usuarios mostrada.
 		$this->view->redirect("exercises", "exercisesList");
 	}

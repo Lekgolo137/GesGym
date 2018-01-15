@@ -1,11 +1,11 @@
 body {
-	padding-top: 50px;
+	padding-top: 40px;
 	background-color: #eee;
 }
 
 h1 {
 	text-align: center;
-	padding-bottom: 50px;
+	padding-bottom: 40px;
 	font-size: 70px;
 }
 
@@ -28,6 +28,9 @@ form > div {
 a {
 	margin-top: 50px;
 }
+textarea {
+	margin-top: 10px;
+}
 
 button {
 	margin-top: 10px;
@@ -42,3 +45,4 @@ button {
 .form-signin .form-control:focus {
 	z-index: 1;
 }
+ 

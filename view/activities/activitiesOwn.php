@@ -4,10 +4,10 @@
 require_once(__DIR__."/../../core/ViewManager.php");
 $view = ViewManager::getInstance();
 $activities= $view->getVariable("activities");
-$view->setVariable("title", i18n("GesGym - My Activities"));
+$view->setVariable("title", i18n("GesGym - Your Activities"));
 ?>
 
-<h1><?=i18n("Activities List")?></h1>
+<h1><?=i18n("Your Activities")?></h1>
 <div class="container">
   <div class="table-responsive">
     <table class="table table-striped table-hover">

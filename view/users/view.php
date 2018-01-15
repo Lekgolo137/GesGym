@@ -55,7 +55,7 @@ $view->setVariable("header", i18n("View User"));
 							<tbody>
 <?php foreach ($sessions as $session): ?>
 								<tr>
-									<td><a href="index.php?controller=sessions&amp;action=view&amp;id=<?=$session->getId()?>"><?=$session->getId()?></a></td>
+									<td><a href="index.php?controller=sessions&amp;action=view&amp;id=<?=$session->getSessionId()?>"><?=$session->getSessionId()?></a></td>
 								</tr>
 <?php endforeach; ?>
 							</tbody>
