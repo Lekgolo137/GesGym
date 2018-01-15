@@ -107,4 +107,10 @@ class Activity{
 	public function setEntrenador($entrenador){
 		$this->entrenador = $entrenador;
 	}
+
+	//Método Adicional
+
+	public function addDia($dia){
+		$this->dia .= ','.$dia;
+	}
 }

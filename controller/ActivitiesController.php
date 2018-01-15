@@ -107,46 +107,40 @@ require_once(__DIR__."/../controller/BaseController.php");
 	// Guarda una actividad nueva en la base de datos.
 	public function add() {
 
+    //Enviamos un array con los entrenadores a la vista
+    $entrenadores = $this->activityMapper->findTrainers();
+    $this->view->setVariable("entrenadores", $entrenadores);
+    $recursos = $this->activityMapper->recurs();
+    $this->view->setVariable("recursos", $recursos);
 		//Se crea una variable actividad donde guardar los datos de una nueva actividad
 		$activity = new Activity();
+
 		//Cuando el usuario le da al boton de crear una actividad...
-		if (isset($_POST["id"])) {
+		if (isset($_POST["nombre"])) {
 
 			//Se guardan los datos introducidos por el usuario en la variable creada
-			$activity->setId($_POST["id"]);
 			$activity->setNombre($_POST["nombre"]);
       $activity->setDescripcion($_POST["descripcion"]);
-      $activity->setDia($_POST["dia"]);
+      $dias='';
+      foreach ($_POST["days"] as $day) $dias = $dias.$day.',';
+      rtrim($dias,',');
+      str_replace(' ','',$dias);
+      $activity->setDia($dias);
       $activity->setHoraInicio($_POST["hora_inicio"]);
       $activity->setHoraFin($_POST["hora_fin"]);
       $activity->setPlazas($_POST["plazas"]);
       $activity->setEntrenador($_POST["entrenador"]);
 
+  				$id = $this->activityMapper->save($activity);
 
-			//Se comprueba si ya existe la actividad en la base de datos
-			if (!$this->activityMapper->actividadIDExists($_POST["id"])) {
-        if ($this->activityMapper->trainerExists($_POST["entrenador"])){
-          //Si no existe y el entrenador es encontrado se guarda la nueva actividad en la base de datos.
-  				$this->activityMapper->save($activity);
-
+          foreach ($_POST["recursos"] as $recurso){
+            $this->activityMapper->addRecActi($recurso, $id);
+          }
   				//Se genera un mensaje de confirmacion de la actividad.
   				$this->view->setFlash(i18n("Activity successfully created."));
 
   				//Se redirige al usuario de vuelta a la lista de actividades
   				$this->view->redirect("activities", "activitiesMenu");
-        } else {
-          //En caso de que el entrenador no sea encontrado
-          $errors = array();
-          $errors["entrenador"] = i18n("That trainer doesn't exists");
-          $this->view->setVariable("errors", $errors);
-        }
-
-			} else {
-				//En caso de que la actividad ya existiera se muestra un mensaje de error.
-				$errors = array();
-				$errors["id"] = i18n("That activity ID already exists");
-				$this->view->setVariable("errors", $errors);
-			}
 
 		}
 
@@ -165,11 +159,21 @@ require_once(__DIR__."/../controller/BaseController.php");
 		$id = $_REQUEST["id"];
 		//Se coge de la BD la actividad seleccionada
 		$activity = $this->activityMapper->findById($id);
+    $recursos = $this->activityMapper->actiRecursos($id);
 		// Se coge de la BD los usuarios que están inscritos en esa actividad.
 		$users = $this->activityMapper->findUsers($id);
+
+    foreach($users as $user){
+        $deportistas = $this->activityMapper->nameUser($user->getUsuario());
+    }
+
+    $entrenador = $this->activityMapper->nameUser($activity->getEntrenador());
 		//Se envian las variables a la vista
 		$this->view->setVariable("activity", $activity);
 		$this->view->setVariable("users", $users);
+    $this->view->setVariable("entrenador", $entrenador);
+    $this->view->setVariable("deportistas", $deportistas);
+    $this->view->setVariable("recursos", $recursos);
 		//Se elige la plantilla y se renderiza la vista
 		$this->view->setLayout("welcome");
 		$this->view->render("activities", "view");
@@ -180,9 +184,13 @@ require_once(__DIR__."/../controller/BaseController.php");
 
 		// Se guarda la id de la actividad seleccionada en una variable.
 		$id = $_REQUEST["id"];
+    $entrenadores = $this->activityMapper->findTrainers();
+    $this->view->setVariable("entrenadores", $entrenadores);
 		// Se guarda la actividad seleccionada en una variable desde la base de datos.
 		$activity = $this->activityMapper->findById($id);
+    $recursos = $this->activityMapper->recurActi($id);
 
+    $this->view->setVariable("recursos", $recursos);
 		// Cuando el usuario le da al boton de modificar la actividad...
 		if (!empty($_POST["nombre"])){
 
@@ -194,19 +202,12 @@ require_once(__DIR__."/../controller/BaseController.php");
       $activity->setHoraFin($_POST["hora_fin"]);
       $activity->setPlazas($_POST["plazas"]);
 			$activity->setEntrenador($_POST["entrenador"]);
-      if($this->activityMapper->trainerExists($activity->getEntrenador())){
 			//Se guardan los cambios en la base de datos
 			$this->activityMapper->update($activity);
 			//Se genera un mensaje de confirmación de la operación para el usuario.
 			$this->view->setFlash(sprintf(i18n("Activity \"%s\" successfully modified."),$activity->getNombre()));
 			//Se redirige al usuario a la lista de actividades
 			$this->view->redirect("activities","activitiesList");
-    }else{
-      //En caso de que la actividad ya existiera se muestra un mensaje de error.
-      $errors = array();
-      $errors["entrenadores"] = i18n("That trainer doens't exists");
-      $this->view->setVariable("errors", $errors);
-    }
 
 		}
 
@@ -246,8 +247,9 @@ require_once(__DIR__."/../controller/BaseController.php");
 
   //Vista de las actividades del usuarios
   public function myActivities() {
-    $id = $_REQUEST["id"];
-    $type = $_REQUEST["type"];
+
+    $id = $this->view->getVariable("currentuserid");
+    $type = $this->view->getVariable("currentusertype");
 
     if($type == "entrenador"){
     $activities = $this->activityMapper->actiTrainer($id);
@@ -297,6 +299,7 @@ require_once(__DIR__."/../controller/BaseController.php");
   public function addResource() {
 
     $id = $_REQUEST["id"];
+
 
     $resources = $this->activityMapper->recurActi($id);
 

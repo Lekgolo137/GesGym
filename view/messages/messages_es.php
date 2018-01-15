@@ -142,6 +142,9 @@ array(
 	"New Activity" => "Nueva actividad",
 	"Activities List" => "Listado de actividades",
 	"GesGym - Manage Activities " => "GesGym - Gestionar actividades",
+	"My Activities" => "Mis Actividades",
+	"Your Activities" => "Tus Actividades",
+	"GesGym - Your Activities" => "GesGym - Tus Actividades",														  
 	// New Activity
 	"GesGym - New Activity" => "GesGym - Nueva actividad",
 	"Places" => "Plazas",

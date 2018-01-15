@@ -16,7 +16,7 @@ $currentuserid = $view->getVariable("currentuserid");
 							<br><?=i18n("New Activity")?>
 						</a>
 					</div>
-
+<?php } ?>
 					<div class="col-sm-6">
 						<a href="index.php?controller=activities&amp;action=activitiesList">
 							<span class="glyphicon glyphicon-list"></span>
@@ -24,19 +24,5 @@ $currentuserid = $view->getVariable("currentuserid");
 						</a>
 					</div>
 				</div>
-<?php } ?>
-<?php if($currentusertype != "administrador"){ ?>
-				<div class="col-sm-6">
-					<a href="index.php?controller=activities&amp;action=activitiesList">
-						<span class="glyphicon glyphicon-list"></span>
-						<br><?=i18n("Activities List")?>
-					</a>
-				</div>
-				<div class="col-sm-6">
-					<a href="index.php?controller=activities&amp;action=myActivities&amp;id=<?=$currentuserid?>&amp;type=<?=$currentusertype?>">
-						<span class="glyphicon glyphicon-list-alt"></span>
-						<br><?=i18n("My Activities")?>
-				</div>
-<?php } ?>
 			</div>
 <?=$view->moveToFragment("css")?>		<link rel="stylesheet" type="text/css" href="css/activitiesMenuStyle.css">
