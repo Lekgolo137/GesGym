@@ -13,12 +13,20 @@ $view->setVariable("header", i18n("New Activity"));
 			<form class="form-signin" action="index.php?controller=activities&amp;action=add" method="POST">
 				<div class="row">
 					<div class="col-sm-6">
+						<?=i18n("Name")?>:
 						<input type="text" name="nombre" class="form-control" placeholder="<?=i18n("Name")?>" value="<?=$activity->getNombre()?>" id="nombre" required />
-						<textarea name="descripcion" class="form-control" placeholder="<?=i18n("Description")?>" value="<?=$activity->getDescripcion()?>"><?=$activity->getDescripcion()?></textarea>
-						<?=i18n("Beginning")?>:
-						<input type="time" name="hora_inicio" class="form-control" value="<?=$activity->getHoraInicio()?>" id="hora_inicio" required />
-						<?=i18n("Ending")?>:
-						<input type="time" name="hora_fin" class="form-control" value="<?=$activity->getHoraFin()?>" id="hora_fin" required />
+						<?=i18n("Description")?>:
+						<textarea name="descripcion" class="form-control" placeholder="<?=i18n("Description")?>"><?=$activity->getDescripcion()?></textarea>
+						<div class="row">
+							<div class="col-sm-6">
+								<?=i18n("Beginning")?>:
+								<input type="time" name="hora_inicio" class="form-control" value="<?=$activity->getHoraInicio()?>" id="hora_inicio" required />
+							</div>
+							<div class="col-sm-6">
+								<?=i18n("Ending")?>:
+								<input type="time" name="hora_fin" class="form-control" value="<?=$activity->getHoraFin()?>" id="hora_fin" required />
+							</div>
+						</div>
 						<?=i18n("Seats")?>:
 						<input type="number" min="0" step="1" name="plazas" class="form-control" value="<?=$activity->getPlazas()?>" id="plazas" required />
 						<?=i18n("Trainer")?>:
@@ -41,7 +49,7 @@ $view->setVariable("header", i18n("New Activity"));
 							<option value="domingo"><?=i18n("Sunday")?></option>
 						</select>
 						<?=i18n("Resources")?>:
-						<select class="form-control" name="recursos[]" multiple size=12>
+						<select class="form-control" name="recursos[]" multiple size=10>
 <?php foreach ($recursos as $recurso): ?>
 							<option value="<?=$recurso->getID()?>"><?=$recurso->getNombre()?></option>
 <?php endforeach; ?>

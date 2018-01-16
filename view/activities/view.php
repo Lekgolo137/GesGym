@@ -17,12 +17,14 @@ $currentuserid = $view->getVariable("currentuserid");
 				<div class="col-sm-6">
 					<?=i18n("Name")?>:
 					<input disabled type="text" class="form-control" placeholder="<?=i18n("Name")?>" value="<?=$activity->getNombre()?>">
+					<?=i18n("Description")?>:
+					<textarea disabled type="text" class="form-control" placeholder="<?=i18n("Description")?>"><?=$activity->getDescripcion()?></textarea>
 					<?=i18n("Days")?>:
 					<input disabled type="text" class="form-control" placeholder="<?=i18n("Day")?>" value="<?=$activity->getDia()?>">
 					<div class="row">
 						<div class="col-sm-6">
 							<?=i18n("Beginning")?>:
-							<input disabled type="time" class="form-control" placeholder="<?=i18n("Beginning")?>" value="<?=$activity->getHoraInicio()?>">
+							<input disabled type="text" class="form-control" placeholder="<?=i18n("Beginning")?>" value="<?=$activity->getHoraInicio()?>">
 						</div>
 						<div class="col-sm-6">
 							<?=i18n("Ending")?>:
@@ -31,8 +33,6 @@ $currentuserid = $view->getVariable("currentuserid");
 					</div>
 					<?=i18n("Places")?>:
 					<input disabled type="text" class="form-control" placeholder="<?=i18n("Places")?>" value="<?=$activity->getPlazas()?>">
-					<?=i18n("Description")?>:
-					<textarea disabled type="text" class="form-control" placeholder="<?=i18n("Description")?>" value="<?=$activity->getDescripcion()?>"></textarea>
 				</div>
 				<div class="col-sm-6">
 <?php if(isset($trainer[0])){ ?>

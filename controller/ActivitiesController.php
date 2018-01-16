@@ -184,40 +184,40 @@ require_once(__DIR__."/../controller/BaseController.php");
 	}
 
 	// Modifica la actividad
-	public function edit(){  // Los deportistas y los entrenadores ya no tienen acceso a esta funcionalidad
-
+	public function edit(){
 		// Se guarda la id de la actividad seleccionada en una variable.
 		$id = $_REQUEST["id"];
-    $entrenadores = $this->activityMapper->findTrainers();
-    $this->view->setVariable("entrenadores", $entrenadores);
+		$entrenadores = $this->activityMapper->findTrainers();
+		$this->view->setVariable("entrenadores", $entrenadores);
 		// Se guarda la actividad seleccionada en una variable desde la base de datos.
 		$activity = $this->activityMapper->findById($id);
-    $recursos = $this->activityMapper->recurActi($id);
-
-    $this->view->setVariable("recursos", $recursos);
+		$recursos = $this->activityMapper->recurs();
+		$this->view->setVariable("recursos", $recursos);
+		$recursosA = $this->activityMapper->actiRecursos($id);
+		$this->view->setVariable("recursosA", $recursosA);
 		// Cuando el usuario le da al boton de modificar la actividad...
 		if (!empty($_POST["nombre"])){
-
 			//Se guardan los datos introducidos por el usuario
-      $activity->setNombre($_POST["nombre"]);
-      $activity->setDescripcion($_POST["descripcion"]);
-      $activity->setDia($_POST["dia"]);
-      $activity->setHoraInicio($_POST["hora_inicio"]);
-      $activity->setHoraFin($_POST["hora_fin"]);
-      $activity->setPlazas($_POST["plazas"]);
-			$activity->setEntrenador($_POST["entrenador"]);
+			$activity->setNombre($_POST["nombre"]);
+			$activity->setDescripcion($_POST["descripcion"]);
+			$activity->setDia($_POST["dia"]);
+			$activity->setHoraInicio($_POST["hora_inicio"]);
+			$activity->setHoraFin($_POST["hora_fin"]);
+			$activity->setPlazas($_POST["plazas"]);
+			if($_POST["entrenador"] == "-"){
+				$activity->setEntrenador(null);
+			}else{
+				$activity->setEntrenador($_POST["entrenador"]);
+			}
 			//Se guardan los cambios en la base de datos
 			$this->activityMapper->update($activity);
 			//Se genera un mensaje de confirmación de la operación para el usuario.
 			$this->view->setFlash(sprintf(i18n("Activity \"%s\" successfully modified."),$activity->getNombre()));
 			//Se redirige al usuario a la lista de actividades
 			$this->view->redirect("activities","activitiesList");
-
 		}
-
 		// Se envia la variable a la vista
 		$this->view->setVariable("activity", $activity);
-
 		// Se elige la plantilla y se renderiza la vista
 		$this->view->setLayout("welcome");
 		$this->view->render("activities","edit");

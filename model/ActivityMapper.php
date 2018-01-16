@@ -121,11 +121,10 @@ class ActivityMapper {
 
 			foreach($atri_db as $atri){
 				array_push($recursos, new Resource($recurso_db["recurso"],
-				 																	$atri["nombre"]));
+												   $atri["nombre"]));
 			}
 		}
 		return $recursos;
-
 	}
 
 	// Borra recursos de la actividades
