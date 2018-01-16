@@ -40,18 +40,22 @@ $currentuserid = $view->getVariable("currentuserid");
 <?php }else{?>
 					<?=i18n("Trainer")?>: <?=i18n("None")?>
 <?php }?>
-					<?php if($currentusertype == "administrador"){ ?>
+<?php if($currentusertype == "administrador"){ ?>
 					<table class="table table-striped table-hover">
 						<thead>
 							<tr>
-								<th><?=i18n("Sportsman")."s"?>:</th>
+								<th><?=i18n("Sportsman")?></th>
+								<th><?=i18n("Inscribed")?></th>
 							</tr>
 						</thead>
 						<tbody>
 <?php foreach ($users as $user):?>
 							<tr>
 <?php foreach ($sportsmen as $man):?>
-								<td><?php if($man->getId() == $user->getUsuario()){ ?><a href="index.php?controller=users&amp;action=view&amp;id=<?=$user->getUsuario()?>"><?=$man->getUsername()?></a><?php } ?></td>
+<?php if($user->getUsuario() == $man->getId()){?>
+								<td><a href="index.php?controller=users&amp;action=view&amp;id=<?=$user->getUsuario()?>"><?=$man->getUsername()?></a></td>
+<?php } ?>
+<?php endforeach; ?>
 <?php if($user->getConf()):?>
 								<td><input disabled type="checkbox" checked></td>
 <?php else: ?>
@@ -60,30 +64,28 @@ $currentuserid = $view->getVariable("currentuserid");
 									<a class="btn btn-primary btn-ms" href="index.php?controller=activities&amp;action=confUsuario&amp;id=<?=$user->getActividad()?>&amp;user=<?=$user->getUsuario()?>"><?=i18n("Confirm")?></a>
 								</td>
 <?php endif; ?>
-<?php endforeach; ?>
 							</tr>
 <?php endforeach; ?>
 						</tbody>
 					</table>
-<?php }?>
-
-				<table class="table table-striped table-hover">
-					<thead>
-						<tr>
-							<th><?=i18n("Resources")?>:</th>
-						</tr>
-					</thead>
-					<tbody>
+<?php } ?>
+					<table class="table table-striped table-hover">
+						<thead>
+							<tr>
+								<th><?=i18n("Resources")?>:</th>
+							</tr>
+						</thead>
+						<tbody>
 <?php foreach ($recursos as $recurso):?>
-					<tr>
-						<td><a href="index.php?controller=resources&amp;action=view&amp;id=<?=$recurso->getId()?>"><?=$recurso->getNombre()?></a></td>
-					</tr>
+						<tr>
+							<td><a href="index.php?controller=resources&amp;action=view&amp;id=<?=$recurso->getId()?>"><?=$recurso->getNombre()?></a></td>
+						</tr>
 <?php endforeach; ?>
-				</table>
+					</table>
 				</div>
 			</div>
 <?php if($currentusertype == "deportista"){ ?>
 			<a class="btn btn-lg btn-primary btn-block" href="index.php?controller=activities&amp;action=preDepor&amp;id=<?=$activity->getId()?>&amp;userid=<?=$currentuserid?>"><?=i18n("Check in")?></a>
 <?php }?>
-			<a class="btn btn-lg btn-primary btn-block" href="javascript:history.back()"><?=i18n("Return")?></a>
+			<a class="btn btn-lg btn-primary btn-block" href="index.php?controller=activities&amp;action=activitiesList"><?=i18n("Return")?></a>
 <?=$view->moveToFragment("css")?>		<link rel="stylesheet" type="text/css" href="css/viewActivityStyle.css"/>

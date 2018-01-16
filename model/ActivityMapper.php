@@ -132,6 +132,12 @@ class ActivityMapper {
 		$stmt = $this->db->prepare("DELETE FROM resources_activity WHERE actividad=?");
 		$stmt->execute(array($id));
 	}
+	
+	// Elimina todos los deportistas de una actividad.
+	public function deleteSportsmans($id) {
+		$stmt = $this->db->prepare("DELETE FROM activities_user WHERE actividad=?");
+		$stmt->execute(array($id));
+	}
 
 	// Borra recursos de la actividades
 	public function actiRecurDel($id,$recur) {
@@ -219,6 +225,39 @@ class ActivityMapper {
 
 		return $users;
 	}
+	
+	// Devuelve los deportistas de una actividad.
+	public function findActiSportsmans($id) {
+		$stmt = $this->db->prepare("SELECT usuario FROM activities_user WHERE actividad=?");
+		$stmt->execute(array($id));
+		$sportsmans_ids = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		$sportsmans = array();
+
+		foreach($sportsmans_ids as $sportsman_id){
+			$stmt = $this->db->prepare("SELECT username FROM users WHERE id=?");
+			$stmt->execute(array($sportsman_id["usuario"]));
+			$sportsman_db = $stmt->fetch(PDO::FETCH_ASSOC);
+			
+			array_push($sportsmans, new User($sportsman_id["usuario"], $sportsman_db["username"]));
+		}
+
+		return $sportsmans;
+	}
+	
+	// Devuelve los deportistas de una actividad.
+	public function findSportsmans() {
+		$stmt = $this->db->query("SELECT * FROM users WHERE tipo='deportista'");
+		$sportsmans_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		$sportsmans = array();
+
+		foreach($sportsmans_db as $sportsman_db){
+			array_push($sportsmans, new User($sportsman_db["id"], $sportsman_db["username"]));
+		}
+
+		return $sportsmans;
+	}
 
 	// Devuelve el nombre del entrenadores
 	public function nameUser($id){
@@ -264,9 +303,9 @@ class ActivityMapper {
 	}
 
 	// Añade un usuario a la tabla "relacion" entre usuarios y la actividad en cuestion V
-	public function addUser($username, $activityid) {
+	public function addUser($userid, $activityid) {
 		$stmt = $this->db->prepare("INSERT INTO activities_user VALUES (?,?,?)");
-		$stmt->execute(array($username, $activityid, false));
+		$stmt->execute(array($userid, $activityid, false));
 	}
 
 	// Borra un usuario de la tabla "relacion" entre usuarios y la actividad en cuestion V

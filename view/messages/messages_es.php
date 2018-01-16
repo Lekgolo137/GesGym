@@ -175,6 +175,9 @@ array(
 	"Add" => "Añadir",
 	"My Activities" => "Mis Actividades",
 	"Check in" => "Registrarse",
+	"Inscribed" => "Inscrito",
+	"Sportsman confirmed." => "Deportista confirmado.",
+	"Sportsman already confirmed." => "Deportista ya confirmado",
 	// Modify Activity
 	"GesGym - Modify Activity" => "GesGym - Modificar actividad",
 	"Modify Activity" => "Modificar actividad",

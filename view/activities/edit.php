@@ -7,6 +7,8 @@ $errors = $view->getVariable("errors");
 $activity = $view->getVariable("activity");
 $recursosA = $view->getVariable("recursosA");
 $recursos = $view->getVariable("recursos");
+$sportsmansA = $view->getVariable("sportsmansA");
+$sportsmans = $view->getVariable("sportsmans");
 $entrenadores = $view->getVariable("entrenadores");
 $view->setVariable("title", i18n("GesGym - Modify Activity"));
 $view->setVariable("header", i18n("Modify Activity"));
@@ -17,17 +19,11 @@ $view->setVariable("header", i18n("Modify Activity"));
 						<?=i18n("Name")?>:
 						<input type="text" name="nombre" class="form-control" placeholder="<?=i18n("Name")?>" value="<?=$activity->getNombre()?>" id="nombre" required>
 						<?=i18n("Description")?>:
-						<textarea type="text" name="descripcion" class="form-control" placeholder="<?=i18n("Description")?>" id="descripcion"><?=$activity->getDescripcion()?></textarea>
-						<div class="row">
-							<div class="col-sm-6">
-								<?=i18n("Beginning")?>:
-								<input type="time" name="hora_inicio" class="form-control" placeholder="<?=i18n("Beginning")?>" value="<?=$activity->getHoraInicio()?>" id="hora_inicio" required>
-							</div>
-							<div class="col-sm-6">
-								<?=i18n("Ending")?>:
-								<input type="time" name="hora_fin" class="form-control" placeholder="<?=i18n("Ending")?>" value="<?=$activity->getHoraFin()?>" id="hora_fin" required>
-							</div>
-						</div>
+						<textarea rows=5 type="text" name="descripcion" class="form-control" placeholder="<?=i18n("Description")?>" id="descripcion"><?=$activity->getDescripcion()?></textarea>
+						<?=i18n("Beginning")?>:
+						<input type="time" name="hora_inicio" class="form-control" placeholder="<?=i18n("Beginning")?>" value="<?=$activity->getHoraInicio()?>" id="hora_inicio" required>
+						<?=i18n("Ending")?>:
+						<input type="time" name="hora_fin" class="form-control" placeholder="<?=i18n("Ending")?>" value="<?=$activity->getHoraFin()?>" id="hora_fin" required>
 						<?=i18n("Places")?>:
 						<input type="number" min="0" step="1" name="plazas" class="form-control" placeholder="<?=i18n("Places")?>" value="<?=$activity->getPlazas()?>" id="plazas" required>
 						<?=i18n("Trainer")?>:
@@ -49,8 +45,14 @@ $view->setVariable("header", i18n("Modify Activity"));
 							<option value="sabado" <?php if(strpos($activity->getDia(),'sabado')!==false){print "selected";}?>><?=i18n("Saturday")?></option>
 							<option value="domingo" <?php if(strpos($activity->getDia(),'domingo')!==false){print "selected";}?>><?=i18n("Sunday")?></option>
 						</select>
+						<?=i18n("Sportsman")?>s:
+						<select class="form-control" name="sportsmans[]" id="sportsmans[]" multiple size="7" >
+<?php foreach ($sportsmans as $sportsman): ?>
+							<option value="<?=$sportsman->getID()?>" <?php if(in_array($sportsman, $sportsmansA)){print "selected";} ?>><?=$sportsman->getUsername()?></option>
+<?php endforeach; ?>
+						</select>
 						<?=i18n("Resources")?>:
-						<select class="form-control" name="recursos[]" id="recursos[]" multiple size="10" >
+						<select class="form-control" name="recursos[]" id="recursos[]" multiple size="7" >
 <?php foreach ($recursos as $recurso): ?>
 							<option value="<?=$recurso->getID()?>" <?php if(in_array($recurso, $recursosA)){print "selected";} ?>><?=$recurso->getNombre()?></option>
 <?php endforeach; ?>

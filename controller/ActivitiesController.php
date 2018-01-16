@@ -91,10 +91,10 @@ require_once(__DIR__."/../controller/BaseController.php");
 			//llamamos a la funcion del modelo
 			$this->activityMapper->confUser($activity_id, $user_id);
 			//Se genera un mensaje de confirmacion del usuario
-			$this->view->setFlash(i18n("User confirmed."));
+			$this->view->setFlash(i18n("Sportsman confirmed."));
 		} else {
 			// En caso de que el usuario ya estuviese cofirmado no se hace nada y se informa al usuario.
-			$this->view->setFlash(i18n("User already confirmed."));
+			$this->view->setFlash(i18n("Sportsman already confirmed."));
 		}
 		$users = $this->activityMapper->listActiUser($activity_id);
 		$this->view->setVariable("users", $users);
@@ -175,6 +175,7 @@ require_once(__DIR__."/../controller/BaseController.php");
 		$this->view->setVariable("users", $users);
 		$this->view->setVariable("entrenador", $entrenador);
 		if(isset($deportistas)){
+			$deportistas = $this->activityMapper->findActiSportsmans($id);
 			$this->view->setVariable("deportistas", $deportistas);
 		}
 		$this->view->setVariable("recursos", $recursos);
@@ -195,6 +196,10 @@ require_once(__DIR__."/../controller/BaseController.php");
 		$this->view->setVariable("recursos", $recursos);
 		$recursosA = $this->activityMapper->actiRecursos($id);
 		$this->view->setVariable("recursosA", $recursosA);
+		$sportsmans = $this->activityMapper->findSportsmans();
+		$this->view->setVariable("sportsmans", $sportsmans);
+		$sportsmansA = $this->activityMapper->findActiSportsmans($id);
+		$this->view->setVariable("sportsmansA", $sportsmansA);
 		// Cuando el usuario le da al boton de modificar la actividad...
 		if (!empty($_POST["nombre"])){
 			//Se guardan los datos introducidos por el usuario
@@ -216,6 +221,10 @@ require_once(__DIR__."/../controller/BaseController.php");
 				$activity->setEntrenador(null);
 			}else{
 				$activity->setEntrenador($_POST["entrenador"]);
+			}
+			$this->activityMapper->deleteSportsmans($id);
+			foreach ($_POST["sportsmans"] as $sportsman){
+				$this->activityMapper->addUser($sportsman, $id);
 			}
 			$this->activityMapper->deleteResources($id);
 			foreach ($_POST["recursos"] as $recurso){
