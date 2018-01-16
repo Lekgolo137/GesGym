@@ -85,6 +85,24 @@ class ExerciseMapper {
 
 		return $exers;
 	}
+
+	/**
+	* Retrieves all exercises include in a specific table
+	*/
+	public function findCheck($tableId) {
+		$stmt = $this->db->prepare("SELECT * FROM exercises INNER JOIN exercises_table ON exercises.id=exercises_table.ejercicio AND exercises_table.tabla = ?");
+		$stmt->execute(array($tableId));
+		$exers_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		$exers = array();
+
+		foreach ($exers_db as $exer) {
+			array_push($exers, new Exercise($exer["id"], $exer["nombre"], $exer["tipo"], $exer["descripcion"], $exer["url"]));
+		}
+
+		return $exers;
+	}
+
 	// Elimina un ejercicio
 	public function delete(Exercise $exer) {
 		// Primero eliminamos las relaciones del usuario con otras entidades.
@@ -101,20 +119,20 @@ class ExerciseMapper {
 		$stmt = $this->db->prepare("SELECT tabla FROM exercises_table WHERE ejercicio=?");
 		$stmt->execute(array($id));
 		$table_ids = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		
+
 		$tables = array();
-		
+
 		foreach ($table_ids as $table_id) {
 			$stmt = $this->db->prepare("SELECT * FROM tables WHERE id=?");
 			$stmt->execute(array($table_id["tabla"]));
 			$table = $stmt->fetch(PDO::FETCH_ASSOC);
-			
+
 			array_push($tables, new Table($table["id"],
 										  $table["nombre"],
 										  $table["tipo"],
 										  $table["descripcion"]));
 		}
-		
+
 		return $tables;
 	}
 }

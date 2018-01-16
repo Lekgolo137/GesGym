@@ -4,6 +4,7 @@ $view = ViewManager::getInstance();
 
 $tables = $view->getVariable("tables");
 $exercises = $view->getVariable("exercises");
+$exercisesCheck = $view->getVariable("exercisesCheck");
 $errors = $view->getVariable("errors");
 $view->setVariable("title", i18n("GesGym - Modify Table"));
 $view->setVariable("header", i18n("Modify Table"));
@@ -33,7 +34,12 @@ $view->setVariable("header", i18n("Modify Table"));
 		<?php foreach ($exercises as $exercise): ?>
 			<?php $cont++ ?>
 					<?php echo ($cont%2==0 ? '<tr><td>' : '<td>') ?>
-						<input type="checkbox" name="exers[]" value="<?=$exercise->getExerciseId()?>"><?=$exercise->getExerName()?>
+						<input
+						<?php foreach ($exercisesCheck as $exerciseCheck): ?>
+							<?php if($exercise->getExerciseId()==$exerciseCheck->getExerciseId()){?>
+								checked
+						<?php } endforeach; ?>
+						type="checkbox" name="exers[]" value="<?=$exercise->getExerciseId()?>"><?=$exercise->getExerName()?>
 						<?php echo ($cont%2==0 ? '</td>' : '</tr></td>') ?>
 
 				<?php endforeach; ?>
