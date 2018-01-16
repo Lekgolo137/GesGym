@@ -73,10 +73,10 @@ class ExercisesController extends BaseController {
 	}
 
 	public function view(){
-		$type = $this->view->getVariable("currentusertype");
-		//if ($type != "entrenador") {
-		//	throw new Exception(i18n("You must be an manager to access this feature."));
-		//}
+		// Se comprueba que el usuario esté logeado.
+		if (!isset($this->currentUser)) {
+			throw new Exception(i18n("You must log in to access this feature."));
+		}
 		// Se guarda el identificador del ejercicio seleccionado en una variable.
 		$exerciseId = $_REQUEST["id"];
 
