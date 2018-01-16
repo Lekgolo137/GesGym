@@ -42,3 +42,11 @@ button {
 .form-signin .form-control:focus {
 	z-index: 1;
 }
+
+.table {
+	margin-bottom: 0px;
+}
+
+#tablas {
+	padding: 0px;
+}

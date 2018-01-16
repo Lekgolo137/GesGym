@@ -12,7 +12,7 @@ $view->setVariable("header", i18n("New Session"));
 ?>
 			<form class="form-signin" action="index.php?controller=sessions&amp;action=add" method="POST">
 				<?= i18n("Choose one workout routine") ?>:
-				<div class="form-control">
+				<div id="tablas" class="form-control">
 					<table class="table table-bordered">
 						<?php $cont=1 ?>
 						<?php foreach ($tables as $table): ?>
