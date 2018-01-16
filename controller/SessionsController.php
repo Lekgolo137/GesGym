@@ -19,16 +19,16 @@ class SessionsController extends BaseController {
 	}
 
 	// Gestionar tablas
-  public function sessionsMenu(){
-    // Se comprueba que el usuario sea un entrenador.
-    $type = $this->view->getVariable("currentusertype");
-    if ($type == "administrador") {
-      throw new Exception(i18n("You can't access this feature."));
-    }
-    // Se elige la plantilla y renderiza la vista.
-    $this->view->setLayout("default");
-    $this->view->render("sessions", "sessionsMenu");
-  }
+	public function sessionsMenu(){
+		// Se comprueba que el usuario sea un entrenador.
+		$type = $this->view->getVariable("currentusertype");
+		if ($type == "administrador") {
+			throw new Exception(i18n("You can't access this feature."));
+		}
+		// Se elige la plantilla y renderiza la vista.
+		$this->view->setLayout("default");
+		$this->view->render("sessions", "sessionsMenu");
+	}
 
 	public function sessionslist() {
 		if (!isset($this->currentUser)) {
@@ -40,7 +40,11 @@ class SessionsController extends BaseController {
 
 		// put the array containing Session object to the view
 		$this->view->setVariable("sessions", $sessions);
-
+		
+		// Se cogen las tablas de la bd y se pasan a la vista.
+		$tables = $this->sessionMapper->findTables();
+		$this->view->setVariable("tables", $tables);
+		
 		// render the view (/view/session/index.php)
 		$this->view->setLayout("default");
 		$this->view->render("sessions", "sessionsList");
@@ -64,7 +68,7 @@ class SessionsController extends BaseController {
 				// We want to see a message after redirection, so we establish
 				// a "flash" message (which is simply a Session variable) to be
 				// get in the view after redirection.
-				$this->view->setFlash(sprintf(i18n("Session \"%s\" successfully added."),$sessions ->getSessionid()));
+				$this->view->setFlash(sprintf(i18n("Session successfully iniciated.")));
 				$this->view->redirect("sessions", "sessionsList");
 			}catch(ValidationException $ex) {
 				// Get the errors array inside the exepction...
@@ -103,7 +107,7 @@ class SessionsController extends BaseController {
 				// We want to see a message after redirection, so we establish
 				// a "flash" message (which is simply a Session variable) to be
 				// get in the view after redirection.
-				$this->view->setFlash(sprintf(i18n("Session \"%s\" successfully closed."),$sessions ->getSessionId()));
+				$this->view->setFlash(sprintf(i18n("Session successfully closed.")));
 				$this->view->redirect("sessions", "sessionsList");
 			}catch(ValidationException $ex) {
 				// Get the errors array inside the exepction...

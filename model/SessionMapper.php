@@ -32,6 +32,21 @@ class SessionMapper {
 
     return $sessions;
   }
+  
+   //Retrieves all Tables
+  public function findTables() {
+    $stmt = $this->db->query("SELECT * FROM tables");
+    $tables_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $tables = array();
+
+    foreach ($tables_db as $table) {
+      array_push($tables, new Table($table["id"],
+									$table["nombre"]));
+    }
+
+    return $tables;
+  }
 
   //Saves a Table into the database
   public function save($session) {
@@ -82,4 +97,5 @@ class SessionMapper {
         return NULL;
       }
     }
-  }
+	
+}

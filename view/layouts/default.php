@@ -32,7 +32,7 @@ $currentusertype = $view->getVariable("currentusertype");
 					<li><a id="list" href="index.php?controller=activities&amp;action=activitiesMenu"><?=i18n("Manage Activities")?></a></li>
 <?php } ?>
 <?php if( ($view->getVariable("title")) == i18n("GesGym - Sessions List")){?>
-					<li><a id="list" href="index.php?controller=users&amp;action=profile"><?=i18n("Profile")?></a></li>
+					<li><a id="list" href="index.php?controller=sessions&amp;action=sessionsMenu"><?=i18n("Manage Sessions")?></a></li>
 <?php } ?>
 <?php if( ($view->getVariable("title")) == i18n("GesGym - Tables List")){?>
 					<li><a id="list" href="index.php?controller=tables&amp;action=tablesMenu"><?=i18n("Manage Tables")?></a></li>

@@ -194,9 +194,10 @@ array(
 	"Start Date" => "Fecha de inicio",
 	"End Date" => "Fecha de fin",
 	"Table" => "Tabla",
-	"Session \"%s\" successfully closed." => "Sesion \"%s\" cerrada con éxito.",
+	"Session successfully closed." => "Sesion cerrada con éxito.",
 	"Comment" => "Comentar",
 	"Coments" => "Comentarios",
+	"Close Session" => "Cerrar sesión",
 	"Close" => "Cerrar",
 	"View Comments" => "Consultar comentarios",
 	// New Session
@@ -206,7 +207,7 @@ array(
 	"Create new session" => "Crear nueva sesión",
 	"Close current session" => "Finalizar sesión en curso",
 	"Choose one workout routine" => "Seleccione una tabla de entrenamiento",
-	"Session \"%s\" successfully added." => "Sesión \"%s\" creada con éxito.",
+	"Session successfully iniciated." => "Sesión iniciada con éxito.",
 	// Manage Tables
 	"GesGym - Manage Tables" => "GesGym - Gestionar tablas",
 	"New Table" => "Nueva tabla",
