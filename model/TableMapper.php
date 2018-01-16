@@ -92,6 +92,21 @@ class TableMapper {
 		return $tables;
 	}
 	
+	//Retrieves all tables link to user
+	public function findProp2($user) {
+		$stmt = $this->db->prepare("SELECT * FROM tables INNER JOIN tables_user ON tables.id=tables_user.tabla AND tables_user.usuario = ?");
+		$stmt->execute(array($user));
+		$tables_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		$tables = array();
+
+		foreach ($tables_db as $table) {
+			array_push($tables, new Table($table["id"],$table["nombre"],$table["tipo"], $table["descripcion"]));
+		}
+
+		return $tables;
+	}
+	
 	//Retrieves user ids related to a given table
 	public function findUsers($tableid) {
 		$stmt = $this->db->prepare("SELECT usuario FROM tables_user WHERE tabla=?");

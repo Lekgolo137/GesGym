@@ -81,8 +81,8 @@ class SessionsController extends BaseController {
 		$this->view->setVariable("sessions", $sessions);
 
 		$this->tableMapper = new TableMapper();
-    $tables = $this->tableMapper->findAll();
-    $this->view->setVariable("tables", $tables);
+		$tables = $this->tableMapper->findProp2($this->view->getVariable("currentuserid"));
+		$this->view->setVariable("tables", $tables);
 		// render the view (/view/session/add.php)
 		$this->view->setLayout("welcome");
 		$this->view->render("sessions", "add");

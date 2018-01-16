@@ -206,7 +206,7 @@ array(
 	"Table ID" => "ID de la tabla",
 	"Create new session" => "Crear nueva sesión",
 	"Close current session" => "Finalizar sesión en curso",
-	"Choose one workout routine" => "Seleccione una tabla de entrenamiento",
+	"Choose one of your workout routines" => "Seleccione una de sus tablas de entrenamiento",
 	"Session successfully iniciated." => "Sesión iniciada con éxito.",
 	// Manage Tables
 	"GesGym - Manage Tables" => "GesGym - Gestionar tablas",
