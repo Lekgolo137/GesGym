@@ -31,7 +31,7 @@ $currentusertype = $view->getVariable("currentusertype");
 				<?php $cont++ ?>
 				<?php echo ($cont%2==0 ? '<tr><td>' : '<td>') ?>
 					<input checked disabled type="checkbox" value="<?=$exercise->getExerciseId()?>">
-					<a href="index.php?controller=exercises&amp;action=viewPublic&amp;id=<?=$exercise->getExerciseId()?>"><?=$exercise->getExerName()?></a>
+					<a href="index.php?controller=exercises&amp;action=view&amp;id=<?=$exercise->getExerciseId()?>"><?=$exercise->getExerName()?></a>
 					<?php echo ($cont%2==0 ? '</td>' : '</tr></td>') ?>
 				<?php endforeach; ?>
 			</table>
