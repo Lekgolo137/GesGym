@@ -126,6 +126,12 @@ class ActivityMapper {
 		}
 		return $recursos;
 	}
+	
+	// Elimina todos los recursos de una actividad.
+	public function deleteResources($id) {
+		$stmt = $this->db->prepare("DELETE FROM resources_activity WHERE actividad=?");
+		$stmt->execute(array($id));
+	}
 
 	// Borra recursos de la actividades
 	public function actiRecurDel($id,$recur) {

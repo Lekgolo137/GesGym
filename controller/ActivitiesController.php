@@ -200,7 +200,15 @@ require_once(__DIR__."/../controller/BaseController.php");
 			//Se guardan los datos introducidos por el usuario
 			$activity->setNombre($_POST["nombre"]);
 			$activity->setDescripcion($_POST["descripcion"]);
-			$activity->setDia($_POST["dia"]);
+			$dias = null;
+			if (isset($_POST["days"])) {
+				$dias = "";
+				foreach ($_POST["days"] as $day){
+					$dias .= $day.",";
+				}
+				$dias = rtrim($dias,",");
+			}
+			$activity->setDia($dias);
 			$activity->setHoraInicio($_POST["hora_inicio"]);
 			$activity->setHoraFin($_POST["hora_fin"]);
 			$activity->setPlazas($_POST["plazas"]);
@@ -208,6 +216,10 @@ require_once(__DIR__."/../controller/BaseController.php");
 				$activity->setEntrenador(null);
 			}else{
 				$activity->setEntrenador($_POST["entrenador"]);
+			}
+			$this->activityMapper->deleteResources($id);
+			foreach ($_POST["recursos"] as $recurso){
+				$this->activityMapper->addRecActi($recurso, $id);
 			}
 			//Se guardan los cambios en la base de datos
 			$this->activityMapper->update($activity);
