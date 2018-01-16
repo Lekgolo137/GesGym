@@ -219,8 +219,9 @@ array(
 	"Custom" => "Personalizada",
 	"Standard" => "Estándar",
 	"Choose" => "Elegir",
+	"Unlink" => "Desvincular",
 	// View Table
-	"Choose table" => "Elegir tabla",
+	"Link table" => "Vincular tabla",
  	"View Table" => "Consultar Tabla",
 	"Table \"%s\" successfully added." => "Tabla \"%s\" creada con exito",
 	"Table \"%s\" successfully updated." => "Tabla \"%s\" actualizada con exito",

@@ -45,7 +45,7 @@ $currentuserid = $view->getVariable("currentuserid");
 		<a class="btn btn-lg btn-primary btn-block" href="index.php?controller=tables&amp;action=tablesList"><?=i18n("Cancel")?></a>
 	<?php } if($currentusertype == "deportista"){ ?>
 		<?php if(!in_array($currentuserid, $users)){ ?>
-			<input class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="<?=i18n("Choose table")?>">
+			<input class="btn btn-lg btn-success btn-block" type="submit" name="submit" value="<?=i18n("Link table")?>">
 		<?php }else{ ?>
 			<a class="btn btn-lg btn-danger btn-block" href="index.php?controller=tables&amp;action=unlinkUser&amp;id=<?= $tables->getTableid() ?>"><?= i18n("Unlink Table") ?></a>
 		<?php } ?>

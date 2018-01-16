@@ -83,6 +83,8 @@ class TablesController extends BaseController {
     $this->view->setVariable("tablesProp", $tablesProp);
 	
 	$this->view->setVariable("titulo", i18n("Your Tables"));
+	
+	$this->view->setVariable("action", "prop");
 		
     // render the view (/view/tables/index.php)
     $this->view->setLayout("default");

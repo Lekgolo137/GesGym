@@ -7,6 +7,7 @@ $tablesProp = $view->getVariable("tablesProp");
 $titulo = $view->getVariable("titulo");
 $view->setVariable("title", "GesGym - ".$titulo);
 $currentusertype = $view->getVariable("currentusertype");
+$action = $view->getVariable("action");
 ?>
 <div class="container">
 	<h1><?=$titulo?></h1>
@@ -30,6 +31,9 @@ $currentusertype = $view->getVariable("currentusertype");
 									<input type="hidden" name="id" value="<?= $table->getTableid() ?>">
 									<a class="btn btn-sm btn-danger" href="#"onclick="if (confirm('<?= i18n("Are you sure?")?>')) {document.getElementById('delete_table_<?= $table->getTableid() ?>').submit()}"><?= i18n("Delete") ?></a>
 								</form>
+							<?php } ?>
+							<?php if($action == "prop"){ ?>
+								<a class="btn btn-sm btn-danger" href="index.php?controller=tables&amp;action=unlinkUser&amp;id=<?= $table->getTableid() ?>"><?= i18n("Unlink") ?></a>
 							<?php } ?>
 						</td>
 					</tr>
