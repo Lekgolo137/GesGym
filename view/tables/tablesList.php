@@ -14,6 +14,7 @@ $currentusertype = $view->getVariable("currentusertype");
 			<thead>
 				<th><?= i18n("Name")?></th>
 				<th><?= i18n("Type")?></th>
+				<th><?= i18n("Description")?></th>
 				<th><?= i18n("Actions")?></th>
 			</tr>
 			<?php foreach ($tables as $table){ ?>
