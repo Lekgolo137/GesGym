@@ -18,7 +18,7 @@ $currentusertype = $view->getVariable("currentusertype");
 				<th><?= i18n("Description")?></th>
 				<th><?= i18n("Actions")?></th>
 			</tr>
-			<?php foreach ($tables as $table): ?>
+			<?php foreach ($tables as $table){ ?>
 				<tr>
 					<td><?= htmlentities($table->getTableNombre()) ?></td>
 					<td>
@@ -29,10 +29,10 @@ $currentusertype = $view->getVariable("currentusertype");
 					<td>
 						<a class="btn btn-sm btn-success" href="index.php?controller=tables&amp;action=view&amp;id=<?= $table->getTableid() ?>"><?=i18n("View")?></a>
 						<?php if($currentusertype == "deportista"){ ?>
-
-
+							<?php foreach ($tablesProp as $tableProp){ ?>
+								<?php if($table->getTableid()!=$tableProp->getTableid()){?>
 								<a class="btn btn-sm btn-primary" href="index.php?controller=tables&amp;action=choose&amp;id=<?= $table->getTableid() ?>"><?= i18n("Choose") ?></a>
-							
+							<?php } } ?>
 						<?php } ?>
 						<?php if($currentusertype == "entrenador"){ ?>
 							<a class="btn btn-sm btn-primary" href="index.php?controller=tables&amp;action=edit&amp;id=<?= $table->getTableid() ?>"><?= i18n("Modify") ?></a>
@@ -44,7 +44,7 @@ $currentusertype = $view->getVariable("currentusertype");
 						<?php } ?>
 					</td>
 				</tr>
-			<?php endforeach; ?>
+			<?php }?>
 		</table>
 	</div>
 </div>
