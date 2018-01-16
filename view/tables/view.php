@@ -47,7 +47,7 @@ $currentuserid = $view->getVariable("currentuserid");
 		<?php if(!in_array($currentuserid, $users)){ ?>
 			<input class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="<?=i18n("Choose table")?>">
 		<?php }else{ ?>
-			<a class="btn btn-sm btn-danger" href="index.php?controller=tables&amp;action=unlinkUser&amp;id=<?= $table->getTableid() ?>"><?= i18n("Unlink") ?></a>
+			<a class="btn btn-lg btn-danger btn-block" href="index.php?controller=tables&amp;action=unlinkUser&amp;id=<?= $tables->getTableid() ?>"><?= i18n("Unlink Table") ?></a>
 		<?php } ?>
 		<a class="btn btn-lg btn-primary btn-block" href="javascript:history.back()"><?=i18n("Cancel")?></a>
 	<?php } ?>

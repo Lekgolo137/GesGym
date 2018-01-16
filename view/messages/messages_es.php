@@ -226,6 +226,7 @@ array(
 	"Table \"%s\" successfully updated." => "Tabla \"%s\" actualizada con exito",
 	"Table \"%s\" successfully deleted." => "Tabla \"%s\" eliminada con exito",
 	"Table \"%s\" successfully choosen." => "Tabla \"%s\" elejida con exito",
+	"Unlink Table" => "Desvincular tabla",
 	// Edit Table
 	"Modify Table" => "Modificar tabla",
 	"GesGym - Modify Table" => "GesGym - Modificar tabla",
