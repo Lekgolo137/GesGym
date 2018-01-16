@@ -15,7 +15,7 @@ main {
 	margin: auto;
 }
 
-input {
+input, textarea {
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
@@ -41,4 +41,12 @@ button {
 
 .form-signin .form-control:focus {
 	z-index: 1;
+}
+
+.table {
+	margin-bottom: 0px;
+}
+
+#ejercicios {
+	padding: 0px;
 }
