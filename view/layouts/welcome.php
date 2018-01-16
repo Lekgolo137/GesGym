@@ -7,7 +7,7 @@ $view = ViewManager::getInstance();
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title><?=$view->getVariable("title","no title")?></title>
+		<title><?=$view->getVariable("title","Gym")?></title>
 		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css"/>
 		<link rel="stylesheet" type="text/css" href="css/layoutStyle.css"/>
 <?=$view->getFragment("css")?>
@@ -15,7 +15,7 @@ $view = ViewManager::getInstance();
 	</head>
 	<body>
 		<header>
-			<h1><?=$view->getVariable("header", "no title")?></h1>
+			<h1><?=$view->getVariable("header", "Gym")?></h1>
 		</header>
 		<main>
 			<div id="flash"><?=$view->popFlash()?></div>

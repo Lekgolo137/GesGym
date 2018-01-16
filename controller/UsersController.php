@@ -20,6 +20,7 @@ class UsersController extends BaseController {
 
 	public function info()
 	{
+		$this->view->setLayout("welcome");
 		$this->view->render("users", "info");
 	}
 
