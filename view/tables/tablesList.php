@@ -11,11 +11,9 @@ $currentusertype = $view->getVariable("currentusertype");
 	<h1><?=i18n("Tables List")?></h1>
 	<div class="table-responsive">
 		<table class="table table-striped table-hover">
-			<tr>
-				<!--<th><?= i18n("ID")?></th>-->
+			<thead>
 				<th><?= i18n("Name")?></th>
 				<th><?= i18n("Type")?></th>
-				<th><?= i18n("Description")?></th>
 				<th><?= i18n("Actions")?></th>
 			</tr>
 			<?php foreach ($tables as $table){ ?>
