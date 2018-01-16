@@ -55,7 +55,6 @@ class TablesController extends BaseController {
 	
 	$this->view->setVariable("titulo", i18n("Tables List"));
 
-
     // render the view (/view/tables/index.php)
     $this->view->setLayout("default");
     $this->view->render("tables", "tablesList");
@@ -77,7 +76,6 @@ class TablesController extends BaseController {
 
     // put the array containing Table object to the view
     $this->view->setVariable("tables", $tables);
-<<<<<<< HEAD
 	
 	// obtain the data from the database
     $tablesProp = $this->tableMapper->findProp($this->currentUser);
@@ -86,14 +84,6 @@ class TablesController extends BaseController {
 	
 	$this->view->setVariable("titulo", i18n("Your Tables"));
 		
-=======
-
-    // obtain the data from the database
-    $tablesProp = $this->tableMapper->findProp($this->currentUser);
-    // put the array containing Table object to the view
-    $this->view->setVariable("tablesProp", $tablesProp);
-
->>>>>>> 1d11419496540014bc36ddfa413cef3b5a10ccba
     // render the view (/view/tables/index.php)
     $this->view->setLayout("default");
     $this->view->render("tables", "tablesList");
@@ -119,11 +109,6 @@ class TablesController extends BaseController {
     $this->view->setVariable("tablesProp", $tablesProp);
 	
 	$this->view->setVariable("titulo", i18n("Tables List"));
-
-    // obtain the data from the database
-    $tablesProp = $this->tableMapper->findProp($this->currentUser);
-    // put the array containing Table object to the view
-    $this->view->setVariable("tablesProp", $tablesProp);
 
     // render the view (/view/tables/index.php)
     $this->view->setLayout("default");
@@ -397,35 +382,7 @@ class TablesController extends BaseController {
     // perform the redirection. More or less:
     // header("Location: index.php?controller=tables&action=index")
     // die();
-    $this->view->redirect("tables", "tablesListProp");
-  }
-
-  /*********************************************************************************/
-  /***********************************************************************************/
-  //Action to delete a table from tables_
-  public function unlinkUser() {
-    if (!isset($this->currentUser)) {
-      throw new Exception("Not in session. This action requires login");
-    }
-
-    if (!isset($_REQUEST["id"])) {
-      throw new Exception("id is mandatory");
-    }
-
-    // Get the Table object from the database
-    $tablesid = $_REQUEST["id"];
-    $tables = $this->tableMapper->findById($tablesid);
-
-    // Does the table exist?
-    if ($tables == NULL) {
-      throw new Exception("no such table with id: ".$tablesid);
-    }
-
-    // Delete the Table object from the database
-    $this->tableMapper->unlinkTableUser($this->currentUser, $tables);
-    $this->view->setFlash(sprintf(i18n("Table \"%s\" successfully deleted."),$tables ->getTableNombre()));
-
-    $this->view->redirect("tables", "tablesListProp");
+    $this->view->redirect("tables", "tablesListPublic");
   }
 
   public function TEST() {
