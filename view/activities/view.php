@@ -35,8 +35,12 @@ $currentuserid = $view->getVariable("currentuserid");
 					<textarea disabled type="text" class="form-control" placeholder="<?=i18n("Description")?>" value="<?=$activity->getDescripcion()?>"></textarea>
 				</div>
 				<div class="col-sm-6">
+<?php if(isset($trainer[0])){ ?>
 					<?=i18n("Trainer")?>: <a href="index.php?controller=users&amp;action=view&amp;id=<?=$trainer[0]->getId()?>"><?=$trainer[0]->getUsername()?></a>
-<?php if($currentusertype == "administrador"){ ?>
+<?php }else{?>
+					<?=i18n("Trainer")?>: <?=i18n("None")?>
+<?php }?>
+					<?php if($currentusertype == "administrador"){ ?>
 					<table class="table table-striped table-hover">
 						<thead>
 							<tr>

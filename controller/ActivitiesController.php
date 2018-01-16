@@ -174,7 +174,9 @@ require_once(__DIR__."/../controller/BaseController.php");
 		$this->view->setVariable("activity", $activity);
 		$this->view->setVariable("users", $users);
 		$this->view->setVariable("entrenador", $entrenador);
-		$this->view->setVariable("deportistas", $deportistas);
+		if(isset($deportistas)){
+			$this->view->setVariable("deportistas", $deportistas);
+		}
 		$this->view->setVariable("recursos", $recursos);
 		//Se elige la plantilla y se renderiza la vista
 		$this->view->setLayout("welcome");
