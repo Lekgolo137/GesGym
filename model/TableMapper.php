@@ -155,5 +155,11 @@ class TableMapper {
 			$stmt = $this->db->prepare("INSERT INTO tables_user (usuario, tabla) VALUES (?,?)");
 			$stmt->execute(array($user->getId(), $table->getTableId()));
 		}
+		
+		//UnLink a table to user
+		public function unlinkTableUser($user, $table) {
+			$stmt = $this->db->prepare("DELETE FROM tables_user WHERE usuario=? AND tabla=?");
+			$stmt->execute(array($user->getId(), $table->getTableId()));
+		}
 
 	}
