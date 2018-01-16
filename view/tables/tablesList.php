@@ -14,7 +14,6 @@ $currentusertype = $view->getVariable("currentusertype");
 			<thead>
 				<th><?= i18n("Name")?></th>
 				<th><?= i18n("Type")?></th>
-				<th><?= i18n("Description")?></th>
 				<th><?= i18n("Actions")?></th>
 			</tr>
 			<?php foreach ($tables as $table){ ?>
@@ -24,7 +23,6 @@ $currentusertype = $view->getVariable("currentusertype");
 						<?php if($table->getTabletipo() == "personalizada"){print i18n("Custom");}
 						if($table->getTabletipo() == "estandar"){print i18n("Standard");} ?>
 					</td>
-					<td><?= htmlentities($table->getTableDescripcion()) ?></td>
 					<td>
 						<a class="btn btn-sm btn-success" href="index.php?controller=tables&amp;action=view&amp;id=<?= $table->getTableid() ?>"><?=i18n("View")?></a>
 						<?php if($currentusertype == "deportista"){ ?>
