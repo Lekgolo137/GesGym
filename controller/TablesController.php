@@ -360,12 +360,16 @@ class TablesController extends BaseController {
     if (!isset($this->currentUser)) {
       throw new Exception("Not in session. This action requires login");
     }
-    if (!isset($_POST["id"])) {
+    if (!isset($_POST["id"]) && !isset($_REQUEST["id"])) {
       throw new Exception("id is mandatory");
     }
 
     // Get the Table object from the database
-    $tablesid = $_REQUEST["id"];
+	if (isset($_POST["id"])) {
+		$tablesid = $_POST["id"];
+	}else{
+		$tablesid = $_REQUEST["id"];
+	}
     $tables = $this->tableMapper->findById($tablesid);
 
     // Does the table exist?
@@ -386,7 +390,7 @@ class TablesController extends BaseController {
     // perform the redirection. More or less:
     // header("Location: index.php?controller=tables&action=index")
     // die();
-    $this->view->redirect("tables", "tablesListProp");
+    $this->view->redirect("tables", "tablesListPublic");
   }
 
   /*********************************************************************************/
@@ -413,8 +417,8 @@ class TablesController extends BaseController {
     // Delete the Table object from the database
     $this->tableMapper->unlinkTableUser($this->currentUser, $tables);
     $this->view->setFlash(sprintf(i18n("Table \"%s\" successfully unlinked."),$tables ->getTableNombre()));
-
-    $this->view->redirect("tables", "tablesListProp");
+	
+	$this->view->redirect("tables", "tablesListPublic");
    }
   
   public function TEST() {
