@@ -12,6 +12,7 @@ $sportsmen = $view->getVariable("deportistas");
 $recursos = $view->getVariable("recursos");
 $currentusertype = $view->getVariable("currentusertype");
 $currentuserid = $view->getVariable("currentuserid");
+$currentusername = $view->getVariable("currentusername");
 ?>
 			<div class="row">
 				<div class="col-sm-6">
@@ -40,12 +41,12 @@ $currentuserid = $view->getVariable("currentuserid");
 <?php }else{?>
 					<?=i18n("Trainer")?>: <?=i18n("None")?>
 <?php }?>
-<?php if($currentusertype == "administrador"){ ?>
+<?php if($currentusertype != "deportista"){ ?>
 					<table class="table table-striped table-hover">
 						<thead>
 							<tr>
 								<th><?=i18n("Sportsman")?></th>
-								<th><?=i18n("Inscribed")?></th>
+								<th><?=i18n("Inscription")?></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -61,8 +62,10 @@ $currentuserid = $view->getVariable("currentuserid");
 <?php else: ?>
 								<td>
 									<input disabled type="checkbox">
+<?php if($currentusertype == "administrador"){ ?>
 									<a class="btn btn-primary btn-ms" href="index.php?controller=activities&amp;action=confUsuario&amp;id=<?=$user->getActividad()?>&amp;user=<?=$user->getUsuario()?>"><?=i18n("Confirm")?></a>
-								</td>
+<?php } ?>
+									</td>
 <?php endif; ?>
 							</tr>
 <?php endforeach; ?>
@@ -84,8 +87,12 @@ $currentuserid = $view->getVariable("currentuserid");
 					</table>
 				</div>
 			</div>
-<?php if($currentusertype == "deportista"){ ?>
-			<a class="btn btn-lg btn-primary btn-block" href="index.php?controller=activities&amp;action=preDepor&amp;id=<?=$activity->getId()?>&amp;userid=<?=$currentuserid?>"><?=i18n("Check in")?></a>
+<?php if($currentusertype == "deportista" && !in_array(new User($currentuserid, $currentusername), $sportsmen)){ ?>
+			<a class="btn btn-lg btn-primary btn-block" href="index.php?controller=activities&amp;action=preDepor&amp;id=<?=$activity->getId()?>&amp;userid=<?=$currentuserid?>"><?=i18n("Request Inscription")?></a>
 <?php }?>
+<?php if($currentusertype != "administrador"){ ?>
+			<a class="btn btn-lg btn-primary btn-block" href="javascript:history.back()"><?=i18n("Return")?></a>
+<?php }else{ ?>
 			<a class="btn btn-lg btn-primary btn-block" href="index.php?controller=activities&amp;action=activitiesList"><?=i18n("Return")?></a>
+<?php } ?>
 <?=$view->moveToFragment("css")?>		<link rel="stylesheet" type="text/css" href="css/viewActivityStyle.css"/>

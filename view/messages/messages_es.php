@@ -174,8 +174,8 @@ array(
 	"Add Resource" => "Añadir Recurso",
 	"Add" => "Añadir",
 	"My Activities" => "Mis Actividades",
-	"Check in" => "Registrarse",
-	"Inscribed" => "Inscrito",
+	"Request Inscription" => "Solicitar inscripción",
+	"Inscription" => "Inscripción",
 	"Sportsman confirmed." => "Deportista confirmado.",
 	"Sportsman already confirmed." => "Deportista ya confirmado",
 	// Modify Activity
