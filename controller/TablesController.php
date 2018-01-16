@@ -112,6 +112,8 @@ class TablesController extends BaseController {
 	
 	$this->view->setVariable("titulo", i18n("Tables List"));
 
+	$this->view->setVariable("action", "public");
+	
     // render the view (/view/tables/index.php)
     $this->view->setLayout("default");
     $this->view->render("tables", "tablesList");
@@ -379,12 +381,12 @@ class TablesController extends BaseController {
     // We want to see a message after redirection, so we establish
     // a "flash" message (which is simply a Session variable) to be
     // get in the view after redirection.
-    $this->view->setFlash(sprintf(i18n("Table \"%s\" successfully choosen."),$tables ->getTableNombre()));
+    $this->view->setFlash(sprintf(i18n("Table \"%s\" successfully linked."),$tables ->getTableNombre()));
 
     // perform the redirection. More or less:
     // header("Location: index.php?controller=tables&action=index")
     // die();
-    $this->view->redirect("tables", "tablesListPublic");
+    $this->view->redirect("tables", "tablesListProp");
   }
 
   /*********************************************************************************/
@@ -410,7 +412,7 @@ class TablesController extends BaseController {
 
     // Delete the Table object from the database
     $this->tableMapper->unlinkTableUser($this->currentUser, $tables);
-    $this->view->setFlash(sprintf(i18n("Table \"%s\" successfully deleted."),$tables ->getTableNombre()));
+    $this->view->setFlash(sprintf(i18n("Table \"%s\" successfully unlinked."),$tables ->getTableNombre()));
 
     $this->view->redirect("tables", "tablesListProp");
    }
