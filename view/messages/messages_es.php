@@ -174,7 +174,10 @@ array(
 	"Add Resource" => "Añadir Recurso",
 	"Add" => "Añadir",
 	"My Activities" => "Mis Actividades",
-	"Check in" => "Registrarse",
+	"Request Inscription" => "Solicitar inscripción",
+	"Inscription" => "Inscripción",
+	"Sportsman confirmed." => "Deportista confirmado.",
+	"Sportsman already confirmed." => "Deportista ya confirmado",
 	// Modify Activity
 	"GesGym - Modify Activity" => "GesGym - Modificar actividad",
 	"Modify Activity" => "Modificar actividad",

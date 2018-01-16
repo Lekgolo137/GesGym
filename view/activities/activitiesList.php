@@ -31,12 +31,12 @@ $currentusertype = $view->getVariable("currentusertype");
 								<td><?=$activity->getPlazas()?></td>
 								<td>
 									<a class="btn btn-sm btn-success" href="index.php?controller=activities&amp;action=view&amp;id=<?=$activity->getId()?>"><?=i18n("View")?></a>
-					<?php if($currentusertype == "administrador"){ ?>
-						<a class="btn btn-sm btn-primary" href="index.php?controller=activities&amp;action=edit&amp;id=<?=$activity->getId()?>"><?=i18n("Modify")?></a>
-						<form id="<?=$activity->getId()?>"  method="POST" action="index.php?controller=activities&amp;action=delete&amp;id=<?=$activity->getId()?>">
-							<a class="btn btn-sm btn-danger" onclick="eliminar('<?=i18n("Are you sure?")?>','<?=$activity->getId()?>')"><?=i18n("Delete")?></a>
-						</form>
-					<?php } ?>
+<?php if($currentusertype == "administrador"){ ?>
+									<a class="btn btn-sm btn-primary" href="index.php?controller=activities&amp;action=edit&amp;id=<?=$activity->getId()?>"><?=i18n("Modify")?></a>
+									<form id="<?=$activity->getId()?>"  method="POST" action="index.php?controller=activities&amp;action=delete&amp;id=<?=$activity->getId()?>">
+										<a class="btn btn-sm btn-danger" onclick="eliminar('<?=i18n("Are you sure?")?>','<?=$activity->getId()?>')"><?=i18n("Delete")?></a>
+									</form>
+<?php } ?>
 								</td>
 							</tr>
 <?php endforeach; ?>
