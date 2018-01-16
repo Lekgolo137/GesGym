@@ -80,29 +80,35 @@ require_once(__DIR__."/../controller/BaseController.php");
       $this->view->redirect("activities","activitiesList");
   }
 
-  // Confirma a un usuario en un actividad
-  public function confUsuario(){
-
-    //Se guarda la id del usuario en una variables
-    $usuario = $_REQUEST["user"];
-    //Se guarda la id de la actividad en una variables
-    $id = $_REQUEST["id"];
-    if(!$this->activityMapper->userIsConf($id,$usuario)){
-
-      //llamamos a la funcion del modelo
-      $this->activityMapper->confUser($id,$usuario);
-
-      //Se genera un mensaje de confirmacion del usuario
-      $this->view->setFlash(i18n("User confirmed."));
-
-    } else {
-      $this->view->setFlash(i18n("User already confirmed."));
-    }
-    $users = $this->activityMapper->listActiUser($id);
-    $this->view->setVariable("users", $users);
-    //Se redirige al usuario a la vista de la lista de usuarios de la actividad.
-    $this->view->redirect("activities","activitiesWUserList");
-  }
+	// Confirma a un usuario en un actividad
+	public function confUsuario(){
+		//Se guarda la id del usuario en una variable
+		$user_id = $_REQUEST["user"];
+		//Se guarda la id de la actividad en una variable
+		$activity_id = $_REQUEST["id"];
+		// Se comprueba que el usuario no esté confirmado ya.
+		if(!$this->activityMapper->userIsConf($activity_id, $user_id)){
+			//llamamos a la funcion del modelo
+			$this->activityMapper->confUser($activity_id, $user_id);
+			//Se genera un mensaje de confirmacion del usuario
+			$this->view->setFlash(i18n("User confirmed."));
+		} else {
+			// En caso de que el usuario ya estuviese cofirmado no se hace nada y se informa al usuario.
+			$this->view->setFlash(i18n("User already confirmed."));
+		}
+		$users = $this->activityMapper->listActiUser($activity_id);
+		$this->view->setVariable("users", $users);
+		//Se redirige al usuario a la vista de la lista de usuarios de la actividad.
+		//$this->view->redirect("activities","view");
+		echo "<!DOCTYPE html>
+			  <html>
+				<body>
+					<script>
+						window.location = 'index.php?controller=activities&action=view&id=$activity_id';
+					</script>
+				</body>
+			  </html>";
+	}
 
 	// Guarda una actividad nueva en la base de datos.
 	public function add() {
@@ -157,21 +163,19 @@ require_once(__DIR__."/../controller/BaseController.php");
 		$id = $_REQUEST["id"];
 		//Se coge de la BD la actividad seleccionada
 		$activity = $this->activityMapper->findById($id);
-    $recursos = $this->activityMapper->actiRecursos($id);
+		$recursos = $this->activityMapper->actiRecursos($id);
 		// Se coge de la BD los usuarios que están inscritos en esa actividad.
 		$users = $this->activityMapper->findUsers($id);
-
-    foreach($users as $user){
-        $deportistas = $this->activityMapper->nameUser($user->getUsuario());
-    }
-
-    $entrenador = $this->activityMapper->nameUser($activity->getEntrenador());
+		foreach($users as $user){
+			$deportistas = $this->activityMapper->nameUser($user->getUsuario());
+		}
+		$entrenador = $this->activityMapper->nameUser($activity->getEntrenador());
 		//Se envian las variables a la vista
 		$this->view->setVariable("activity", $activity);
 		$this->view->setVariable("users", $users);
-    $this->view->setVariable("entrenador", $entrenador);
-    $this->view->setVariable("deportistas", $deportistas);
-    $this->view->setVariable("recursos", $recursos);
+		$this->view->setVariable("entrenador", $entrenador);
+		$this->view->setVariable("deportistas", $deportistas);
+		$this->view->setVariable("recursos", $recursos);
 		//Se elige la plantilla y se renderiza la vista
 		$this->view->setLayout("welcome");
 		$this->view->render("activities", "view");

@@ -6,15 +6,9 @@ require_once(__DIR__."/../model/Resource.php");
 require_once(__DIR__."/../model/ActivityWUser.php");
 require_once(__DIR__."/../model/User.php");
 
-/**
-* Clase ActivityMapper
-*
-* @author SirGarner <borjaswimmer@gmail.com>
-*/
 class ActivityMapper {
 
 	// Referencia la conexion PDO
-
 	private $db;
 
 	//Constructor
@@ -58,7 +52,8 @@ class ActivityMapper {
 
 		return $recursos;
 	}
- 	// Separa los recursos ya asignados a la actividad
+ 	
+	// Separa los recursos ya asignados a la actividad
 	public function recurActi($id){
 		$stmt = $this->db->prepare("SELECT recurso FROM resources_activity WHERE actividad=?");
 		$stmt->execute(array($id));
@@ -104,7 +99,6 @@ class ActivityMapper {
 	}
 		return $recur_NoActi;
 	}
-
 
  	// Guarda una actividad con su recurso en la tabla relacion
 	public function addRecActi($recur, $id) {
@@ -172,7 +166,6 @@ class ActivityMapper {
 
 		return $activities;
 	}
-
 
 	// Devuelve una actividad V
 	public function findById($id) {
@@ -277,35 +270,35 @@ class ActivityMapper {
 		$stmt->execute(array($username, $activityid));
 	}
 
-	// Confirma un usuario de la tabla "relacion" entre usuarios y la actividad en cuestion V
-	public function confUser($activityid, $username) {
+	// Confirma la inscripción de un deportista en una actividad.
+	public function confUser($activity_id, $user_id) {
 		$stmt = $this->db->prepare("UPDATE activities_user SET conf=1 WHERE usuario=? AND actividad=?");
-		$stmt->execute(array($username, $activityid));
+		$stmt->execute(array($user_id, $activity_id));
 	}
 
 	// Comprueba que el usuario no esta confirmado en la actividades
-	public function userIsConf($activityid, $username) {
+	public function userIsConf($activity_id, $user_id) {
 		$stmt = $this->db->prepare("SELECT count(usuario) FROM activities_user WHERE usuario=? AND actividad=? AND conf=1");
-		$stmt->execute(array($username,$activityid));
+		$stmt->execute(array($user_id, $activity_id));
 
 		if($stmt->fetchColumn() > 0){
 			return true;
 		}
 	}
 
-	// Lista la actividad y sus preinscritos V
-	public function listActiUser($id) {
-		$stmt = $this->db->query("SELECT * FROM activities_user WHERE actividad=?");
-		$stmt->execute(array($id));
-		$users_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	// Devuelve un array con todas las relaciones usario-actividad de una actividad pasada.
+	public function listActiUser($activity_id) {
+		$stmt = $this->db->prepare("SELECT * FROM activities_user WHERE actividad=?");
+		$stmt->execute(array($activity_id));
+		$relations_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-		$activities = array();
+		$relations = array();
 
-		foreach ($activities_db as $activity) {
-			array_push($activities, new ActivityWUser($activity["usuario"], $activity["actividad"], $activity["conf"]));
+		foreach ($relations_db as $relation) {
+			array_push($relations, new ActivityWUser($relation["usuario"], $relation["actividad"], $relation["conf"]));
 		}
 
-		return $activities;
+		return $relations;
 	}
 
 	// Lista Las actividades de un entrenador V
@@ -357,4 +350,5 @@ class ActivityMapper {
 		}
 		return $activities;
 	}
+
 }
