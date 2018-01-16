@@ -23,7 +23,7 @@ $view->setVariable("header", i18n("Modify Table"));
 	</select>
 
 	<?= i18n("Description") ?>: <?= isset($errors["tableDescripcion"])?i18n($errors["tableDescripcion"]):"" ?>
-	<textarea rows="5" class="form-control" type="text" name="tableDescripcion"> <?= $tables->getTableDescripcion() ?> </textarea>
+	<textarea rows="5" class="form-control" type="text" name="tableDescripcion"><?=$tables->getTableDescripcion()?></textarea>
 
 	<div id="ejercicios" class="form-control"><table class="table table-bordered">
 		<?php $cont=1 ?>

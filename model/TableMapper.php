@@ -108,7 +108,7 @@ class TableMapper {
 			} else {
 				return NULL;
 			}
-		}
+	}
 
 		//Updates a Table in the database
 		public function update(Table $table, $tableId, $exers) {
