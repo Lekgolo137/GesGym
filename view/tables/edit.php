@@ -35,7 +35,8 @@ $view->setVariable("header", i18n("Modify Table"));
 							<?php if($exercise->getExerciseId()==$exerciseCheck->getExerciseId()){?>
 								checked
 						<?php } endforeach; ?>
-						type="checkbox" name="exers[]" value="<?=$exercise->getExerciseId()?>"> <?=$exercise->getExerName()?>
+						type="checkbox" name="exers[]" value="<?=$exercise->getExerciseId()?>">
+						<a href="index.php?controller=exercises&amp;action=view&amp;id=<?=$exercise->getExerciseId()?>"><?=$exercise->getExerName()?></a>
 						<?php echo ($cont%2==0 ? '</td>' : '</tr></td>') ?>
 
 				<?php endforeach; ?>
