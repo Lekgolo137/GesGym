@@ -5,34 +5,30 @@ class Session {
 
   private $id;
   private $comentarios;
-  private $fecha_inicio;
-  private $fecha_fin;
+  private $fechaInicio;
+  private $fechaFin;
   private $usuario;
   private $tabla;
 
   // Constructor
-  public function __construct($id=NULL, $comentarios=NULL, $fecha_inicio=NULL, $fecha_fin=NULL, $usuario=NULL, $tabla=NULL) {
+  public function __construct($id=NULL, $comentarios=NULL, $fechaInicio=NULL, $fechaFin=NULL, $usuario=NULL, $tabla=NULL) {
     $this->id = $id;
     $this->comentarios = $comentarios;
-    $this->fecha_inicio = $fecha_inicio;
-    $this->fecha_fin = $fecha_fin;
+    $this->fechaInicio = $fechaInicio;
+    $this->fechaFin = $fechaFin;
     $this->usuario = $usuario;
     $this->tabla = $tabla;
   }
-  
+
   // GETTERS Y SETTERS TODAVIA NO CAMBIADOS
 
   // GETTERS
-  public function getSessionid() {
-    return $this->sessionid;
+  public function getSessionId() {
+    return $this->id;
   }
 
-  public function getUsername() {
-    return $this->username;
-  }
-
-  public function getTableid() {
-    return $this->tableid;
+  public function getComents() {
+    return $this->comentarios;
   }
 
   public function getFechaInicio() {
@@ -43,17 +39,21 @@ class Session {
     return $this->fechaFin;
   }
 
+  public function getUserId() {
+    return $this->usuario;
+  }
+
+  public function getTableId() {
+    return $this->tabla;
+  }
+
   // SETTERS
-  public function setSessionid($sessionid) {
-    $this->sessionid = $sessionid;
+  public function setSessionId($id) {
+    $this->id = $id;
   }
 
-  public function setUsername($username) {
-    $this->username = $username;
-  }
-
-  public function setTableid($tableid) {
-    $this->tableid = $tableid;
+  public function setComents($comentarios) {
+    $this->comentarios = $comentarios;
   }
 
   public function setFechaInicio($fechaInicio) {
@@ -63,4 +63,13 @@ class Session {
   public function setFechaFin($fechaFin) {
     $this->fechaFin = $fechaFin;
   }
+
+  public function setUserId($usuario) {
+    $this->usuario = $usuario;
+  }
+
+  public function setTableId($tabla) {
+    $this->tabla = $tabla;
+  }
+
 }

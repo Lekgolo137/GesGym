@@ -34,8 +34,14 @@ $currentusertype = $view->getVariable("currentusertype");
 <?php if( ($view->getVariable("title")) == i18n("GesGym - Sessions List")){?>
 					<li><a id="list" href="index.php?controller=users&amp;action=profile"><?=i18n("Profile")?></a></li>
 <?php } ?>
-<?php if( ($view->getVariable("title")) == i18n("GesGym - Tables List")){?>
+<?php if( ($view->getVariable("title")) == "GesGym - ".i18n("Tables List") && $currentusertype != "deportista"){?>
 					<li><a id="list" href="index.php?controller=tables&amp;action=tablesMenu"><?=i18n("Manage Tables")?></a></li>
+<?php } ?>
+<?php if( ($view->getVariable("title")) == i18n("GesGym - Your Activities")){?>
+					<li><a id="list" href="index.php?controller=users&amp;action=profile"><?=i18n("Profile")?></a></li>
+<?php } ?>
+<?php if( ($view->getVariable("title")) == "GesGym - ".i18n("Your Tables")){?>
+					<li><a id="list" href="index.php?controller=users&amp;action=profile"><?=i18n("Profile")?></a></li>
 <?php } ?>
 <?php if( ($view->getVariable("title")) == "GesGym - ".i18n("Your Sportsmans")){?>
 					<li><a id="list" href="index.php?controller=users&amp;action=profile"><?=i18n("Profile")?></a></li>

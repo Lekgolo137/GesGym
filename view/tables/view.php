@@ -1,45 +1,55 @@
 <?php
-//file: view/posts/view.php
 require_once(__DIR__."/../../core/ViewManager.php");
 $view = ViewManager::getInstance();
 
-$post = $view->getVariable("post");
-$currentuser = $view->getVariable("currentusername");
-$newcomment = $view->getVariable("comment");
+$tables = $view->getVariable("tables");
+$exercises = $view->getVariable("exercises");
 $errors = $view->getVariable("errors");
-
-$view->setVariable("title", "View Post");
-
+$users = $view->getVariable("users");
+$view->setVariable("title", i18n("GesGym - View Table"));
+$view->setVariable("header", i18n("View Table"));
+$currentusertype = $view->getVariable("currentusertype");
+$currentuserid = $view->getVariable("currentuserid");
 ?>
-<div class="container">
-<h1><?= i18n("Post").": ".htmlentities($post->getTitle()) ?></h1>
-<em><?= sprintf(i18n("by %s"),$post->getAuthor()->getUsername()) ?></em>
-<p>
-	<?= htmlentities($post->getContent()) ?>
-</p>
 
-<h2><?= i18n("Comments") ?></h2>
+<form class="form-signin" action="index.php?controller=tables&amp;action=linkUser" method="POST"">
 
-<?php foreach($post->getComments() as $comment): ?>
-	<hr>
-	<p><?= sprintf(i18n("%s commented..."),$comment->getAuthor()->getUsername()) ?> </p>
-	<p><?= $comment->getContent(); ?></p>
-<?php endforeach; ?>
+	<?= i18n("Name") ?>:
+	<input disabled class="form-control" type="text" name="tableNombre" value="<?= $tables->getTableNombre() ?>">
 
-<?php if (isset($currentuser) ): ?>
-	<h3><?= i18n("Write a comment") ?></h3>
+	<?= i18n("Type") ?>:
+	<select disabled class="form-control" name="tableTipo">
+		<option value="estandar" <?php if ($tables->getTableTipo() == "estandar") print "selected"?> > <?=i18n("Standard")?> </option>
+		<option value="personalizada" <?php if ($tables->getTableTipo() == "personalizada") print "selected"?> > <?=i18n("Custom")?> </option>
+	</select>
 
-	<form class="form-signin" method="POST" action="index.php?controller=comments&amp;action=add">
-		<div class="row">
-			<div class="col-sm-3">
-		<?= i18n("Comment")?>:<br>
-		<?= isset($errors["content"])?i18n($errors["content"]):"" ?><br>
-		<textarea class="form-control" class="form-control" type="text" name="content"><?=
-		htmlentities($newcomment->getContent());
-		?></textarea>
-		<input class="form-control" type="hidden" name="id" value="<?= $post->getId() ?>" ><br>
-		<input class="form-control" type="submit" name="submit" value="<?=i18n("do comment") ?>">
+	<?= i18n("Description") ?>:
+	<textarea disabled rows="5" class="form-control" type="text" name="tableDescripcion"><?=$tables->getTableDescripcion()?></textarea><br/>
+
+	<div id="ejercicios" disabled class="form-control">
+		<table class="table table-bordered">
+			<?php $cont=1 ?>
+			<?php foreach ($exercises as $exercise): ?>
+				<?php $cont++ ?>
+				<?php echo ($cont%2==0 ? '<tr><td>' : '<td>') ?>
+					<input checked disabled type="checkbox" value="<?=$exercise->getExerciseId()?>">
+					<a href="index.php?controller=exercises&amp;action=view&amp;id=<?=$exercise->getExerciseId()?>"><?=$exercise->getExerName()?></a>
+					<?php echo ($cont%2==0 ? '</td>' : '</tr></td>') ?>
+				<?php endforeach; ?>
+			</table>
+		</div>
+
+		<input class="form-control" type="hidden" name="id" value="<?= $tables->getTableid() ?>">
+
+	<?php if($currentusertype == "entrenador"){ ?>
+		<a class="btn btn-lg btn-primary btn-block" href="index.php?controller=tables&amp;action=tablesList"><?=i18n("Cancel")?></a>
+	<?php } if($currentusertype == "deportista"){ ?>
+		<?php if(!in_array($currentuserid, $users)){ ?>
+			<input class="btn btn-lg btn-success btn-block" type="submit" name="submit" value="<?=i18n("Link table")?>">
+		<?php }else{ ?>
+			<a class="btn btn-lg btn-danger btn-block" href="index.php?controller=tables&amp;action=unlinkUser&amp;id=<?= $tables->getTableid() ?>"><?= i18n("Unlink Table") ?></a>
+		<?php } ?>
+		<a class="btn btn-lg btn-primary btn-block" href="javascript:history.back()"><?=i18n("Cancel")?></a>
+	<?php } ?>
 	</form>
-</div></div>
-</div>
-<?php endif ?>
+	<?=$view->moveToFragment("css")?>		<link rel="stylesheet" type="text/css" href="css/viewTableStyle.css">

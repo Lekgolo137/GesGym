@@ -11,13 +11,19 @@ class UsersController extends BaseController {
 
 	// Se instancia al Mapper para poder interaccionar con la base de datos.
 	private $userMapper;
-	
+
 	// Se añade la instanciación del Mapper al constructor.
 	public function __construct() {
 		parent::__construct();
 		$this->userMapper = new UserMapper();
 	}
-	
+
+	public function info()
+	{
+		$this->view->setLayout("welcome");
+		$this->view->render("users", "info");
+	}
+
 	public function login() {
 		// Cuando el usuario le da al botón de iniciar sesión...
 		if (isset($_POST["username"])){
@@ -52,7 +58,7 @@ class UsersController extends BaseController {
 		// Se redirige al usuario a Login.
 		$this->view->redirect("users", "login");
 	}
-	
+
 	public function mainMenu(){
 		// Se comprueba que el usuario esté logeado.
 		if (!isset($this->currentUser)) {
@@ -62,7 +68,7 @@ class UsersController extends BaseController {
 		$this->view->setLayout("default");
 		$this->view->render("users", "mainMenu");
 	}
-	
+
 	public function profile(){
 		// Se comprueba que el usuario esté logeado.
 		if (!isset($this->currentUser)) {
@@ -72,7 +78,7 @@ class UsersController extends BaseController {
 		$this->view->setLayout("default");
 		$this->view->render("users", "profile");
 	}
-	
+
 	public function usersMenu(){
 		// Se comprueba que el usuario esté logeado como administrador o entrenador.
 		$type = $this->view->getVariable("currentusertype");
@@ -83,7 +89,7 @@ class UsersController extends BaseController {
 		$this->view->setLayout("default");
 		$this->view->render("users", "usersMenu");
 	}
-	
+
 	public function add() {
 		// Se comprueba que el usuario esté logeado como administrador o entrenador.
 		$type = $this->view->getVariable("currentusertype");
@@ -138,7 +144,7 @@ class UsersController extends BaseController {
 		$this->view->render("users", "add");
 
 	}
-		
+
 	public function usersList(){
 		// Se comprueba que el usuario esté logeado como administrador o entrenador.
 		$type = $this->view->getVariable("currentusertype");
@@ -152,7 +158,7 @@ class UsersController extends BaseController {
 		$this->view->setLayout("default");
 		$this->view->render("users", "usersList");
 	}
-	
+
 	public function sportsmansList(){
 		// Se comprueba que el usuario esté logeado como entrenador.
 		$type = $this->view->getVariable("currentusertype");
@@ -171,7 +177,7 @@ class UsersController extends BaseController {
 		$this->view->setLayout("default");
 		$this->view->render("users", "sportsmansList");
 	}
-	
+
 	public function view(){
 		// Se guarda el nombre de usuario seleccionado en una variable.
 		$id = $_REQUEST["id"];
@@ -221,7 +227,7 @@ class UsersController extends BaseController {
 		$this->view->setLayout("welcome");
 		$this->view->render("users", "view");
 	}
-		
+
 	public function edit(){
 		// Se guarda el nombre de usuario seleccionado en una variable.
 		$id = $_REQUEST["id"];
@@ -266,8 +272,13 @@ class UsersController extends BaseController {
 				if($user->getEntrenador() == $this->view->getVariable("currentuserid")){
 					$this->view->redirect("users", "sportsmansList");
 				}else{
-					// Sino se redirige al usuario de vuelta a la lista de usuarios.
-					$this->view->redirect("users", "usersList");
+					// Sino se redirige al usuario de vuelta al perfil si se estaba editando a sí mismo.
+					if($user->getUsername() == $this->view->getVariable("currentusername")){
+						$this->view->redirect("users", "profile");
+					}else{
+						// O a la lista de usuarios si estaba editando a otro..
+						$this->view->redirect("users", "usersList");
+					}
 				}
 			}catch(ValidationException $ex) {
 				// En caso de que los datos introducidos no sean válidos se captura el error y se muestra al usuario.
@@ -298,7 +309,7 @@ class UsersController extends BaseController {
 		$this->view->setLayout("welcome");
 		$this->view->render("users", "edit");
 	}
-		
+
 	public function editProfile(){
 		// Se comprueba que el usuario esté logeado.
 		if (!isset($this->currentUser)) {
@@ -334,7 +345,7 @@ class UsersController extends BaseController {
 		$this->view->setLayout("welcome");
 		$this->view->render("users", "editProfile");
 	}
-	
+
 	// No tiene una vista asociada.
 	public function delete(){
 		// Se guarda el nombre de usuario seleccionado en una variable.
@@ -361,5 +372,26 @@ class UsersController extends BaseController {
 		// Se recarga la lista de usuarios mostrada.
 		$this->view->redirect("users", "usersList");
 	}
-	
+
+	public function schedule(){
+		// Se comprueba que el usuario esté logeado.
+		if (!isset($this->currentUser)) {
+			throw new Exception(i18n("You must log in to access this feature."));
+		}
+		if (isset($_POST["day"])){
+			$day = $_POST["day"];
+		}else{
+			$day = "lunes";
+		}
+		$activities = $this->userMapper->findActivitiesDay($day);
+		$resources = $this->userMapper->findResources($activities);
+		// Se envían las variables a la vista.
+		$this->view->setVariable("day", $day);
+		$this->view->setVariable("activities", $activities);
+		$this->view->setVariable("resources", $resources);
+		// Se elige la plantilla y renderiza la vista.
+		$this->view->setLayout("default");
+		$this->view->render("users", "schedule");
+	}
+
 }

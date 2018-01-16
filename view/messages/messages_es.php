@@ -50,6 +50,7 @@ array(
 	"Manage Exercises" => "Gestionar ejercicios",
 	"Manage Users" => "Gestionar usuarios",
 	"Manage Resources" => "Gestionar recursos",
+	"Schedule" => "Agenda",
 	// Manage Users
 	"GesGym - Manage Users" => "GesGym - Gestionar usuarios",
 	// New User
@@ -113,6 +114,7 @@ array(
 	"Stretching" => "Estiramiento",
 	"ID must be at least 5 characters in length" => "El ID debe tener por lo menos 5 caracteres.",
 	"Exercise successfully created." => "Ejercicio creado correctamente.",
+	"* The URL must be a valid youtube video identifier code." => "* La URL debe ser un código de identificación válido de un vídeo de youtube.",
 	// Exercises List
 	"GesGym - Exercises List" => "GesGym - Listado de ejercicios",
 	// Modify Exercise
@@ -122,6 +124,10 @@ array(
 	// View Exercise
 	"GesGym - View Exercise" => "GesGym - Consultar ejercicio",
 	"View Exercise" => "Consultar ejercicio",
+	"Tables that include this exercise" => "Tablas que incluyen este ejercicio",
+	"Ilustrative video" => "Video ilustrativo",
+	// Delete Exercise
+	"Exercise \"%s\" successfully deleted." => "Ejercicio \"%s\" eliminado con éxito.",
 	// Profile
 	"GesGym - Profile" => "GesGym - Perfil",
 	"Modify Profile" => "Modificar perfil",
@@ -136,12 +142,25 @@ array(
 	"New Activity" => "Nueva actividad",
 	"Activities List" => "Listado de actividades",
 	"GesGym - Manage Activities " => "GesGym - Gestionar actividades",
+	"My Activities" => "Mis Actividades",
+	"Your Activities" => "Tus Actividades",
+	"GesGym - Your Activities" => "GesGym - Tus Actividades",														  
 	// New Activity
 	"GesGym - New Activity" => "GesGym - Nueva actividad",
 	"Places" => "Plazas",
 	"Create New Activity" => "Crear nueva actividad",
 	"That activity ID already exists" => "Ya existe una actividad con ese ID.",
 	"Activity successfully created." => "Actividad creada con éxito",
+	"Monday" => "Lunes",
+	"Tuesday" => "Martes",
+	"Wednesday" => "Miércoles",
+	"Thursday" => "Jueves",
+	"Friday" => "Viernes",
+	"Saturday" => "Sábado",
+	"Sunday" => "Domingo",
+	"Days" => "Días",
+	"Resources" => "Recursos",
+	"Seats" => "Plazas",
 	// Activities List
 	"GesGym - Activities List" => "GesGym - Listado de actividades",
 	// View Activity
@@ -155,7 +174,10 @@ array(
 	"Add Resource" => "Añadir Recurso",
 	"Add" => "Añadir",
 	"My Activities" => "Mis Actividades",
-	"Check in" => "Registrarse",					 
+	"Request Inscription" => "Solicitar inscripción",
+	"Inscription" => "Inscripción",
+	"Sportsman confirmed." => "Deportista confirmado.",
+	"Sportsman already confirmed." => "Deportista ya confirmado",
 	// Modify Activity
 	"GesGym - Modify Activity" => "GesGym - Modificar actividad",
 	"Modify Activity" => "Modificar actividad",
@@ -164,22 +186,28 @@ array(
 	"User successfully added to the activity." => "Usuario añadido correctamente a la actividad.",
 	"That user is already asigned to the activity" => "Ese usuario ya está en esta actividad.",
 	"That user doesn't exist." => "Ese usuario no existe.",
+	// Delete Activity
+	"Activity \"%s\" successfully deleted." => "Actividad \"%s\" eliminada con éxito.",
 	// Sessions List
 	"GesGym - Sessions List" => "GesGym - Listado de sesiones",
 	"Sessions List" => "Listado de sesiones",
 	"Start Date" => "Fecha de inicio",
 	"End Date" => "Fecha de fin",
 	"Table" => "Tabla",
-	"Session \"%s\" successfully closed." => "Sesion \"%s\" cerrada con éxito.",
+	"Session successfully closed." => "Sesion cerrada con éxito.",
 	"Comment" => "Comentar",
+	"Coments" => "Comentarios",
+	"Close Session" => "Cerrar sesión",
 	"Close" => "Cerrar",
 	"View Comments" => "Consultar comentarios",
 	// New Session
-	"GesGym - New Session" => "Nueva sesion",
+	"GesGym - New Session" => "Nueva sesión",
 	"Session ID" => "ID de la sesión",
 	"Table ID" => "ID de la tabla",
 	"Create new session" => "Crear nueva sesión",
-	"Session \"%s\" successfully added." => "Sesion \"%s\" creada con éxito.",
+	"Close current session" => "Finalizar sesión en curso",
+	"Choose one of your workout routines" => "Seleccione una de sus tablas de entrenamiento",
+	"Session successfully iniciated." => "Sesión iniciada con éxito.",
 	// Manage Tables
 	"GesGym - Manage Tables" => "GesGym - Gestionar tablas",
 	"New Table" => "Nueva tabla",
@@ -190,9 +218,26 @@ array(
 	// Tables List
 	"Custom" => "Personalizada",
 	"Standard" => "Estándar",
+	"Choose" => "Elegir",
+	"Unlink" => "Desvincular",
+	"Link" => "Vincular",
+	"Table \"%s\" successfully unlinked." => "Tabla \"%s\" desvinculada con éxito.",
+	// View Table
+	"Link table" => "Vincular tabla",
+ 	"View Table" => "Consultar Tabla",
+	"Table \"%s\" successfully added." => "Tabla \"%s\" creada con exito",
+	"Table \"%s\" successfully updated." => "Tabla \"%s\" actualizada con exito",
+	"Table \"%s\" successfully deleted." => "Tabla \"%s\" eliminada con exito",
+	"Table \"%s\" successfully linked." => "Tabla \"%s\" vinculada con exito",
+	"Unlink Table" => "Desvincular tabla",
 	// Edit Table
 	"Modify Table" => "Modificar tabla",
 	"GesGym - Modify Table" => "GesGym - Modificar tabla",
+	// Schedule
+	"Select the day" => "Selecciona el día",
+	"Activity" => "Actividad",
+	"Time" => "Hora",
+	"Place" => "Lugar",
 	// Your Sportsmans
 	"Add Sportsman" => "Añadir deportista"
 )

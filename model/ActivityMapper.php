@@ -4,16 +4,11 @@
 require_once(__DIR__."/../core/PDOConnection.php");
 require_once(__DIR__."/../model/Resource.php");
 require_once(__DIR__."/../model/ActivityWUser.php");
+require_once(__DIR__."/../model/User.php");
 
-/**
-* Clase ActivityMapper
-*
-* @author SirGarner <borjaswimmer@gmail.com>
-*/
 class ActivityMapper {
 
 	// Referencia la conexion PDO
-
 	private $db;
 
 	//Constructor
@@ -23,11 +18,42 @@ class ActivityMapper {
 
 	// Guarda una actividad V
 	public function save($activity) {
-		$stmt = $this->db->prepare("INSERT INTO activities VALUES (?,?,?,?,?,?,?,?)");
-		$stmt->execute(array($activity->getId(), $activity->getNombre(), $activity->getDescripcion(), $activity->getDia(), $activity->getHoraInicio(), $activity->getHoraFin(), $activity->getPlazas(), $activity->getEntrenador()));
+		$stmt = $this->db->prepare("INSERT INTO activities (nombre, descripcion, dia, hora_inicio, hora_fin, plazas, entrenador) VALUES (?, ?, ?, ?, ?, ?, ?)");
+		$stmt->execute(array($activity->getNombre(), $activity->getDescripcion(), $activity->getDia(), $activity->getHoraInicio(), $activity->getHoraFin(), $activity->getPlazas(), $activity->getEntrenador()));
+		$stmt = $this->db->query("SELECT MAX(id) FROM activities");
+		$id = $stmt->fetch();
+		return $id;
 	}
 
- 	// Separa los recursos ya asignados a la actividad
+	// Devuelve un array de $entrenadores
+	public function findTrainers(){
+		$stmt = $this->db->query("SELECT id, username FROM users WHERE tipo='entrenador'");
+		$trainers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		$entrenadores = array();
+
+		foreach($trainers as $trainer){
+			array_push($entrenadores, new User($trainer["id"], $trainer["username"]));
+		}
+
+		return $entrenadores;
+	}
+
+	// Devuelve todos los recursos
+	public function recurs(){
+		$stmt = $this->db->query("SELECT * FROM resources");
+		$recursos_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		$recursos = array();
+
+		foreach($recursos_db as $recurso_db){
+			array_push($recursos, new Resource($recurso_db["id"], $recurso_db["nombre"]));
+		}
+
+		return $recursos;
+	}
+ 	
+	// Separa los recursos ya asignados a la actividad
 	public function recurActi($id){
 		$stmt = $this->db->prepare("SELECT recurso FROM resources_activity WHERE actividad=?");
 		$stmt->execute(array($id));
@@ -45,7 +71,7 @@ class ActivityMapper {
 					array_push($arrayAux, new Resource($r["id"], $r["nombre"], $r["aforo"]));
 				}
 			}
-		}
+
 
 		foreach($recursos_acti as $recurso_acti){
 			if(empty($recurso_acti))
@@ -62,11 +88,20 @@ class ActivityMapper {
 						array_push($recur_NoActi, new Resource($recur["id"], $recur["nombre"], $recur["aforo"]));
 			}
 		}
+	}else{
+
+		$stmt = $this->db->query("SELECT * FROM resources");
+		$recs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		foreach ($recs as $rec) {
+			array_push($recur_NoActi, new Resource($rec["id"], $rec["nombre"], $rec["aforo"]));
+		}
+	}
 		return $recur_NoActi;
 	}
 
  	// Guarda una actividad con su recurso en la tabla relacion
-	public function addRecActi($id, $recur) {
+	public function addRecActi($recur, $id) {
 		$stmt = $this->db->prepare("INSERT INTO resources_activity VALUES (?,?)");
 		$stmt->execute(array($id, $recur));
 	}
@@ -86,11 +121,22 @@ class ActivityMapper {
 
 			foreach($atri_db as $atri){
 				array_push($recursos, new Resource($recurso_db["recurso"],
-				 																	$atri["nombre"]));
+												   $atri["nombre"]));
 			}
 		}
 		return $recursos;
-
+	}
+	
+	// Elimina todos los recursos de una actividad.
+	public function deleteResources($id) {
+		$stmt = $this->db->prepare("DELETE FROM resources_activity WHERE actividad=?");
+		$stmt->execute(array($id));
+	}
+	
+	// Elimina todos los deportistas de una actividad.
+	public function deleteSportsmans($id) {
+		$stmt = $this->db->prepare("DELETE FROM activities_user WHERE actividad=?");
+		$stmt->execute(array($id));
 	}
 
 	// Borra recursos de la actividades
@@ -131,7 +177,6 @@ class ActivityMapper {
 
 		return $activities;
 	}
-
 
 	// Devuelve una actividad V
 	public function findById($id) {
@@ -180,6 +225,52 @@ class ActivityMapper {
 
 		return $users;
 	}
+	
+	// Devuelve los deportistas de una actividad.
+	public function findActiSportsmans($id) {
+		$stmt = $this->db->prepare("SELECT usuario FROM activities_user WHERE actividad=?");
+		$stmt->execute(array($id));
+		$sportsmans_ids = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		$sportsmans = array();
+
+		foreach($sportsmans_ids as $sportsman_id){
+			$stmt = $this->db->prepare("SELECT username FROM users WHERE id=?");
+			$stmt->execute(array($sportsman_id["usuario"]));
+			$sportsman_db = $stmt->fetch(PDO::FETCH_ASSOC);
+			
+			array_push($sportsmans, new User($sportsman_id["usuario"], $sportsman_db["username"]));
+		}
+
+		return $sportsmans;
+	}
+	
+	// Devuelve los deportistas de una actividad.
+	public function findSportsmans() {
+		$stmt = $this->db->query("SELECT * FROM users WHERE tipo='deportista'");
+		$sportsmans_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		$sportsmans = array();
+
+		foreach($sportsmans_db as $sportsman_db){
+			array_push($sportsmans, new User($sportsman_db["id"], $sportsman_db["username"]));
+		}
+
+		return $sportsmans;
+	}
+
+	// Devuelve el nombre del entrenadores
+	public function nameUser($id){
+		$stmt = $this->db->prepare("SELECT * FROM users WHERE id=?");
+		$stmt->execute(array($id));
+		$names = $stmt->fetchALL(PDO::FETCH_ASSOC);
+
+		$users = array();
+		foreach($names as $name){
+			array_push($users, new User($name["id"],$name["username"]));
+		}
+		return $users;
+	}
 
 	// Comprueba que un usuario no esta previamente registrado en una actividad V
 	public function userExistAct($activityid, $username){
@@ -212,9 +303,9 @@ class ActivityMapper {
 	}
 
 	// Añade un usuario a la tabla "relacion" entre usuarios y la actividad en cuestion V
-	public function addUser($username, $activityid) {
+	public function addUser($userid, $activityid) {
 		$stmt = $this->db->prepare("INSERT INTO activities_user VALUES (?,?,?)");
-		$stmt->execute(array($username, $activityid, false));
+		$stmt->execute(array($userid, $activityid, false));
 	}
 
 	// Borra un usuario de la tabla "relacion" entre usuarios y la actividad en cuestion V
@@ -223,35 +314,35 @@ class ActivityMapper {
 		$stmt->execute(array($username, $activityid));
 	}
 
-	// Confirma un usuario de la tabla "relacion" entre usuarios y la actividad en cuestion V
-	public function confUser($activityid, $username) {
-		$stmt = $this->db->prepare("UPDATE activities_user SET conf='1' WHERE usuario=? AND actividad=?");
-		$stmt->execute(array($username, $activityid));
+	// Confirma la inscripción de un deportista en una actividad.
+	public function confUser($activity_id, $user_id) {
+		$stmt = $this->db->prepare("UPDATE activities_user SET conf=1 WHERE usuario=? AND actividad=?");
+		$stmt->execute(array($user_id, $activity_id));
 	}
 
 	// Comprueba que el usuario no esta confirmado en la actividades
-	public function userIsConf($activityid, $username) {
+	public function userIsConf($activity_id, $user_id) {
 		$stmt = $this->db->prepare("SELECT count(usuario) FROM activities_user WHERE usuario=? AND actividad=? AND conf=1");
-		$stmt->execute(array($username,$activityid));
+		$stmt->execute(array($user_id, $activity_id));
 
 		if($stmt->fetchColumn() > 0){
 			return true;
 		}
 	}
 
-	// Lista la actividad y sus preinscritos V
-	public function listActiUser($id) {
-		$stmt = $this->db->query("SELECT * FROM activities_user WHERE actividad=?");
-		$stmt->execute(array($id));
-		$users_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	// Devuelve un array con todas las relaciones usario-actividad de una actividad pasada.
+	public function listActiUser($activity_id) {
+		$stmt = $this->db->prepare("SELECT * FROM activities_user WHERE actividad=?");
+		$stmt->execute(array($activity_id));
+		$relations_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-		$activities = array();
+		$relations = array();
 
-		foreach ($activities_db as $activity) {
-			array_push($activities, new ActivityWUser($activity["usuario"], $activity["actividad"], $activity["conf"]));
+		foreach ($relations_db as $relation) {
+			array_push($relations, new ActivityWUser($relation["usuario"], $relation["actividad"], $relation["conf"]));
 		}
 
-		return $activities;
+		return $relations;
 	}
 
 	// Lista Las actividades de un entrenador V
@@ -303,4 +394,5 @@ class ActivityMapper {
 		}
 		return $activities;
 	}
+
 }

@@ -17,13 +17,13 @@ $currentusertype = $view->getVariable("currentusertype");
 					</div>
 <?php if($currentusertype == "deportista") { ?>
 					<div class="col-sm-3">
-						<a href="index.php?controller=sessions&amp;action=X">
+						<a href="index.php?controller=sessions&amp;action=sessionsList">
 							<span class="glyphicon glyphicon-hourglass"></span>
 							<br><?=i18n("Your Sessions")?>
 						</a>
 					</div>
 					<div class="col-sm-3">
-						<a href="index.php?controller=tables&amp;action=X">
+						<a href="index.php?controller=tables&amp;action=tablesListProp">
 							<span class="glyphicon glyphicon-list-alt"></span>
 							<br><?=i18n("Your Tables")?>
 						</a>
