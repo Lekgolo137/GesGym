@@ -226,26 +226,17 @@ INSERT INTO resources (nombre, aforo, descripcion) values ('Sala de judo', 40, '
 INSERT INTO resources (nombre, aforo, descripcion) values ('Sala de kárate', 40, 'Sala de kárate cubierta ubicada adyacente a la sala de esgrima, sin almacén.');
 INSERT INTO resources (nombre, aforo, descripcion) values ('Sala de boxeo', 55, 'Sala de boxeo cubierta ubicada en la zona noreste del complejo deportivo, cuenta con almacén propio así como con los distintos materiales necesarios para practicar y entrenar el deporte.');
 
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('Sesión facil, es el momento de subir peso', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 3, 1);
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 6, 2);
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 9, 3);
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 12, 4);
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 15, 5);
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 18, 6);
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 21, 7);
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 3, 8);
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 6, 9);
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 9, 10);
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 12, 11);
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 15, 12);
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 18, 13);
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 21, 4);
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 3, 13);
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 6, 12);
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 9, 10);
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 12, 8);
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 15, 9);
-INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) values ('', '2017-11-15 16:00:00', '2017-11-15 18:00:00', 18, 2);
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) VALUES ('Sesión facil, es el momento de subir peso', '2018-01-16 21:51:06', '2018-01-16 21:52:43', 5, 1),
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) VALUES ('Siguiente sesión incluir piernas', '2018-01-16 21:51:11', '2018-01-16 21:53:16', 11, 3),
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) VALUES ('Buena tabla, repetir', '2018-01-16 21:51:17', '2018-01-16 21:53:28', 17, 5),
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) VALUES ('Tabla demasiado avanzada', '2018-01-16 21:51:29', '2018-01-16 21:53:51', 5, 9),
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) VALUES ('Sesión 1 de 4 de perdida de peso', '2018-01-16 21:51:44', '2018-01-16 21:54:22', 11, 11),
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) VALUES ('Sesión 2 de 4 de perdida de peso', '2018-01-16 21:51:53', '2018-01-16 21:54:29', 11, 11),
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) VALUES ('Sesión 3 de 4 de perdida de peso', '2018-01-16 21:51:57', '2018-01-16 21:54:34', 11, 11),
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) VALUES ('Última sesión de perdida de peso, próximo día entrenar definición', '2018-01-16 21:52:00', '2018-01-16 21:55:10', 11, 11),
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) VALUES ('Tabla complicada pero merece la pena', '2018-01-16 21:52:06', '2018-01-16 21:56:02', 5, 9),
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) VALUES ('Menos peso que en la sesión anterior por las agujetas', '2018-01-16 21:52:16', '2018-01-16 21:56:27', 17, 9),
+INSERT INTO sessions (comentarios, fecha_inicio, fecha_fin, usuario, tabla) VALUES ('Más peso que el la sesión anterior', '2018-01-16 21:52:20', '2018-01-16 21:56:51', 5, 9); 
 
 INSERT INTO tables_user VALUES (4, 1);
 INSERT INTO tables_user VALUES (5, 2);
