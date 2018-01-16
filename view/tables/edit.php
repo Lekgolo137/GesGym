@@ -17,7 +17,7 @@ $view->setVariable("header", i18n("Modify Table"));
 
 
 	<?= i18n("Type") ?>: <?= isset($errors["tableTipo"])?i18n($errors["tableTipo"]):"" ?>
-	<select disabled class="form-control" name="tableTipo">
+	<select class="form-control" name="tableTipo" disabled >
 		<option value="estandar" <?php if ($tables->getTableTipo() == "estandar") print "selected"?> > <?=i18n("Standard")?> </option>
 		<option value="personalizada" <?php if ($tables->getTableTipo() == "personalizada") print "selected"?> > <?=i18n("Custom")?> </option>
 	</select>

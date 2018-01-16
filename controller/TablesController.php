@@ -248,7 +248,6 @@ class TablesController extends BaseController {
 
       // populate the Table object with data form the form
       $tables->setTableNombre($_POST["tableNombre"]);
-      $tables->setTableTipo($_POST["tableTipo"]);
       $tables->setTableDescripcion($_POST["tableDescripcion"]);
       $exers = $_POST['exers'];
 
