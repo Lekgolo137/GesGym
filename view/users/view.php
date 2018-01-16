@@ -49,22 +49,6 @@ $view->setVariable("header", i18n("View User"));
 						<table class="table table-striped table-hover">
 							<thead>
 								<tr>
-									<th><?=i18n("Sessions")?></th>
-								</tr>
-							</thead>
-							<tbody>
-<?php foreach ($sessions as $session): ?>
-								<tr>
-									<td><a href="index.php?controller=sessions&amp;action=view&amp;id=<?=$session->getSessionId()?>"><?=$session->getSessionId()?></a></td>
-								</tr>
-<?php endforeach; ?>
-							</tbody>
-						</table>
-					</div>
-					<div class="table-responsive">
-						<table class="table table-striped table-hover">
-							<thead>
-								<tr>
 									<th><?=i18n("Tables")?></th>
 								</tr>
 							</thead>
