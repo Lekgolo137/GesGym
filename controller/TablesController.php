@@ -52,6 +52,8 @@ class TablesController extends BaseController {
     $tablesProp = $this->tableMapper->findProp($this->currentUser);
     // put the array containing Table object to the view
     $this->view->setVariable("tablesProp", $tablesProp);
+	
+	$this->view->setVariable("titulo", i18n("Tables List"));
 
     // render the view (/view/tables/index.php)
     $this->view->setLayout("default");
@@ -74,7 +76,14 @@ class TablesController extends BaseController {
 
     // put the array containing Table object to the view
     $this->view->setVariable("tables", $tables);
-
+	
+	// obtain the data from the database
+    $tablesProp = $this->tableMapper->findProp($this->currentUser);
+    // put the array containing Table object to the view
+    $this->view->setVariable("tablesProp", $tablesProp);
+	
+	$this->view->setVariable("titulo", i18n("Your Tables"));
+		
     // render the view (/view/tables/index.php)
     $this->view->setLayout("default");
     $this->view->render("tables", "tablesList");
@@ -93,6 +102,13 @@ class TablesController extends BaseController {
 
     // put the array containing Table object to the view
     $this->view->setVariable("tables", $tables);
+	
+	// obtain the data from the database
+    $tablesProp = $this->tableMapper->findProp($this->currentUser);
+    // put the array containing Table object to the view
+    $this->view->setVariable("tablesProp", $tablesProp);
+	
+	$this->view->setVariable("titulo", i18n("Tables List"));
 
     // render the view (/view/tables/index.php)
     $this->view->setLayout("default");
@@ -127,6 +143,9 @@ class TablesController extends BaseController {
     $this->exerciseMapper = new ExerciseMapper();
     $exercises = $this->exerciseMapper->findCheck($_REQUEST["id"]);
     $this->view->setVariable("exercises", $exercises);
+	
+	$user_ids = $this->tableMapper->findUsers($tablesid);
+	$this->view->setVariable("users", $user_ids);
 
     // render the view (/view/tables/add.php)
     $this->view->setLayout("welcome");

@@ -91,6 +91,21 @@ class TableMapper {
 
 		return $tables;
 	}
+	
+	//Retrieves user ids related to a given table
+	public function findUsers($tableid) {
+		$stmt = $this->db->prepare("SELECT usuario FROM tables_user WHERE tabla=?");
+		$stmt->execute(array($tableid));
+		$user_ids_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		$user_ids = array();
+
+		foreach ($user_ids_db as $user_id_db) {
+			array_push($user_ids, $user_id_db["usuario"]);
+		}
+
+		return $user_ids;
+	}
 
 
 	//Retrieves a Table from the database given its id

@@ -5,9 +5,11 @@ $view = ViewManager::getInstance();
 $tables = $view->getVariable("tables");
 $exercises = $view->getVariable("exercises");
 $errors = $view->getVariable("errors");
+$users = $view->getVariable("users");
 $view->setVariable("title", i18n("GesGym - View Table"));
 $view->setVariable("header", i18n("View Table"));
 $currentusertype = $view->getVariable("currentusertype");
+$currentuserid = $view->getVariable("currentuserid");
 ?>
 
 <form class="form-signin" action="index.php?controller=tables&amp;action=linkUser" method="POST"">
@@ -42,6 +44,9 @@ $currentusertype = $view->getVariable("currentusertype");
 	<?php if($currentusertype == "entrenador"){ ?>
 		<a class="btn btn-lg btn-primary btn-block" href="index.php?controller=tables&amp;action=tablesList"><?=i18n("Cancel")?></a>
 	<?php } if($currentusertype == "deportista"){ ?>
+		<?php if(!in_array($currentuserid, $users)){ ?>
+			<input class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="<?=i18n("Choose table")?>">
+		<?php } ?>
 		<a class="btn btn-lg btn-primary btn-block" href="javascript:history.back()"><?=i18n("Cancel")?></a>
 	<?php } ?>
 	</form>
