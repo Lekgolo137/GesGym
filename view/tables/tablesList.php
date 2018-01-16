@@ -34,6 +34,17 @@ $currentusertype = $view->getVariable("currentusertype");
 								class="btn btn-sm btn-primary" href="index.php?controller=tables&amp;action=choose&amp;id=<?= $table->getTableid() ?>"><?= i18n("Choose") ?></a>
 
 						<?php } ?>
+
+						<?php if($currentusertype == "deportista"){ ?>
+
+								<?php foreach ($tablesProp as $tableProp){ ?>
+									<?php if($table->getTableid() == $tableProp->getTableid()){?>
+								<a class="btn btn-sm btn-danger" href="index.php?controller=tables&amp;action=unlinkUser&amp;id=<?= $table->getTableid() ?>"><?= i18n("Unlink") ?></a>
+									<?php } }  ?>
+
+
+						<?php } ?>
+
 						<?php if($currentusertype == "entrenador"){ ?>
 							<a class="btn btn-sm btn-primary" href="index.php?controller=tables&amp;action=edit&amp;id=<?= $table->getTableid() ?>"><?= i18n("Modify") ?></a>
 

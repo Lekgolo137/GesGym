@@ -374,7 +374,35 @@ class TablesController extends BaseController {
     // perform the redirection. More or less:
     // header("Location: index.php?controller=tables&action=index")
     // die();
-    $this->view->redirect("tables", "tablesListPublic");
+    $this->view->redirect("tables", "tablesListProp");
+  }
+
+  /*********************************************************************************/
+  /***********************************************************************************/
+  //Action to delete a table from tables_
+  public function unlinkUser() {
+    if (!isset($this->currentUser)) {
+      throw new Exception("Not in session. This action requires login");
+    }
+
+    if (!isset($_REQUEST["id"])) {
+      throw new Exception("id is mandatory");
+    }
+
+    // Get the Table object from the database
+    $tablesid = $_REQUEST["id"];
+    $tables = $this->tableMapper->findById($tablesid);
+
+    // Does the table exist?
+    if ($tables == NULL) {
+      throw new Exception("no such table with id: ".$tablesid);
+    }
+
+    // Delete the Table object from the database
+    $this->tableMapper->unlinkTableUser($this->currentUser, $tables);
+    $this->view->setFlash(sprintf(i18n("Table \"%s\" successfully deleted."),$tables ->getTableNombre()));
+
+    $this->view->redirect("tables", "tablesListProp");
   }
 
   public function TEST() {
