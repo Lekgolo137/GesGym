@@ -22,9 +22,9 @@ $currentusertype = $view->getVariable("currentusertype");
 	</select>
 
 	<?= i18n("Description") ?>:
-	<textarea disabled rows="5" class="form-control" type="text" name="tableDescripcion"> <?= $tables->getTableDescripcion() ?> </textarea><br/>
+	<textarea disabled rows="5" class="form-control" type="text" name="tableDescripcion"><?=$tables->getTableDescripcion()?></textarea><br/>
 
-	<div disabled class="form-control">
+	<div id="ejercicios" disabled class="form-control">
 		<table class="table table-bordered">
 			<?php $cont=1 ?>
 			<?php foreach ($exercises as $exercise): ?>
